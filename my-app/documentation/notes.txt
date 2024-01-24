@@ -1,0 +1,2 @@
+To do:
+- add a css style class for the two column layout on the main page for a div component [1/22/2024]
