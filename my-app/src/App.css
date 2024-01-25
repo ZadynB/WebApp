@@ -39,6 +39,7 @@
 .App-body-sidebar {
   width: 20%;
   background-color: black;
+  border-radius: 3px;
 }
 
 .App-body-main {
@@ -48,4 +49,24 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.Sidebar {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.Sidebar-btn {
+  flex-basis: auto;
+  min-width: 10% !important;
+  border-radius: 0px 3px 3px 0px !important;
+}
+
+.Sidebar-txt {
+  flex-basis: auto;
+  width: 85%;
+  text-align: center;
 }
