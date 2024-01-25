@@ -1,3 +1,4 @@
 To do:
 X - add a css style class for the two column layout on the main page for a div component [1/22/2024]
 - add more styling to make the About page nice and add pictures [1/24/2024]
+Aarin has joined the suffering of a thousand souls
