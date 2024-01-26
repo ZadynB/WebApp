@@ -24,6 +24,14 @@ function Sidebar() {
     setState({ ...state, [anchor]: open });
   };
 
+  const goToGitHub = (text) => (event) => {
+    if (text === 'GitHub') {
+      window.open('https://github.com/ZadynB/WebApp');
+    } else {
+      return;
+    }
+  }
+
   const list = (anchor) => (
     <Box
       sx={{ width: 250 }}
@@ -32,13 +40,13 @@ function Sidebar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Developers', 'Github'].map((text, index) => (
+        {['Developers', 'GitHub'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <Info /> : <GitHub />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} onClick={goToGitHub(text)}/>
             </ListItemButton>
           </ListItem>
         ))}
