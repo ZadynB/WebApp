@@ -37,13 +37,13 @@
 }
 
 .App-body-sidebar {
-  width: 20%;
+  width: 16%;
   background-color: black;
   border-radius: 3px;
 }
 
 .App-body-main {
-  width: 80%;
+  width: 84%;
   text-align: center;
 }
 
@@ -51,22 +51,16 @@
   color: #61dafb;
 }
 
-.Sidebar {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  height: 100%;
-  justify-content: flex-end;
+.rotate {
+  vertical-align:top;
+	transform:rotate(7deg);
+  -ms-transform:rotate(90deg); /* IE 9 */
+  -moz-transform:rotate(90deg); /* Firefox */
+  -webkit-transform:rotate(90deg); /* Safari and Chrome */
+  -o-transform:rotate(90deg); /* Opera */
 }
 
-.Sidebar-btn {
-  flex-basis: auto;
-  min-width: 10% !important;
-  border-radius: 0px 3px 3px 0px !important;
-}
-
-.Sidebar-txt {
-  flex-basis: auto;
-  width: 85%;
-  text-align: center;
+.sidebar {
+  position: fixed;
+  top: 45%;
 }

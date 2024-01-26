@@ -1,5 +1,5 @@
-To do:
-X - add a css style class for the two column layout on the main page for a div component [1/22/2024]
-- add more styling to make the About page nice and add pictures [1/24/2024]
+Log:
+- added a css style class for the two column layout on the main page for a div component [1/22/2024]
+- added more styling to make the About page nicer[1/24/2024]
 - added a side bar with a button to retract/expand [1/25/2024]
-Aarin has joined the suffering of a thousand souls
+
