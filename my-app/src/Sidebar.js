@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import Info from '@mui/icons-material/Info';
 import GitHub from '@mui/icons-material/GitHub';
+import CollectionsBookmark from '@mui/icons-material/CollectionsBookmark';
 
 function Sidebar() {
   const [state, setState] = React.useState({
@@ -24,11 +25,49 @@ function Sidebar() {
     setState({ ...state, [anchor]: open });
   };
 
-  const goToGitHub = (text) => (event) => {
-    if (text === 'GitHub') {
-      window.open('https://github.com/ZadynB/WebApp');
-    } else {
-      return;
+  const sidebarAction = (text) => (event) => {
+    let section;
+    let sect_top;
+    switch (text) {
+      case 'Developers':
+        // scroll to developer section
+        section = document.getElementById('dev_info');
+        sect_top = section.offsetTop;
+        console.log(sect_top);
+        window.scrollTo({
+          top: sect_top,
+          behavior: 'smooth'
+        });
+        break;
+      case 'GitHub':
+        //open github link in new tab
+        window.open('https://github.com/ZadynB/WebApp');
+        break;
+      case 'Projects':
+        // scroll to projects section
+        section = document.getElementById('project_info');
+        sect_top = section.offsetTop;
+        console.log(sect_top);
+        window.scrollTo({
+          top: sect_top,
+          behavior: 'smooth'
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const getIcon = (text) => {
+    switch (text) {
+      case 'Developers':
+        return (<Info />);
+      case 'GitHub':
+        return (<GitHub />);
+      case 'Projects':
+        return (<CollectionsBookmark />);
+      default:
+        return (<Info />);
     }
   }
 
@@ -40,13 +79,13 @@ function Sidebar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Developers', 'GitHub'].map((text, index) => (
+        {['Developers', 'Projects', 'GitHub'].map((text) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={sidebarAction(text)}>
               <ListItemIcon>
-                {index % 2 === 0 ? <Info /> : <GitHub />}
+                {getIcon(text)}
               </ListItemIcon>
-              <ListItemText primary={text} onClick={goToGitHub(text)}/>
+              <ListItemText primary={text}/>
             </ListItemButton>
           </ListItem>
         ))}
