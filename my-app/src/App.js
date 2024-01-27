@@ -8,17 +8,17 @@ import Home from './pages/Home';
 
 function App() {
   // Getting the page to display
-  let component
+  let component;
 
   switch (window.location.pathname) {
     case "/":
-      component = <Home />
-      break
+      component = <Home />;
+      break;
     case "/about":
-      component = <About />
-      break
+      component = <About />;
+      break;
     default:
-      component = <Home />
+      component = <Home />;
   }
 
   return (

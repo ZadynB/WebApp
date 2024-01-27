@@ -12,7 +12,9 @@ import Info from '@mui/icons-material/Info';
 import GitHub from '@mui/icons-material/GitHub';
 import CollectionsBookmark from '@mui/icons-material/CollectionsBookmark';
 
-function Sidebar() {
+function Sidebar(props) {
+  const items = props.items.split(', ');
+
   const [state, setState] = React.useState({
     left: false,
   });
@@ -26,18 +28,20 @@ function Sidebar() {
   };
 
   const sidebarAction = (text) => (event) => {
-    let section;
-    let sect_top;
+    // let section;
+    // let sect_top;
     switch (text) {
       case 'Developers':
         // scroll to developer section
-        section = document.getElementById('dev_info');
-        sect_top = section.offsetTop;
-        console.log(sect_top);
-        window.scrollTo({
-          top: sect_top,
-          behavior: 'smooth'
-        });
+        // section = document.getElementById('dev_info');
+        // sect_top = section.offsetTop;
+        // console.log(sect_top);
+        // window.scrollTo({
+        //   top: sect_top,
+        //   behavior: 'smooth'
+        // });        
+        // console.log(window.location.pathname);
+        props.changeSection(text);
         break;
       case 'GitHub':
         //open github link in new tab
@@ -45,13 +49,14 @@ function Sidebar() {
         break;
       case 'Projects':
         // scroll to projects section
-        section = document.getElementById('project_info');
-        sect_top = section.offsetTop;
-        console.log(sect_top);
-        window.scrollTo({
-          top: sect_top,
-          behavior: 'smooth'
-        });
+        // section = document.getElementById('project_info');
+        // sect_top = section.offsetTop;
+        // console.log(sect_top);
+        // window.scrollTo({
+        //   top: sect_top,
+        //   behavior: 'smooth'
+        // });
+        props.changeSection(text);
         break;
       default:
         break;
@@ -79,7 +84,7 @@ function Sidebar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Developers', 'Projects', 'GitHub'].map((text) => (
+        {items.map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={sidebarAction(text)}>
               <ListItemIcon>

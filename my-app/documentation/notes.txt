@@ -4,3 +4,8 @@ Log:
 - added a side bar with a button to retract/expand [1/25/2024]
 - added a github link to the sidebar [1/26/2024]
 - added icons to sidebar and scroll functionality [1/26/2024]
+- added stacked navigation bar to about page [1/27/2024]
+- added more styling to about page [1/27/2024]
+
+To fix/do:
+- figure out a way to change the section on the About page efficiently (Proxy??)

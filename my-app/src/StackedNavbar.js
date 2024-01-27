@@ -1,11 +1,11 @@
 import Nav from 'react-bootstrap/Nav';
 
-const createNavLink = (item) => {
-  return(<Nav.Link key={item} style={{textDecoration: 'underline 1px'}}>{item}</Nav.Link>);
-}
-
 function StackedNavbar(props) {
-  let items = props.items.split(',');
+  const items = props.items.split(', ');
+
+  const createNavLink = (item) => {
+    return(<Nav.Link key={item} style={{textDecoration: 'underline 1px'}}>{item}</Nav.Link>);
+  }
 
   return (
     <Nav defaultActiveKey="/home" className="flex-column">
