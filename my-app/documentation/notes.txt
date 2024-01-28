@@ -9,3 +9,4 @@ Log:
 
 To fix/do:
 - figure out a way to change the section on the About page efficiently (Proxy??)
+    -> Solution: Use the useState function along with a callback function to do this cleanly.
