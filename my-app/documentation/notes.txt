@@ -1,15 +1,27 @@
 Log:
-- added a css style class for the two column layout on the main page for a div component [1/22/2024]
-- added more styling to make the About page nicer[1/24/2024]
-- added a side bar with a button to retract/expand [1/25/2024]
-- added a github link to the sidebar [1/26/2024]
-- added icons to sidebar and scroll functionality [1/26/2024]
-- added stacked navigation bar to about page [1/27/2024]
-- added more styling to about page [1/27/2024]
-- implemented solution to changing the sections on the about page [1/28/2024]
-- added transitions between sections through the framer-motion library [1/28/2024]
-- added more styling to the sidebars by disabling the currently selected section [1/28/2024]
+[1/22/2024]
+- added a css style class for the two column layout on the main page for a div component
+
+[1/24/2024]
+- added more styling to make the About page nicer
+
+[1/25/2024]
+- added a side bar with a button to retract/expand
+
+[1/26/2024]
+- added a github link to the sidebar
+- added icons to sidebar and scroll functionality
+
+[1/27/2024]
+- added stacked navigation bar to about page
+- added more styling to about page
+
+[1/28/2024]
+- implemented solution to changing the sections on the about page
+- added transitions between sections through the framer-motion library
+- added more styling to the sidebars by disabling the currently selected section
 
 To fix/do:
+[1/28/2024] - DONE
 - figure out a way to change the section on the About page efficiently (Proxy??)
     -> Solution: Use the useState function along with a callback function to do this cleanly.
