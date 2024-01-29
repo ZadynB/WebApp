@@ -4,17 +4,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../Sidebar';
 import AboutSection from './AboutSection';
 import Developers from './Developers';
+import Projects from './Projects';
 import { AnimatePresence } from 'framer-motion';
 
 function About() {
   const sectionObj = {
     About: <AboutSection key={'About'}/>,
-    Developers: <Developers key={'Developers'}/>
+    Developers: <Developers key={'Developers'}/>,
+    Projects: <Projects key={'Projects'}/>
   };
   
   const [section, setComponent] = useState({
     currentSection: 'About',
-    component: <AboutSection />
+    component: <AboutSection key={'About'}/>
   });
   
 

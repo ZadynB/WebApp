@@ -27,6 +27,7 @@ body {
 .App-body {
   height: 93%;
   color: white;
+  overflow-y: auto;
 }
 
 .body-main-center {
@@ -45,7 +46,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   height: 100%;
   width: 50%;
   margin: auto;
@@ -98,4 +98,24 @@ body {
 
 .sidebar-item:hover {
   background-color: var(--orange);
+}
+
+.stackedNavbar {
+  width: 150px;
+  height: 80%;
+  border-style: solid;
+  border-color: var(--blue2);
+  border-radius: 5px;
+  border-width: 1px;
+  position: fixed;
+  left: 87%;
+  bottom: 5%;
+}
+
+.stackedNavbar-item {
+  font-size: 10pt !important;
+}
+
+.stackedNavbar-item:hover {
+  color: var(--orange);
 }
