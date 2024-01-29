@@ -4,25 +4,36 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../Sidebar';
 import AboutSection from './AboutSection';
 import Developers from './Developers';
+import { AnimatePresence } from 'framer-motion';
 
 function About() {
   const sectionObj = {
-    About: <AboutSection />,
-    Developers: <Developers />
+    About: <AboutSection key={'About'}/>,
+    Developers: <Developers key={'Developers'}/>
   };
-  const [section, setComponent] = useState({component: <AboutSection />});
+  
+  const [section, setComponent] = useState({
+    currentSection: 'About',
+    component: <AboutSection />
+  });
   
 
   const setSection = (section) => {
-    setComponent({component: sectionObj[section]});
+    setComponent({
+      currentSection: section,
+      component: sectionObj[section]
+    });
   }
 
   
 
   return (
     <div id='about-pg' className='App-body'>
-      <Sidebar items='Developers, Projects, GitHub' changeSection={setSection}/>
-      {section.component}
+      <Sidebar currentSection={section.currentSection} items='About, Developers, Projects, GitHub' changeSection={setSection}/>
+      <AnimatePresence mode='wait'>
+        {section.component}
+      </AnimatePresence>
+      
     </div>
   );
 }

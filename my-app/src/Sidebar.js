@@ -11,6 +11,7 @@ import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import Info from '@mui/icons-material/Info';
 import GitHub from '@mui/icons-material/GitHub';
 import CollectionsBookmark from '@mui/icons-material/CollectionsBookmark';
+// import AboutSection from './pages/AboutSection';
 
 function Sidebar(props) {
   const items = props.items.split(', ');
@@ -28,19 +29,13 @@ function Sidebar(props) {
   };
 
   const sidebarAction = (text) => (event) => {
-    // let section;
-    // let sect_top;
     switch (text) {
+      case 'About':
+        // change section to About section
+        props.changeSection(text);
+        break;
       case 'Developers':
-        // scroll to developer section
-        // section = document.getElementById('dev_info');
-        // sect_top = section.offsetTop;
-        // console.log(sect_top);
-        // window.scrollTo({
-        //   top: sect_top,
-        //   behavior: 'smooth'
-        // });        
-        // console.log(window.location.pathname);
+        // change section to Developers section
         props.changeSection(text);
         break;
       case 'GitHub':
@@ -48,14 +43,7 @@ function Sidebar(props) {
         window.open('https://github.com/ZadynB/WebApp');
         break;
       case 'Projects':
-        // scroll to projects section
-        // section = document.getElementById('project_info');
-        // sect_top = section.offsetTop;
-        // console.log(sect_top);
-        // window.scrollTo({
-        //   top: sect_top,
-        //   behavior: 'smooth'
-        // });
+        //change section to Projects section
         props.changeSection(text);
         break;
       default:
@@ -65,6 +53,8 @@ function Sidebar(props) {
 
   const getIcon = (text) => {
     switch (text) {
+      case 'About':
+        return (<Info />)
       case 'Developers':
         return (<Info />);
       case 'GitHub':
@@ -85,7 +75,7 @@ function Sidebar(props) {
     >
       <List>
         {items.map((text) => (
-          <ListItem key={text} disablePadding>
+          <ListItem key={text} disablePadding disabled={props.currentSection === text ? true : false}>
             <ListItemButton onClick={sidebarAction(text)}>
               <ListItemIcon>
                 {getIcon(text)}
