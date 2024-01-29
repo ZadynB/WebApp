@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 function Navigationbar() {
   return (
-    <Navbar sticky='top' expand="lg" bg='primary' data-bs-theme='dark' className="navbar">
+    <Navbar sticky='top' expand="lg" data-bs-theme='dark' className="navbar">
       <Container>
         <Navbar.Brand href="/home">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -68,14 +68,14 @@ function Sidebar(props) {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250}}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
         {items.map((text) => (
-          <ListItem key={text} disablePadding disabled={props.currentSection === text ? true : false}>
+          <ListItem key={text} disablePadding disabled={props.currentSection === text ? true : false} className='sidebar-item'>
             <ListItemButton onClick={sidebarAction(text)}>
               <ListItemIcon>
                 {getIcon(text)}
@@ -92,7 +92,7 @@ function Sidebar(props) {
     <div className='sidebar'>
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button size='small' variant='outlined' onClick={toggleDrawer(anchor, true)} className='rotate'>
+          <Button size='small' variant='outlined' onClick={toggleDrawer(anchor, true)} className='rotate sidebar-btn'>
               <KeyboardArrowUp/>
           </Button>
           <Drawer

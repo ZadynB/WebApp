@@ -20,6 +20,7 @@ Log:
 - implemented solution to changing the sections on the about page
 - added transitions between sections through the framer-motion library
 - added more styling to the sidebars by disabling the currently selected section
+- added information/introduction to the developers page
 
 To fix/do:
 - figure out a way to change the section on the About page efficiently (Proxy??) - DONE

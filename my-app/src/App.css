@@ -1,3 +1,15 @@
+:root {
+  --bg: #282c34;
+  --orange: #ff9843;
+  --purple: #8d44bb;
+  --dark-blue: #280274;
+  --blue1: #3652ad;
+  --blue2: #525ceb;
+  --light-blue: #61dafb;
+  --off-white: #e9f6ff;
+  --white: white;
+}
+
 body {
   height: 100vh;
 }
@@ -8,7 +20,7 @@ body {
 
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: var(--bg);
   height: 100%;
 }
 
@@ -40,11 +52,29 @@ body {
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--light-blue);
+}
+
+.caption {
+  display: block;
+  font-weight: 700;
+  font-size: 15pt;
+  color: var(--orange);
+}
+
+.figure {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+}
+
+.highlight-text:hover {
+  color: var(--orange);
 }
 
 .navbar {
   height: 7%;
+  background-color: var(--blue2);
 }
 
 .rotate {
@@ -59,4 +89,13 @@ body {
 .sidebar {
   position: fixed;
   top: 50%;
+}
+
+.sidebar-btn {
+  border-color: var(--blue2) !important;
+  color: var(--blue2) !important;
+}
+
+.sidebar-item:hover {
+  background-color: var(--orange);
 }
