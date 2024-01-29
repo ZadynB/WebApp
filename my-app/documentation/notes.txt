@@ -22,6 +22,6 @@ Log:
 - added more styling to the sidebars by disabling the currently selected section
 
 To fix/do:
-[1/28/2024] - DONE
-- figure out a way to change the section on the About page efficiently (Proxy??)
+- figure out a way to change the section on the About page efficiently (Proxy??) - DONE
     -> Solution: Use the useState function along with a callback function to do this cleanly.
+- add a StackedNavBar to the right of the page so that users can navigate to specific sections.
