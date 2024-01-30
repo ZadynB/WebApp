@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import StackedNavbar from '../StackedNavbar';
 import { useState } from 'react';
 import projects from '../files/projects.json';
+import ProjectContainer from '../components/ProjectContainer';
 
 function Projects() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
@@ -64,6 +65,7 @@ function Projects() {
           to display the options.
         </p>
       </div> */}
+      <ProjectContainer />
       <StackedNavbar items={projects} subHeader='Projects' currentSection={section} changeSection={changeSection}/>
     </motion.div>
   );

@@ -75,8 +75,8 @@ function Sidebar(props) {
     >
       <List>
         {items.map((text) => (
-          <ListItem key={text} disablePadding disabled={props.currentSection === text ? true : false} className='sidebar-item'>
-            <ListItemButton onClick={sidebarAction(text)}>
+          <ListItem key={text} disablePadding className='sidebar-item'>
+            <ListItemButton disabled={props.currentSection === text ? true : false} onClick={sidebarAction(text)}>
               <ListItemIcon>
                 {getIcon(text)}
               </ListItemIcon>

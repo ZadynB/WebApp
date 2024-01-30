@@ -77,6 +77,15 @@ body {
   background-color: var(--blue2);
 }
 
+.project-container {
+  width: 100%;
+  height: 50px;
+  border-style: solid;
+  border-color: var(--blue2);
+  border-radius: 5px;
+  border-width: 1px;
+}
+
 .rotate {
   vertical-align:top;
 	transform:rotate(7deg);
