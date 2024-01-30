@@ -25,8 +25,7 @@ function About() {
       currentSection: section,
       component: sectionObj[section]
     });
-  }
-
+  };
   
 
   return (

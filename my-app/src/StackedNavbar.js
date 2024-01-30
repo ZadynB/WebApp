@@ -10,13 +10,14 @@ import Divider from '@mui/material/Divider';
 function StackedNavbar(props) {
   const offWhite = getComputedStyle(document.body).getPropertyValue('--off-white');
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
-  const items = props.items.split(', ');
+  const items = props.items;
+  const subHeader = props.subHeader;
 
-  const createListItem = (item) => {
+  const createListItem = (key, value) => {
     return(
-      <ListItem key={item} disablePadding>
-        <ListItemButton>
-          <ListItemText className='stackedNavbar-item' primary={item}/>
+      <ListItem key={key} disablePadding>
+        <ListItemButton className='stackedNavbar-btn' onClick={() => props.changeSection(key)}>
+          <ListItemText className='stackedNavbar-item' primary={value}/>
         </ListItemButton>
       </ListItem>
     );
@@ -25,7 +26,7 @@ function StackedNavbar(props) {
   return (
     <div className='stackedNavbar'>
       <Box
-        sx={{ width: 150}}
+        sx={{ width: '100%'}}
         role="presentation"
       >
         <List
@@ -33,7 +34,7 @@ function StackedNavbar(props) {
           aria-labelledby="nested-list-subheader"
           subheader={
             <ListSubheader sx={{background: 'rgba(0, 0, 0, 0)', color: offWhite, textAlign: 'left'}} component="div" id="nested-list-subheader">
-              Projects
+              {subHeader}
               <Divider
                 variant='left'
                 sx={{
@@ -46,7 +47,7 @@ function StackedNavbar(props) {
             </ListSubheader>
           }
         >
-          {items.map((text) => createListItem(text))}
+          {Object.entries(items).map(([key, value]) => createListItem(key, value))}
         </List>
       </Box>
     </div>

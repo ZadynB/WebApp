@@ -22,7 +22,13 @@ Log:
 - added more styling to the sidebars by disabling the currently selected section
 - added information/introduction to the developers page
 
+[1/29/2024]
+- added Projects.js and updated StackedNavbar.js
+- added projects.json so projects can be added dynamically and easily
+- added functionality on the buttons on StackedNavbar.js to change the section
+
 To fix/do:
 - figure out a way to change the section on the About page efficiently (Proxy??) - DONE
     -> Solution: Use the useState function along with a callback function to do this cleanly.
-- add a StackedNavBar to the right of the page so that users can navigate to specific sections.
+- add a StackedNavBar to the right of the page so that users can navigate to specific sections -DONE
+- add a new component to be used as a project container for dynamic use

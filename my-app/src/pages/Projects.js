@@ -3,9 +3,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Divider from '@mui/material/Divider';
 import { motion } from 'framer-motion';
 import StackedNavbar from '../StackedNavbar';
+import { useState } from 'react';
+import projects from '../files/projects.json';
 
 function Projects() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
+  const [section, setSection] = useState('project_1');
+
+  const changeSection = (section) => {
+    setSection(section);
+  };
+
+  //add currently selected section variable x
+  //add callback function from StackedNavbar.js to change the section x
+  //add currently selected section variable to the props of StackedNavbar.js  x
+  //add code to create new project container so that it can be dynamically created
 
   return (
     <motion.div 
@@ -52,7 +64,7 @@ function Projects() {
           to display the options.
         </p>
       </div> */}
-      <StackedNavbar capacity='3' items='Developers, Projects, GitHub' />
+      <StackedNavbar items={projects} subHeader='Projects' currentSection={section} changeSection={changeSection}/>
     </motion.div>
   );
 }

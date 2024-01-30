@@ -101,7 +101,7 @@ body {
 }
 
 .stackedNavbar {
-  width: 150px;
+  width: 10%;
   height: 80%;
   border-style: solid;
   border-color: var(--blue2);
@@ -116,6 +116,6 @@ body {
   font-size: 10pt !important;
 }
 
-.stackedNavbar-item:hover {
+.stackedNavbar-btn:hover {
   color: var(--orange);
 }
