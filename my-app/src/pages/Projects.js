@@ -1,15 +1,19 @@
-import '../App.css';
+// import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Divider from '@mui/material/Divider';
 import { motion } from 'framer-motion';
-import StackedNavbar from '../StackedNavbar';
+import StackedNavbar from '../components/StackedNavbar';
 import { useState } from 'react';
 import projects from '../files/projects.json';
+import projectsInfo from '../files/projectsInfo.json';
 import ProjectContainer from '../components/ProjectContainer';
+import VerticalCarousel from '../components/VerticalCarousel';
+import Info from '@mui/icons-material/Info';
+import { Button } from '@mui/material';
 
 function Projects() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
-  const [section, setSection] = useState('project_1');
+  const [section, setSection] = useState('');
 
   const changeSection = (section) => {
     setSection(section);
@@ -65,7 +69,15 @@ function Projects() {
           to display the options.
         </p>
       </div> */}
-      <ProjectContainer />
+      {/* <ProjectContainer project_name='Unity Game'/> */}
+      <br></br>
+      <div className='carousel-container'>
+        <VerticalCarousel data={projectsInfo}/>
+        <Button size='small' className='project-info-btn'>
+          <Info />
+        </Button>
+      </div>
+      
       <StackedNavbar items={projects} subHeader='Projects' currentSection={section} changeSection={changeSection}/>
     </motion.div>
   );

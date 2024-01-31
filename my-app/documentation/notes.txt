@@ -27,8 +27,17 @@ Log:
 - added projects.json so projects can be added dynamically and easily
 - added functionality on the buttons on StackedNavbar.js to change the section
 
+[1/30/2024]
+- added projectInfo.js, added projectContainer.js to display project info
+- partially finished the carousel functionality and css
+
 To fix/do:
-- figure out a way to change the section on the About page efficiently (Proxy??) - DONE
+[Solved/Done]
+- figure out a way to change the section on the About page efficiently (Proxy??)
     -> Solution: Use the useState function along with a callback function to do this cleanly.
-- add a StackedNavBar to the right of the page so that users can navigate to specific sections -DONE
+- add a StackedNavBar to the right of the page so that users can navigate to specific sections
+
+[In Progress]
 - add a new component to be used as a project container for dynamic use
+    -> add a new section to display some of the tools + description
+- check and try to fix the weird functionality with the carousel

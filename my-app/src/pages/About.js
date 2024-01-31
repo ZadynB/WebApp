@@ -1,7 +1,7 @@
-import '../App.css';
+// import '../App.css';
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Sidebar from '../Sidebar';
+import Sidebar from '../components/Sidebar';
 import AboutSection from './AboutSection';
 import Developers from './Developers';
 import Projects from './Projects';

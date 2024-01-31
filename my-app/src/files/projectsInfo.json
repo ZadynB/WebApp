@@ -1,0 +1,44 @@
+{
+    "slides": [
+        {
+            "id": "project_1",
+            "data": {
+                "name": "Unity Game",
+                "type": "Personal",
+                "date": "2023",
+                "tools": "C#, Unity",
+                "description": "An adventure game with 3D graphics in which you can collect items, equip armor, do some exploration and battle monsters!"
+            }
+        },
+        {
+            "id": "project_2",
+            "data": {
+                "name": "Course Grapher",
+                "type": "Personal",
+                "date": "2022",
+                "tools": "React, JS, HTML, CSS, Python, NGINX",
+                "description": "Coded as part of a school group project where users could navigate a web app to display a course tree graph for a particular subject, a department, or a degree."
+            }
+        },
+        {
+            "id": "project_3",
+            "data": {
+                "name": "Route Calculator",
+                "type": "Personal",
+                "date": "2021",
+                "tools": "HTML, CSS, C",
+                "description": "A website made with a combination of HTML, CSS and C in order to input files with route data points and the website would compute various calculations on them."
+            }
+        },
+        {
+            "id": "project_4",
+            "data": {
+                "name": "Java Game",
+                "type": "Personal",
+                "date": "2021",
+                "tools": "Java",
+                "description": "An 2D game in which the character can collect items, consume items, equip armor and move to different levels with a user-friendly GUI."
+            }
+        }
+    ]
+}

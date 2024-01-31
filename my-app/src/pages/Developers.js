@@ -1,4 +1,4 @@
-import '../App.css';
+// import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Divider from '@mui/material/Divider';
 import { motion } from 'framer-motion';
@@ -45,11 +45,11 @@ function Developers() {
       >
       </Divider>
       <br></br>
-      <div>
+      <section>
         <h4>Introductions</h4>
         <br></br>
-        <figure style={{float: 'left'}} className='figure'>
-          <Image src={zadyn_pic} style={{height: '180px', width: '171px', float: 'left', marginRight: '10px'}} roundedCircle/>
+        <figure className='figure'>
+          <Image src={zadyn_pic} style={{height: '180px', width: '171px', marginRight: '10px'}} roundedCircle/>
           <figcaption className='caption'>Zadyn Belgrave</figcaption>
         </figure>
         <p style={{textAlign: 'left'}}>
@@ -71,7 +71,7 @@ function Developers() {
         <p style={{textAlign: 'left'}}>
           Other activities that pique my interest include volleyball, watching anime, drawing, listening to music and gaming.
         </p>
-      </div>
+      </section>
       {/* <StackedNavbar capacity='3' items='Developers, Projects, GitHub' /> */}
     </motion.div>
   );

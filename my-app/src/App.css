@@ -1,6 +1,7 @@
 :root {
   --bg: #282c34;
   --orange: #ff9843;
+  --orange2: #f36c00;
   --purple: #8d44bb;
   --dark-blue: #280274;
   --blue1: #3652ad;
@@ -30,27 +31,6 @@ body {
   overflow-y: auto;
 }
 
-.body-main-center {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 50%;
-  margin: auto;
-}
-
-.body-main {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  width: 50%;
-  margin: auto;
-}
-
 .App-link {
   color: var(--light-blue);
 }
@@ -62,12 +42,6 @@ body {
   color: var(--orange);
 }
 
-.figure {
-  vertical-align: top;
-  display: inline-block;
-  text-align: center;
-}
-
 .highlight-text:hover {
   color: var(--orange);
 }
@@ -77,13 +51,157 @@ body {
   background-color: var(--blue2);
 }
 
+/* carousel css */
+.outer-container {
+  max-width: 800px;
+  width: 600px;
+  margin: auto;
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.outer-container > div {
+  flex: 1;
+  padding: 20px;
+}
+
+.outer-container .carousel-wrapper {
+  background: var(--orange2);
+  display: flex;
+  flex-direction: column;
+}
+
+.outer-container {
+  background: var(--white);
+}
+
+.carousel-button {
+  display: flex;
+  align-self: center;
+  padding: 10px;
+  max-width: 50px;
+  border-radius: 30px;
+  background: var(--orange2);
+  border: 2px solid var(--white);
+}
+
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+
+.outer-container .carousel-wrapper p,
+.vertical-carousel-item {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.vertical-carousel {
+  height: 100%;
+  display: flex;
+  flex: 5;
+  align-items: center;
+  color: var(--white);
+}
+
+.slides {
+  align-self: flex-start;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  position: relative;
+  max-height: 250px;
+  height: 250px;
+}
+
+.carousel-inner::before,
+.carousel-inner::after {
+  content: '';
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 110px;
+  pointer-events: none;
+}
+
+.carousel-inner::before {
+  top: 0;
+  background: linear-gradient(0deg, hsla(0, 0%, 100%, 0) 0%, hsla(27, 100%, 48%, 1) 100%);
+  right: 0;
+}
+
+.carousel-inner::after {
+  bottom: 0;
+  background: linear-gradient(0deg, hsla(27, 100%, 48%, 1) 0%, hsla(0, 0%, 100%, 0) 100%);
+}
+
+.vertical-carousel-item {
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  top: 112px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+} 
+
+.vertical-carousel-item.visible {
+  opacity: 1
+}
+
+/* carousel css */
+
 .project-container {
   width: 100%;
-  height: 50px;
-  border-style: solid;
-  border-color: var(--blue2);
+  height: 52px;
+  /* border-style: solid; */
+  /* border-color: var(--blue2); */
+  /* border-radius: 5px; */
+  /* border-width: 2px; */
+  /* background-color: var(--blue2); */
+  /* display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; */
+  
+}
+
+.project-info-btn {
+  /* width: 5%;
+  height: 100%;
+  border-color: var(--blue2) !important;
+  color: var(--off-white) !important;
+  background-color: var(--off-white) !important;
+  margin-bottom: 5px !important;
+  border-radius: 0px 5px 5px 0px !important;
+  border-color: black !important;
+  border-style: solid !important;
+  border-width: 1px 1px 1px 0px !important; */
+  color: var(--orange) !important;
+}
+
+.project_info {
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue2);
   border-radius: 5px;
-  border-width: 1px;
+  border-color: black !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  display: flex;
+  align-items: center;
+  /* margon */
 }
 
 .rotate {
@@ -109,22 +227,95 @@ body {
   background-color: var(--orange);
 }
 
-.stackedNavbar {
-  width: 10%;
-  height: 80%;
-  border-style: solid;
-  border-color: var(--blue2);
-  border-radius: 5px;
-  border-width: 1px;
-  position: fixed;
-  left: 87%;
-  bottom: 5%;
+/* media css */
+/* for smaller deveices */
+@media screen and (max-width: 916px) {
+  .body-main-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 60%;
+    margin: auto;
+  }
+
+  .body-main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 57%;
+    margin: auto;
+  }
+
+  .figure {
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+  }
+
+  .stackedNavbar {
+    visibility: hidden;
+  }
+
+  .stackedNavbar-item {
+    visibility: hidden;
+  }
+  
+  .stackedNavbar-btn:hover {
+    visibility: hidden;
+  }
 }
 
-.stackedNavbar-item {
-  font-size: 10pt !important;
-}
+/* for larger devices */
+@media screen and (min-width: 917px) {
+  .body-main-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 60%;
+    margin: auto;
+  }
 
-.stackedNavbar-btn:hover {
-  color: var(--orange);
+  .body-main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+    margin: auto;
+  }
+
+  .stackedNavbar {
+    width: 10%;
+    height: 80%;
+    border-style: solid;
+    border-color: var(--blue2);
+    border-radius: 5px;
+    border-width: 1px;
+    position: fixed;
+    left: 87%;
+    bottom: 5%;
+  }
+
+  .figure {
+    float: left;
+    vertical-align: top;
+    text-align: center;
+  }
+
+  .stackedNavbar-item {
+    font-size: 10pt !important;
+  }
+  
+  .stackedNavbar-btn:hover {
+    color: var(--orange);
+  }
 }
