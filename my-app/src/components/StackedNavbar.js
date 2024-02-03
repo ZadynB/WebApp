@@ -5,6 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
+import classNames from 'classnames';
 
 
 function StackedNavbar(props) {
@@ -17,7 +18,11 @@ function StackedNavbar(props) {
   const createListItem = (key, value) => {
     return(
       <ListItem key={key} disablePadding>
-        <ListItemButton className='stackedNavbar-btn' disabled={props.currentSection === key ? true : false} onClick={() => props.changeSection(key)}>
+        <ListItemButton
+          className='highlight-text'
+          disabled={props.currentSection === key ? true : false}
+          onClick={() => props.changeSection(key, value)}
+        >
           <ListItemText className='stackedNavbar-item' primary={value} />
         </ListItemButton>
       </ListItem>

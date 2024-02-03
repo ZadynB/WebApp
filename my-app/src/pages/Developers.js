@@ -72,7 +72,6 @@ function Developers() {
           Other activities that pique my interest include volleyball, watching anime, drawing, listening to music and gaming.
         </p>
       </section>
-      {/* <StackedNavbar capacity='3' items='Developers, Projects, GitHub' /> */}
     </motion.div>
   );
 }

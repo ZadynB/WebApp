@@ -34,6 +34,9 @@ Log:
 [02/02/2024]
 - added a carousel which cycles between the projects
 
+[02/03/2024]
+- fixed functionality of the carousel and tidied up the application.
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
