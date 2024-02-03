@@ -11,8 +11,19 @@ import VerticalCarousel from '../components/VerticalCarousel';
 import Info from '@mui/icons-material/Info';
 import { Button } from '@mui/material';
 
+import TestVerticalCarousel from '../components/testCarousel';
+import { config } from '@react-spring/web';
+import TestSpring from '../components/TestSpring';
+
 function Projects() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
+
+  const state = {
+    goToSlide: 0,
+    offsetRadius: 2,
+    showNavigation: true,
+    config: config.gentle
+  }
   const [section, setSection] = useState('');
 
   const changeSection = (section) => {
@@ -72,10 +83,17 @@ function Projects() {
       {/* <ProjectContainer project_name='Unity Game'/> */}
       <br></br>
       <div className='carousel-container'>
-        <VerticalCarousel data={projectsInfo}/>
-        <Button size='small' className='project-info-btn'>
+        {/* <VerticalCarousel data={projectsInfo}/> */}
+        <TestVerticalCarousel 
+          slides={projectsInfo.slides}
+          offsetRadius={state.offsetRadius}
+          showNavigation={state.showNavigation}
+          animationConfig={state.config}
+        />
+        {/* <Button size='small' className='project-info-btn'>
           <Info />
-        </Button>
+        </Button> */}
+        {/* <TestSpring /> */}
       </div>
       
       <StackedNavbar items={projects} subHeader='Projects' currentSection={section} changeSection={changeSection}/>

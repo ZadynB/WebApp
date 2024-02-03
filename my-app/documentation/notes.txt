@@ -31,13 +31,20 @@ Log:
 - added projectInfo.js, added projectContainer.js to display project info
 - partially finished the carousel functionality and css
 
+[02/02/2024]
+- added a carousel which cycles between the projects
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
     -> Solution: Use the useState function along with a callback function to do this cleanly.
 - add a StackedNavBar to the right of the page so that users can navigate to specific sections
+- check and try to fix the weird functionality with the carousel
+    -> fiddle a bit more with it
+    -> Solution: created custom carousel using react-spring and useState.
 
 [In Progress]
 - add a new component to be used as a project container for dynamic use
     -> add a new section to display some of the tools + description
-- check and try to fix the weird functionality with the carousel
+
+

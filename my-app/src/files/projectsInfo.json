@@ -2,7 +2,7 @@
     "slides": [
         {
             "id": "project_1",
-            "data": {
+            "content": {
                 "name": "Unity Game",
                 "type": "Personal",
                 "date": "2023",
@@ -12,7 +12,7 @@
         },
         {
             "id": "project_2",
-            "data": {
+            "content": {
                 "name": "Course Grapher",
                 "type": "Personal",
                 "date": "2022",
@@ -22,7 +22,7 @@
         },
         {
             "id": "project_3",
-            "data": {
+            "content": {
                 "name": "Route Calculator",
                 "type": "Personal",
                 "date": "2021",
@@ -32,7 +32,7 @@
         },
         {
             "id": "project_4",
-            "data": {
+            "content": {
                 "name": "Java Game",
                 "type": "Personal",
                 "date": "2021",

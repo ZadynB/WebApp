@@ -92,6 +92,8 @@ body {
   display: flex;
   flex-direction: column;
   margin: auto;
+  height: 500px;
+  width: 300px;
 }
 
 
@@ -160,6 +162,22 @@ body {
   opacity: 1
 }
 
+.test {
+  transform-origin: 50% 50%;
+  height: 50px;
+  /* background-color: black; */
+}
+
+.tester {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.tester-child {
+  position: absolute;
+}
 /* carousel css */
 
 .project-container {
