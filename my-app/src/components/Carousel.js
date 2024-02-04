@@ -3,6 +3,7 @@ import { useSpring, animated, useSpringRef, useTransition, config } from '@react
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
+import ProjectContainer from "./ProjectContainer";
 
 function Carousel(props) {
   const data = props.data.slides;
@@ -27,41 +28,44 @@ function Carousel(props) {
     exitBeforeEnter: true,
     config: {
       duration: 250,
-      friction: 14,
-      tension: 120
     }
   });
 
   // change background color
   const springRef = useSpringRef();
   const spring = useSpring({
-    from: { opacity: 1, y: 0},
-    to: [{ opacity: 1, y: -5}, { opacity: 1, y: 2}, { opacity: 1, y: 0}],
+    from: { opacity: 1, scale: 1},
+    to: [{ opacity: 1, scale: 1.2}, { opacity: 1, y: 0, scale: 1}],
     ref: springRef,
     config: {
-      duration: 1000,
-      friction: 14,
+      friction: 10,
       tension: 120
     }
   });
 
   useEffect(() => {
     transRef.start();
-  }, [activeState]);
+  }, [activeState, transRef]);
 
   useEffect(() => {
     springRef.start();
-  }, [isHovered]);
+  }, [isHovered, springRef]);
+
+  const createComponent = (index) => {
+    let properties = {'name': index.content.name};
+    const newComp = React.createElement(props.componentType, properties);
+    return(newComp);
+  }
 
   return (
     <div>
       <Button onClick={() => { handleClick('up');}}>
         <KeyboardArrowUp />
       </Button>
-      <animated.div style={{...spring}} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <animated.div style={{...spring}} onMouseEnter={() => setIsHovered(!isHovered)}>
         {trans((style, index) => (
-          <animated.div style={{...style, backgroundColor: 'white', zIndex: '1', position: 'relative'}}>
-            <p style={{color: 'black', height: '100%', textAlign: 'center'}}>{index.content.name}</p>
+          <animated.div style={{...style, position: 'relative'}}>
+            {createComponent(index)}
           </animated.div>
         ))}
       </animated.div>

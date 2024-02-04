@@ -20,9 +20,9 @@ function ProjectContainer(props) {
 
   return (
     <div className='project-container'>
-      <React.Fragment key={props.project_name}>
+      <React.Fragment key={props.name}>
           <div className='project_info'>
-            <p>{props.project_name}</p>
+            <p>{props.name}</p>
           </div>
         </React.Fragment>
     </div>

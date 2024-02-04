@@ -74,7 +74,7 @@ function Projects() {
       {/* <ProjectContainer project_name='Unity Game'/> */}
       <br></br>
       <div className='carousel-container'>
-        <Carousel data={projectsInfo}/>
+        <Carousel data={projectsInfo} componentType={ProjectContainer}/>
         {/* <VerticalCarousel data={projectsInfo}/> */}
         <Button size='small' className='project-info-btn'>
           <Info />
