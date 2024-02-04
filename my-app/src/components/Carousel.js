@@ -3,7 +3,7 @@ import { useSpring, animated, useSpringRef, useTransition, config } from '@react
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
-import ProjectContainer from "./ProjectContainer";
+import Info from '@mui/icons-material/Info';
 
 function Carousel(props) {
   const data = props.data.slides;
@@ -23,19 +23,19 @@ function Carousel(props) {
   const trans = useTransition( presentableData, {
     from: { opacity: 0, y: activeState.direction === 'up' ? 10 : -10 },
     enter: [{ opacity: 1, y: activeState.direction === 'up' ? -5 : 5 }, { opacity: 1, y: 0}],
-    leave: { opacity: 0, y: activeState.direction === 'up' ? -10: 10 },
+    leave: { opacity: 0, y: activeState.direction === 'up' ? -15: 15 },
     ref: transRef,
     exitBeforeEnter: true,
     config: {
-      duration: 250,
+      duration: 350,
     }
   });
 
-  // change background color
+  // change scale of slide
   const springRef = useSpringRef();
   const spring = useSpring({
-    from: { opacity: 1, scale: 1},
-    to: [{ opacity: 1, scale: 1.2}, { opacity: 1, y: 0, scale: 1}],
+    from: isHovered ? { opacity: 1, scale: 1} : { opacity: 1, scale: 1.2},
+    to: isHovered ? { opacity: 1, scale: 1.2} : { opacity: 1, scale: 1},
     ref: springRef,
     config: {
       friction: 10,
@@ -58,19 +58,22 @@ function Carousel(props) {
   }
 
   return (
-    <div>
-      <Button onClick={() => { handleClick('up');}}>
+    <div className='slide-container'>
+      <Button size='small' onClick={() => handleClick('up')}>
         <KeyboardArrowUp />
       </Button>
-      <animated.div style={{...spring}} onMouseEnter={() => setIsHovered(!isHovered)}>
+      <animated.div style={{...spring, height: '100%', padding: '5px 5px', zIndex: 5}} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
         {trans((style, index) => (
-          <animated.div style={{...style, position: 'relative'}}>
+          <animated.div style={{...style, position: 'relative', height: '100%'}}>
             {createComponent(index)}
           </animated.div>
         ))}
       </animated.div>
-      <Button onClick={() => { handleClick('down');}}>
+      <Button size='small' onClick={() => handleClick('down')}>
         <KeyboardArrowDown />
+      </Button>
+      <Button size='small' className='project-info-btn'>
+        <Info />
       </Button>
     </div>
   );

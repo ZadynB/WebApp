@@ -36,6 +36,7 @@ Log:
 
 [02/03/2024]
 - fixed functionality of the carousel and tidied up the application.
+- added more styling to make the carousel look better
 
 To fix/do:
 [Solved/Done]

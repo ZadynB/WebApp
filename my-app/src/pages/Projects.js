@@ -15,11 +15,6 @@ import Carousel from '../components/Carousel';
 
 function Projects() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
-  // const [slide, setSlide] = useState({index: 0, section: ''});
-
-  // const changeSlide = (newSection, newIndex) => {
-  //   setSlide({index: newIndex, section: newSection});
-  // };
 
   //add currently selected section variable x
   //add callback function from StackedNavbar.js to change the section x
@@ -61,25 +56,19 @@ function Projects() {
         }}
       >
       </Divider>
-      {/* <div>
-        <p style={{textWrap: 'wrap'}}>
-          This page holds information about the developers of this React Web Application.
-          Additionally, you can also find information on the different kinds of projects that were done.
-        </p>
-        <p style={{textWrap: 'wrap'}}>
-          In order to navigate to the various pages, you an either use the below navigation links or use the button at the side of the page
-          to display the options.
-        </p>
-      </div> */}
-      {/* <ProjectContainer project_name='Unity Game'/> */}
       <br></br>
-      <div className='carousel-container'>
-        <Carousel data={projectsInfo} componentType={ProjectContainer}/>
-        {/* <VerticalCarousel data={projectsInfo}/> */}
-        <Button size='small' className='project-info-btn'>
-          <Info />
-        </Button>
-        {/* <TestSpring /> */}
+      <div className='main-content'>
+        <h4 style={{textDecoration: 'underline 1px'}}>Controls</h4>
+        <p style={{textWrap: 'wrap'}}>
+          Use the "up" and "down" buttons to select a project from the carousel below.
+        </p>
+        <div className='carousel-container'>
+          <Carousel data={projectsInfo} componentType={ProjectContainer}/>
+        </div>
+        <br></br>
+        <p style={{textWrap: 'wrap'}}>
+          More detailed information about the project can be viewed by clicking the "info" icon.
+        </p>
       </div>
       
       <StackedNavbar items={projects} subHeader='Projects' changeSection={() => {}}/>
