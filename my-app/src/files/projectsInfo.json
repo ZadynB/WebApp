@@ -5,8 +5,8 @@
             "content": {
                 "name": "Unity Game",
                 "type": "Personal",
-                "date": "2023",
-                "tools": "C#, Unity",
+                "date": "January 2023",
+                "tools": "C#, Unity, Git",
                 "description": "An adventure game with 3D graphics in which you can collect items, equip armor, do some exploration and battle monsters!"
             }
         },
@@ -15,8 +15,8 @@
             "content": {
                 "name": "Course Grapher",
                 "type": "Personal",
-                "date": "2022",
-                "tools": "React, JS, HTML, CSS, Python, NGINX",
+                "date": "April 2022",
+                "tools": "React, JS, HTML, CSS, Python, NGINX, Git",
                 "description": "Coded as part of a school group project where users could navigate a web app to display a course tree graph for a particular subject, a department, or a degree."
             }
         },
@@ -25,8 +25,8 @@
             "content": {
                 "name": "Route Calculator",
                 "type": "Personal",
-                "date": "2021",
-                "tools": "HTML, CSS, C",
+                "date": "September 2021",
+                "tools": "HTML, CSS, C, Git, SQL",
                 "description": "A website made with a combination of HTML, CSS and C in order to input files with route data points and the website would compute various calculations on them."
             }
         },
@@ -35,9 +35,19 @@
             "content": {
                 "name": "Java Game",
                 "type": "Personal",
-                "date": "2021",
-                "tools": "Java",
+                "date": "September 2021",
+                "tools": "Java, Git",
                 "description": "An 2D game in which the character can collect items, consume items, equip armor and move to different levels with a user-friendly GUI."
+            }
+        },
+        {
+            "id": "project_5",
+            "content": {
+                "name": "Personal Web App",
+                "type": "Personal",
+                "date": "In Progress",
+                "tools": "HTML, CSS, React, JavaScript, NodeJS, Git",
+                "description": "A web application created to talk about myself and showcase all the projects I have worked on and to display future applications that people can use."
             }
         }
     ]

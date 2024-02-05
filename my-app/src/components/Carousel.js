@@ -68,7 +68,7 @@ function Carousel(props) {
   }, [isHovered.info, infoSpringRef]);
 
   const createComponent = (index) => {
-    let properties = {'name': index.content.name};
+    let properties = {'content': index.content};
     const newComp = React.createElement(props.componentType, properties);
     return(newComp);
   }

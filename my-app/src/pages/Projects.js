@@ -1,25 +1,14 @@
-// import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Divider from '@mui/material/Divider';
 import { motion } from 'framer-motion';
 import StackedNavbar from '../components/StackedNavbar';
-import { useState } from 'react';
 import projects from '../files/projects.json';
 import projectsInfo from '../files/projectsInfo.json';
 import ProjectContainer from '../components/ProjectContainer';
-import Info from '@mui/icons-material/Info';
-import { Button } from '@mui/material';
-
-import { config } from '@react-spring/web';
 import Carousel from '../components/Carousel';
 
 function Projects() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
-
-  //add currently selected section variable x
-  //add callback function from StackedNavbar.js to change the section x
-  //add currently selected section variable to the props of StackedNavbar.js  x
-  //add code to create new project container so that it can be dynamically created
 
   return (
     <motion.div 
@@ -71,7 +60,7 @@ function Projects() {
         </p>
       </div>
       
-      <StackedNavbar items={projects} subHeader='Projects' changeSection={() => {}}/>
+      <StackedNavbar items={projects} subHeader='Projects' changeSection={() => {}} clickable={false}/>
     </motion.div>
   );
 }
