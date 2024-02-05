@@ -38,6 +38,10 @@ Log:
 - fixed functionality of the carousel and tidied up the application.
 - added more styling to make the carousel look better
 
+[02/04/2024]
+- added additional css and styling to make the carousel look nicer.
+- updated the projectContainer function to have sections.
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -50,5 +54,8 @@ To fix/do:
 [In Progress]
 - add a new component to be used as a project container for dynamic use
     -> add a new section to display some of the tools + description
+    -> add styling to the ProjectsContainer.js
+
+- update the stackedNavbar so that it can return either buttons or listText items
 
 
