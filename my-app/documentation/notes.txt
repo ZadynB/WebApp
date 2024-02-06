@@ -47,6 +47,8 @@ Log:
 - updated the styling of the projectContainer item.
 - added a modal to display more details about a certain project.
 
+[2/06/2024]
+- finished the project container template structure.
 
 To fix/do:
 [Solved/Done]

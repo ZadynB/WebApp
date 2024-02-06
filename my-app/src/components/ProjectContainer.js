@@ -15,20 +15,6 @@ const dark = getComputedStyle(document.body).getPropertyValue('--dark');
 const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 const images = require.context('../images', true);
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '50%',
-  height: '90%',
-  bgcolor: dark,
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-  color: offWhite
-};
-
 const Title = styled(Paper)(({ theme }) => ({
   backgroundColor: dark,
   padding: theme.spacing(1),
@@ -108,18 +94,25 @@ function ProjectContainer(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box className='modal_box'>
           <Button style={{position:'absolute', right: 0, top: 0}} onClick={handleClose}>
             <Close />
           </Button>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {props.content.name}
+            {props.content.name},
           </Typography>
-          {/* insert image here */}
-          <Typography id="modal-modal-description" sx={{ mt: 2, textIndent: '5%', textAlign: 'justify' }}>
-            {props.content.detailedDescription}
+          <Typography id="modal-modal-date" variant="h6" component="h2">
+            {props.content.date}
           </Typography>
-          {/* add more text if need be here */}
+
+          <Image src={images(`./${props.content.name}.png`)} style={{width: '100%', height: '25%', objectFit:'cover'}}/>
+
+          <Typography id="modal-modal-description1" sx={{ mt: 2, textIndent: '5%'}} className='modal-text'>
+            {props.content.paragraph_1}
+          </Typography>
+          <Typography id="modal-modal-description2" sx={{ mt: 2, textIndent: '5%'}} className='modal-text'>
+            {props.content.paragraph_2}
+          </Typography>
         </Box>
       </Modal>
     </div>
