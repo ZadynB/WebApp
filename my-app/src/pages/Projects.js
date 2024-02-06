@@ -56,7 +56,7 @@ function Projects() {
         </div>
         <br></br>
         <p style={{textWrap: 'wrap'}}>
-          More detailed information about the project can be viewed by clicking the "info" icon.
+          You can view more details by clicking the "icon" button or by clicking the project.
         </p>
       </div>
       

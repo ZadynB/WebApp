@@ -45,6 +45,7 @@ Log:
 [02/05/2024]
 - updated the stackedNavbar to return either buttons or listText items depending on the type.
 - updated the styling of the projectContainer item.
+- added a modal to display more details about a certain project.
 
 
 To fix/do:
@@ -59,9 +60,11 @@ To fix/do:
 - add a new component to be used as a project container for dynamic use
     -> add a new section to display some of the tools + description
     -> add styling to the ProjectsContainer.js
+- add functionality to the info button and the projectContainer to display a modal with more details.
 
 [In Progress]
-- Add functionality to the info button and the projectContainer to display a modal with more details.
+
+- add code to get the images and write the rest of the descriptions.
 
 
 

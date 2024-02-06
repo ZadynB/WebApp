@@ -98,9 +98,6 @@ function Carousel(props) {
         onMouseEnter={() => setIsHovered({item: false, info: true})}
         onMouseLeave={() => setIsHovered({item: false, info: false})}
       >
-        <Button size='small' className='project-info-btn'>
-          <Info />
-        </Button>
       </animated.div>
     </div>
   );
