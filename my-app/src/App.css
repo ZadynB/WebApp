@@ -38,7 +38,8 @@ body {
 }
 
 .caption {
-  display: block;
+  display: flex;
+  flex-direction: column;
   font-weight: 700;
   font-size: 15pt;
   color: var(--orange);

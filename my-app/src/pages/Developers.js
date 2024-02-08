@@ -1,13 +1,16 @@
-// import '../App.css';
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Divider from '@mui/material/Divider';
 import { motion } from 'framer-motion';
 import { Image } from 'react-bootstrap';
 import zadyn_pic from '../images/zadyn_pic.jpg';
-// import StackedNavbar from '../StackedNavbar';
+import { Button, Tooltip } from '@mui/material';
+import { Phone, Email, LinkedIn } from '@mui/icons-material';
 
 function Developers() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
+  const [openPhone, setOpenPhone] = useState(false);
+  const [openEmail, setOpenEmail] = useState(false);
 
   return (
     <motion.div 
@@ -51,9 +54,26 @@ function Developers() {
         <figure className='figure'>
           <Image src={zadyn_pic} style={{height: '180px', width: '171px', marginRight: '10px'}} roundedCircle/>
           <figcaption className='caption'>Zadyn Belgrave</figcaption>
+          <Tooltip
+            title='+1-548-333-8479'
+            arrow
+            open={openPhone}
+            onClose={() => {setOpenPhone(false)}}
+          >
+            <Button size='small' sx={{width: '20px'}} onClick={() => {setOpenPhone(!openPhone)}}><Phone/></Button>
+          </Tooltip>
+          <Tooltip
+            title='zadynbelgrave@gmail.com'
+            arrow
+            open={openEmail}
+            onClose={() => {setOpenEmail(false)}}
+          >
+            <Button size='small' sx={{width: '20px'}} onClick={() => {setOpenEmail(!openEmail)}}><Email/></Button>
+          </Tooltip>
+          <Button size='small' sx={{width: '20px'}} onClick={() => {window.open('https://www.linkedin.com/in/zadyn-belgrave/');}}><LinkedIn/></Button>
         </figure>
         <p style={{textAlign: 'left'}}>
-          Hi! I am a keen young man who has a passion for software development! 
+          Hi! I am a keen young man who has a passion for software development! And with this passion, aims to create software solutions for those who need them! 
         </p>
         <p style={{textAlign: 'left'}}>
           As a young lad, I was fascinated with computers and fell in love with these machines.

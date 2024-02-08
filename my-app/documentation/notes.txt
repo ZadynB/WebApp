@@ -53,6 +53,7 @@ Log:
 [02/08/2024]
 - finished adding the project descriptions and images.
 - added another modal to open the image bigger.
+- added tooltip to the email and phone icons to show details.
 
 To fix/do:
 [Solved/Done]
@@ -68,11 +69,13 @@ To fix/do:
     -> add styling to the ProjectsContainer.js
 - add functionality to the info button and the projectContainer to display a modal with more details.
 - add code to get the images and write the rest of the descriptions.
-
-[In Progress]
 - add contact info icons to developers page (email, linkedin)
 
 
+[In Progress]
+- clean up the home screen
+- clean up the nav bar
+- start checking out back end stuff
 
 
 
