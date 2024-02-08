@@ -58,10 +58,13 @@ const Tool = styled(Paper)(({ theme }) => ({
 function ProjectContainer(props) {
  
   const [open, setOpen] = React.useState(false);
+  const [zoom, setZoom] = React.useState(false);
   const tools = props.content.tools.split(', ');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleZoomIn = () => setZoom(true);
+  const handleZoomOut = () => setZoom(false);
 
   const createTool = (item) => {
     return (
@@ -69,6 +72,26 @@ function ProjectContainer(props) {
         <Tool className='project-item'>{item}</Tool>
       </Grid>
     );
+  };
+
+  const createClickableImage = () => {
+    if (props.content.hasImage) {
+      return (<Image 
+                src={images(`./${props.content.name}.jpg`)} 
+                style={{width: '100%', height: 'auto', objectFit:'cover'}}
+                onClick={handleZoomIn}
+              />);
+    }
+    return;
+  };
+
+  const createImage = () => {
+    if (props.content.hasImage) {
+      return (<Image 
+                src={images(`./${props.content.name}.jpg`)} 
+              />);
+    }
+    return;
   };
 
   return (
@@ -89,8 +112,10 @@ function ProjectContainer(props) {
           </Grid>
         </div>
       </React.Fragment>
+      
       <Modal
         open={open}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -105,7 +130,7 @@ function ProjectContainer(props) {
             {props.content.date}
           </Typography>
 
-          <Image src={images(`./${props.content.name}.png`)} style={{width: '100%', height: '25%', objectFit:'cover'}}/>
+          {createClickableImage()}
 
           <Typography id="modal-modal-description1" sx={{ mt: 2, textIndent: '5%'}} className='modal-text'>
             {props.content.paragraph_1}
@@ -113,6 +138,17 @@ function ProjectContainer(props) {
           <Typography id="modal-modal-description2" sx={{ mt: 2, textIndent: '5%'}} className='modal-text'>
             {props.content.paragraph_2}
           </Typography>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={zoom}
+        onClose={handleZoomOut}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className='modal_image_box'>
+          {createImage()}
         </Box>
       </Modal>
     </div>

@@ -1,9 +1,8 @@
 import React from "react";
-import { useSpring, animated, useSpringRef, useTransition, config } from '@react-spring/web';
+import { useSpring, animated, useSpringRef, useTransition } from '@react-spring/web';
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
-import Info from '@mui/icons-material/Info';
 
 function Carousel(props) {
   const data = props.data.slides;

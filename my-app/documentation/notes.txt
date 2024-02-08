@@ -47,8 +47,12 @@ Log:
 - updated the styling of the projectContainer item.
 - added a modal to display more details about a certain project.
 
-[2/06/2024]
+[02/06/2024]
 - finished the project container template structure.
+
+[02/08/2024]
+- finished adding the project descriptions and images.
+- added another modal to open the image bigger.
 
 To fix/do:
 [Solved/Done]
@@ -63,10 +67,11 @@ To fix/do:
     -> add a new section to display some of the tools + description
     -> add styling to the ProjectsContainer.js
 - add functionality to the info button and the projectContainer to display a modal with more details.
+- add code to get the images and write the rest of the descriptions.
 
 [In Progress]
+- add contact info icons to developers page (email, linkedin)
 
-- add code to get the images and write the rest of the descriptions.
 
 
 
