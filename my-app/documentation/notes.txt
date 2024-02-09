@@ -70,11 +70,15 @@ To fix/do:
 - add functionality to the info button and the projectContainer to display a modal with more details.
 - add code to get the images and write the rest of the descriptions.
 - add contact info icons to developers page (email, linkedin)
+- clean up the nav bar
 
 
 [In Progress]
 - clean up the home screen
-- clean up the nav bar
+    -> set up the app grid using the Grid element
+    -> set up transitions/springs for the app tiles
+    -> create app tiles
+
 - start checking out back end stuff
 
 

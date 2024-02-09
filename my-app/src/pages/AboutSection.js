@@ -1,8 +1,6 @@
-// import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Divider from '@mui/material/Divider';
 import { motion } from 'framer-motion';
-// import StackedNavbar from '../StackedNavbar';
 
 function AboutSection() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
