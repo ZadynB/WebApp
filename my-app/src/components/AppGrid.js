@@ -6,18 +6,20 @@ import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import { Grid } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import AppTile from './AppTile';
 
 function AppGrid(props) {
   const apps = props.apps;
 
   const createAppTile = (key, value) => {
-    return (<p>{value.id}</p>);
+    return (<AppTile key={key} details={value}/>);
   };
 
+  //add styling like the spring/transition for all of the grid items
   return (
-    <div>
+    <Grid container justifyContent='center' columnSpacing={1} rowSpacing={1}>
       {Object.entries(apps).map(([key, value]) => createAppTile(key, value))}
-    </div>
+    </Grid>
   );
 };
 

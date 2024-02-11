@@ -55,6 +55,9 @@ Log:
 - added another modal to open the image bigger.
 - added tooltip to the email and phone icons to show details.
 
+[02/10/2024]
+- added app grid and app tiles
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -71,13 +74,14 @@ To fix/do:
 - add code to get the images and write the rest of the descriptions.
 - add contact info icons to developers page (email, linkedin)
 - clean up the nav bar
-
-
-[In Progress]
 - clean up the home screen
     -> set up the app grid using the Grid element
     -> set up transitions/springs for the app tiles
     -> create app tiles
+
+
+[In Progress]
+
 
 - start checking out back end stuff
 

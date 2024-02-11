@@ -1,8 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import Divider from '@mui/material/Divider';
-import AppGrid from '../components/AppGrid';
-import apps from '../files/apps.json';
 
 function Home() {
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
@@ -34,10 +32,6 @@ function Home() {
           <h6>Here on the home page you will be able to see the web applications I have newly developed on this website.</h6>
           <h6>Please feel free to try them out!</h6>
           <h6>If you would like to know more about the developers, projects or you would like to contact them, navigate to the "About" section.</h6>
-          <br></br>
-          <br></br>
-          <br></br>
-          <AppGrid apps={apps.apps}/>
         </div>
       </motion.div>
     </AnimatePresence>

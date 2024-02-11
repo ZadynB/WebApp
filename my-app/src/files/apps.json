@@ -2,8 +2,8 @@
     "apps": [
         {
             "id": "SVNTCOG-APP",
-            "name": "SVNTCOG App",
-            "link": "/SVNTCOG-APP"
+            "name": "SVNTCOG",
+            "link": "/svntcog-app"
         }
     ]
 }
