@@ -1,15 +1,11 @@
 import React from "react";
-import { useSpring, animated, useSpringRef, useTransition } from '@react-spring/web';
+import { useSpring, animated, useSpringRef } from '@react-spring/web';
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
-import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
-import { Grid } from '@mui/material';
-import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { InsertPhoto } from "@mui/icons-material";
 
 const offWhite = getComputedStyle(document.body).getPropertyValue('--off-white');
-const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
 const Tile = styled(Button)(({ theme }) => ({
   backgroundColor: offWhite,
@@ -27,21 +23,39 @@ const Tile = styled(Button)(({ theme }) => ({
 
 function AppTile(props) {
   const details = props.details;
+  const [isHovered, setHovered] = useState(false);
 
   const handleClick = () => {
-    console.log(window.location);
     window.location.pathname = details.link;
   };
 
-  // add styling like srping
+  // spring
+  const springRef = useSpringRef();
+  const spring = useSpring({
+    from: isHovered ? { opacity: 1, scale: 1} : { opacity: 1, scale: 1.2},
+    to: isHovered ? { opacity: 1, scale: 1.2} : { opacity: 1, scale: 1},
+    ref: springRef,
+    config: {
+      friction: 10,
+      tension: 120
+    }
+  });
+
+  useEffect(() => {
+    springRef.start();
+  }, [isHovered, springRef]);
 
   return (
-    <Grid item xs={6} md={2}>
-      {details.name}
-      <Tile onClick={handleClick}>
-        <InsertPhoto sx={{color:'black'}}/>
-      </Tile>
-    </Grid>
+      <animated.div
+        style={{...spring}}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {details.name}
+        <Tile onClick={handleClick} className="app-tile">
+          <InsertPhoto sx={{color:'black'}}/>
+        </Tile>
+      </animated.div>
   );
 };
 

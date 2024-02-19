@@ -1,24 +1,45 @@
 import React from "react";
-import { useSpring, animated, useSpringRef, useTransition } from '@react-spring/web';
-import { useState, useEffect } from "react";
-import { Button } from "@mui/material";
-import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
+import { animated, useSpringRef, useTransition } from '@react-spring/web';
+import { useEffect } from "react";
 import { Grid } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 import AppTile from './AppTile';
 
 function AppGrid(props) {
   const apps = props.apps;
 
-  const createAppTile = (key, value) => {
-    return (<AppTile key={key} details={value}/>);
+  const createAppTile = (item) => {
+    return (
+      <AppTile key={item.id} details={item}/>
+    );
   };
 
-  //add styling like the spring/transition for all of the grid items
+  //transition
+  const transRef = useSpringRef();
+  const trans = useTransition(apps, {
+    ref: transRef,
+    trail: 400 / apps.length,
+    from: { opacity: 0, scale: 0 },
+    enter: { opacity: 1, scale: 1 },
+    leave: { opacity: 0, scale: 0 },
+    config: {
+      friction: 10,
+      tension: 120
+    }
+  });
+
+  useEffect(() => {
+    transRef.start();
+  }, [apps, transRef]);
+
   return (
     <Grid container justifyContent='center' columnSpacing={1} rowSpacing={1}>
-      {Object.entries(apps).map(([key, value]) => createAppTile(key, value))}
+        {trans((style, item) => (
+          <Grid item xs={6} md={2} className="app-grid-tile">
+            <animated.div style={{...style}}>
+              {createAppTile(item)}
+            </animated.div>
+          </Grid>
+        ))}
     </Grid>
   );
 };

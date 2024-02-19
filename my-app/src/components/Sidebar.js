@@ -11,7 +11,6 @@ import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import Info from '@mui/icons-material/Info';
 import GitHub from '@mui/icons-material/GitHub';
 import CollectionsBookmark from '@mui/icons-material/CollectionsBookmark';
-// import AboutSection from './pages/AboutSection';
 
 function Sidebar(props) {
   const items = props.items.split(', ');

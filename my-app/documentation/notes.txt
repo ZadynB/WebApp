@@ -58,6 +58,10 @@ Log:
 [02/10/2024]
 - added app grid and app tiles
 
+[02/19/2024]
+- fixed transition for app grid
+- fixed styling of app grid
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -81,8 +85,6 @@ To fix/do:
 
 
 [In Progress]
-
-
 - start checking out back end stuff
 
 

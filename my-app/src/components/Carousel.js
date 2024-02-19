@@ -7,9 +7,8 @@ import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 function Carousel(props) {
   const data = props.data.slides;
   const [activeState, setActiveState] = useState({index: 0, direction: ''});
-  const [isHovered, setIsHovered] = useState({item: false, info: false});
+  const [isHovered, setIsHovered] = useState(false);
   const presentableData = data[activeState.index];
-  const lightBlue = getComputedStyle(document.body).getPropertyValue('--light-blue2');
 
   const handleClick = (dir) => {
     if (dir === 'up') {
@@ -34,20 +33,9 @@ function Carousel(props) {
   // change scale of slide
   const itemSpringRef = useSpringRef();
   const itemSpring = useSpring({
-    from: isHovered.item ? { opacity: 1, scale: 1} : { opacity: 1, scale: 1.2},
-    to: isHovered.item ? { opacity: 1, scale: 1.2} : { opacity: 1, scale: 1},
+    from: isHovered? { opacity: 1, scale: 1} : { opacity: 1, scale: 1.2},
+    to: isHovered ? { opacity: 1, scale: 1.2} : { opacity: 1, scale: 1},
     ref: itemSpringRef,
-    config: {
-      friction: 10,
-      tension: 120
-    }
-  });
-
-  const infoSpringRef = useSpringRef();
-  const infoSpring = useSpring({
-    from: isHovered.info ? { opacity: 1, scale: 1, backgroundColor: 'white'} : { opacity: 1, scale: 1.2, backgroundColor: lightBlue},
-    to: isHovered.info ? { opacity: 1, scale: 1.2, backgroundColor: lightBlue} : { opacity: 1, scale: 1, backgroundColor: 'white'},
-    ref: infoSpringRef,
     config: {
       friction: 10,
       tension: 120
@@ -60,11 +48,7 @@ function Carousel(props) {
 
   useEffect(() => {
     itemSpringRef.start();
-  }, [isHovered.item, itemSpringRef]);
-
-  useEffect(() => {
-    infoSpringRef.start();
-  }, [isHovered.info, infoSpringRef]);
+  }, [isHovered, itemSpringRef]);
 
   const createComponent = (index) => {
     let properties = {'content': index.content};
@@ -80,8 +64,8 @@ function Carousel(props) {
       <animated.div 
         style={{...itemSpring, height: '100%', padding: '5px 5px', zIndex: 5, cursor: 'pointer'}}
         onClick={() => {}}
-        onMouseEnter={() => setIsHovered({item: true, info: false})}
-        onMouseLeave={() => setIsHovered({item: false, info: false})}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {trans((style, index) => (
           <animated.div style={{...style, position: 'relative', height: '100%'}}>
@@ -92,12 +76,6 @@ function Carousel(props) {
       <Button style={{margin: 'auto'}} size='small' onClick={() => handleClick('down')}>
         <KeyboardArrowDown />
       </Button>
-      <animated.div
-        style={{...infoSpring, margin: 'auto', borderRadius: '5px'}}
-        onMouseEnter={() => setIsHovered({item: false, info: true})}
-        onMouseLeave={() => setIsHovered({item: false, info: false})}
-      >
-      </animated.div>
     </div>
   );
 }

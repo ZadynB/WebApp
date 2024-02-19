@@ -10,7 +10,6 @@ import Divider from '@mui/material/Divider';
 function StackedNavbar(props) {
   const offWhite = getComputedStyle(document.body).getPropertyValue('--off-white');
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
-  const orange = getComputedStyle(document.body).getPropertyValue('--orange');
   const items = props.items;
   const subHeader = props.subHeader;
 

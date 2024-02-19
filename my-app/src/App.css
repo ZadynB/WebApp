@@ -3,6 +3,7 @@
   --dark: #1B1A22;
   --orange: #ff9843;
   --orange2: #f36c00;
+  --light-orange: #ffcba0;
   --purple: #8d44bb;
   --dark-blue: #280274;
   --blue1: #3652ad;
@@ -33,8 +34,16 @@ body {
   overflow-y: auto;
 }
 
+.app-grid-tile:hover {
+  z-index: 20;
+}
+
 .App-link {
   color: var(--light-blue);
+}
+
+.app-tile:hover {
+  background-color: var(--orange) !important;
 }
 
 .caption {
@@ -43,24 +52,6 @@ body {
   font-weight: 700;
   font-size: 15pt;
   color: var(--orange);
-}
-
-/* carousel css */
-.carousel-container {
-  margin: auto;
-  height: 100%;
-  width: 668px;
-  background: radial-gradient(circle at 100% 100%, #ffffff 0, #ffffff 3px, transparent 3px) 0% 0%/8px 8px no-repeat,
-            radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 3px, transparent 3px) 100% 0%/8px 8px no-repeat,
-            radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 3px, transparent 3px) 0% 100%/8px 8px no-repeat,
-            radial-gradient(circle at 0 0, #ffffff 0, #ffffff 3px, transparent 3px) 100% 100%/8px 8px no-repeat,
-            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 10px) calc(100% - 16px) no-repeat,
-            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 16px) calc(100% - 10px) no-repeat,
-            linear-gradient(225deg, transparent 0%, #8d44bb 100%),
-            linear-gradient(45deg, transparent 0%, #f36c00 100%);
-  border-radius: 8px;
-  padding: 9px;
-  box-sizing: border-box;
 }
 
 .highlight-text:hover {
