@@ -62,6 +62,11 @@ Log:
 - fixed transition for app grid
 - fixed styling of app grid
 
+[02/21/2024]
+- added backend routes to get and put data in database
+- added spinner to svntcog page
+- added search bar for the songs
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

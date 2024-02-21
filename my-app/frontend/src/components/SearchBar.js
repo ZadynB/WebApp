@@ -1,0 +1,32 @@
+import { FormControl, FormLabel, Autocomplete, AutocompleteOption, ListItemContent, Typography } from "@mui/joy";
+import { Search } from "@mui/icons-material";
+
+function SearchBar(props) {
+  const options = props.options;
+  return (
+    <FormControl id='search-bar' sx={{width: '100%'}}>
+      <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
+      <Autocomplete
+        placeholder='Search...'
+        endDecorator={<Search />}
+        type="search"
+        freeSolo
+        disableClearable
+        getOptionLabel={(option) => option.title+option.songWriter}
+        options={options}
+        renderOption={(props, option) => (
+          <AutocompleteOption {...props}>
+            <ListItemContent sx={{fontSize:'sm'}}>
+              {option.title}
+              <Typography level='body-xs'>
+                {option.songWriter}
+              </Typography>
+            </ListItemContent>
+          </AutocompleteOption>
+        )}
+      />
+    </FormControl>
+  );
+}
+
+export default SearchBar;

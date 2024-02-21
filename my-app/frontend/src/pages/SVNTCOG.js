@@ -3,20 +3,26 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Divider from '@mui/material/Divider';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CircularProgress } from '@mui/joy';
+import SearchBar from '../components/SearchBar';
 
 function SVNTCOG () {
   const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(false);
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
   
   useEffect(() => {
+    setLoading(true);
     axios
       .get('http://localhost:5555/songs')
       .then((response) => {
         console.log(response.data.data);
         setSongs(response.data.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, []);
 
@@ -41,7 +47,14 @@ function SVNTCOG () {
             }}
           >
           </Divider>
-          {/* <p>{songs[0].title}</p> */}
+          <br></br>
+          {loading ? (<CircularProgress size='md' className='spinner'/>) :
+            (
+              <div className='svntcog-main'>
+                <SearchBar options={songs}/>
+              </div>
+            )
+          }
         </div>
       </motion.div>
     </AnimatePresence>
