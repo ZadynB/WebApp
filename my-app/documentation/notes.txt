@@ -66,6 +66,7 @@ Log:
 - added backend routes to get and put data in database
 - added spinner to svntcog page
 - added search bar for the songs
+- added data grid to display example services
 
 To fix/do:
 [Solved/Done]
@@ -89,8 +90,11 @@ To fix/do:
     -> create app tiles
 
 
+
 [In Progress]
 - start checking out back end stuff
+- create custome pagination for the data grid
+- add css for data grids to look nice on mobile
 
 
 

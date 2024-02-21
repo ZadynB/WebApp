@@ -5,11 +5,26 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CircularProgress } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 function SVNTCOG () {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
+  const dark = getComputedStyle(document.body).getPropertyValue('--dark');
+
+  const visible_headers = ['date', 'worshipLeader', 'numSongs'];
+  const columns = [
+    {'field': 'id', 'hide': true},
+    {'field': 'date', 'headerName': 'Date'},
+    {'field': 'worshipLeader', 'headerName': 'Worship Leader'},
+    {'field': 'numSongs', 'headerName': 'No. of Songs'}
+  ];
+  const rows = [
+    {'id': '1', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
+    {'id': '2', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
+  ];
   
   useEffect(() => {
     setLoading(true);
@@ -50,8 +65,32 @@ function SVNTCOG () {
           <br></br>
           {loading ? (<CircularProgress size='md' className='spinner'/>) :
             (
-              <div className='svntcog-main'>
+              <div style={{width: '100%'}}>
                 <SearchBar options={songs}/>
+                <br></br>
+                
+                {/* component to display the planned services */}
+                <div>
+                  <DataGrid
+                    columns={columns}
+                    rows={rows}
+                    slots={{toolbar: GridToolbar}}
+                    sx={{color: 'white', bgcolor: dark}}
+                    hideFooterPagination
+                    hideFooter
+                  />
+                </div>
+                <br></br>
+                <div>
+                  <DataGrid
+                    columns={columns}
+                    rows={rows}
+                    slots={{toolbar: GridToolbar}}
+                    sx={{color: 'white', bgcolor: dark}}
+                    hideFooterPagination
+                    hideFooter
+                  />
+                </div>
               </div>
             )
           }
