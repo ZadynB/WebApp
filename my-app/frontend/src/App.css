@@ -59,6 +59,7 @@ body {
   color: white;
   margin-top: 0;
   margin-bottom: 0;
+  font-size: 8pt;
 }
 
 .dataGrid-box div {
@@ -148,7 +149,7 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    width: 57%;
+    width: 60%;
     margin: auto;
   }
 
@@ -241,6 +242,16 @@ body {
 
   .stackedNavbar-btn {
     visibility: hidden;
+  }
+
+  .svntcog-main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 90%;
+    margin: auto;
   }
 }
 
@@ -366,5 +377,15 @@ body {
   .stackedNavbar-item {
     font-size: 10pt !important;
     padding: 8px 16px;
+  }
+
+  .svntcog-main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+    margin: auto;
   }
 }

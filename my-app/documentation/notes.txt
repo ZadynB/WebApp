@@ -68,6 +68,9 @@ Log:
 - added search bar for the songs
 - added data grid to display example services
 
+[02/23/2024]
+- added more styling for mobile for the data grid
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -88,13 +91,15 @@ To fix/do:
     -> set up the app grid using the Grid element
     -> set up transitions/springs for the app tiles
     -> create app tiles
+- add css for data grids to look nice on mobile
+- create custome pagination for the data grid
 
 
 
 [In Progress]
 - start checking out back end stuff
-- create custome pagination for the data grid
-- add css for data grids to look nice on mobile
+
+
 
 
 

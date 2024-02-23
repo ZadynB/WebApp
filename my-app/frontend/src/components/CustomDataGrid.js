@@ -1,6 +1,7 @@
 import { DataGrid, useGridApiContext, gridPageCountSelector, GridPagination, useGridSelector } from '@mui/x-data-grid';
 import MuiPagination from '@mui/material/Pagination';
 import Box from '@mui/material/Box';
+import { useState } from 'react';
 
 function Pagination({ page, onPageChange, className }) {
     const apiRef = useGridApiContext();

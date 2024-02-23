@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CircularProgress } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
-// import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import CustomDataGrid from '../components/CustomDataGrid';
 
 function SVNTCOG () {
@@ -13,15 +12,13 @@ function SVNTCOG () {
   const [loading, setLoading] = useState(false);
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
-  // const dark = getComputedStyle(document.body).getPropertyValue('--dark');
 
-  const visible_headers = ['date', 'worshipLeader', 'numSongs'];
   const columns = [
-    {'field': 'id', 'hide': true},
-    {'field': 'date', 'headerName': 'Date'},
-    {'field': 'worshipLeader', 'headerName': 'Worship Leader'},
-    {'field': 'numSongs', 'headerName': 'No. of Songs'}
+    { field: 'date', headerName: 'Date', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'worshipLeader', headerName: 'Worship Leader', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'numSongs', headerName: 'No. of Songs', flex: 1, headerAlign: 'center', align: 'center'}
   ];
+
   const rows = [
     {'id': '1', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
     {'id': '2', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
@@ -72,7 +69,7 @@ function SVNTCOG () {
     {'id': '47', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
     {'id': '48', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
   ];
-  
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -97,7 +94,7 @@ function SVNTCOG () {
         transition={{duration: 0.5, ease: 'easeOut'}}
         exit={{opacity: 0}}
       >
-        <div className='body-main'>
+        <div className='svntcog-main'>
           <br></br>
           <h2>SVNTCOG App</h2>
           <Divider
