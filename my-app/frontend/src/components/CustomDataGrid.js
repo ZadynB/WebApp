@@ -1,28 +1,29 @@
 import { DataGrid, useGridApiContext, gridPageCountSelector, GridPagination, useGridSelector } from '@mui/x-data-grid';
 import MuiPagination from '@mui/material/Pagination';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { GridFilterPanel } from '@mui/x-data-grid';
+import { GridFilterForm } from '@mui/x-data-grid';
 
-function Pagination({ page, onPageChange, className }) {
-    const apiRef = useGridApiContext();
-    const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+// function Pagination({ page, onPageChange, className }) {
+//     const apiRef = useGridApiContext();
+//     const pageCount = useGridSelector(apiRef, gridPageCountSelector);
 
-    return (
-        <MuiPagination
-            color='primary'
-            className={className}
-            count={pageCount}
-            page={page + 1}
-            onChange={(event, newPage) => {
-                onPageChange(event, newPage - 1);
-            }}
-        />
-    );
-}
+//     return (
+//         <MuiPagination
+//             color='primary'
+//             className={className}
+//             count={pageCount}
+//             page={page + 1}
+//             onChange={(event, newPage) => {
+//                 onPageChange(event, newPage - 1);
+//             }}
+//         />
+//     );
+// }
 
-function CustomPagination(props) {
-    return <GridPagination ActionsComponent={Pagination} {...props}/>;
-}
+// function CustomPagination(props) {
+//     return <GridPagination ActionsComponent={Pagination} {...props}/>;
+// }
 
 function CustomDataGrid(props) {
     const dark = getComputedStyle(document.body).getPropertyValue('--dark');
@@ -32,11 +33,36 @@ function CustomDataGrid(props) {
             <DataGrid
                 pagination
                 slots={{
-                    pagination: CustomPagination,
+                    // pagination: CustomPagination,
+                }}
+                slotProps={{
+                    filterPanel: {
+                        columnsSort: 'asc',
+                        filterFormProps: {
+                            operatorInputProps:{
+                                variant: 'outlined',
+                                size: 'small',
+                                sx: { display: 'none' }
+                            },
+                            columnInputProps: {
+                                variant: 'outlined',
+                                size: 'small',
+                                sx: { mt: 'auto', width: '40%' }
+                            },
+                            valueInputProps: {
+                                InputComponentProps:{
+                                    variant: 'outlined',
+                                    size: 'small',
+                                }
+                            }
+                        }
+                    }
                 }}
                 columns={props.columns}
                 rows={props.rows}
                 sx={{color: 'white', bgcolor: dark}}
+                hideFooter
+                // disableColumnFilter
             />
         </Box>
     )
