@@ -74,6 +74,10 @@ Log:
 [02/24/2024]
 - added more styling to data grid filtering
 
+[02/25/2024]
+- updated styling of data grid
+- added buttons to compliment the data grid
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

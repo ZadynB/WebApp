@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Divider from '@mui/material/Divider';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { CircularProgress } from '@mui/joy';
+import { CircularProgress, Button, ButtonGroup, Stack } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
 
@@ -13,13 +13,24 @@ function SVNTCOG () {
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
-  const columns = [
+  const serviceColumns = [
     { field: 'date', headerName: 'Date', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'worshipLeader', headerName: 'Worship Leader', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'numSongs', headerName: 'No. of Songs', flex: 1, headerAlign: 'center', align: 'center'}
   ];
 
-  const rows = [
+  const songsColumns = [
+    { field: 'name', headerName: 'Name', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'songWriter', headerName: 'Author', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'key', headerName: 'Key', flex: 1, headerAlign: 'center', align: 'center'}
+  ];
+
+  const songsRows = [
+    {'id': '1', 'name': 'Hide Me Now', 'songWriter': 'Hillsong', 'key': 'C'},
+    {'id': '2', 'name': 'Create a Clean Heart', 'songWriter': 'Dionne', 'key': 'C#'},
+  ];
+
+  const serviceRows = [
     {'id': '1', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
     {'id': '2', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
     {'id': '3', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
@@ -112,32 +123,23 @@ function SVNTCOG () {
               <div style={{width: '100%'}}>
                 <SearchBar options={songs}/>
                 <br></br>
-                
-                {/* component to display the planned services */}
-                <div>
-                  {/* <DataGrid
-                    columns={columns}
-                    rows={rows}
-                    slots={{toolbar: GridToolbar}}
-                    sx={{color: 'white', bgcolor: dark}}
-                    hideFooterPagination
-                    hideFooter
-                  /> */}
-                  <CustomDataGrid columns={columns} rows={rows}/>
-                </div>
-                <br></br>
-                <div>
-                  {/* <DataGrid
-                    columns={columns}
-                    rows={rows}
-                    slots={{toolbar: GridToolbar, pagination: CustomPagination}}
-                    sx={{color: 'white', bgcolor: dark, overflowY: 'auto'}}
-                    // paginationModel={page: '1', }
-                    // hideFooterPagination
-                    // hideFooter
-                  /> */}
-                  <CustomDataGrid columns={columns} rows={rows}/>
-                </div>
+                <Stack spacing={1} alignItems='center' direction='column'>
+                  {/* component to display the planned services */}
+                  <CustomDataGrid columns={serviceColumns} rows={serviceRows}/>
+                  <ButtonGroup variant='solid' spacing='0.5rem'>
+                    <Button size='sm'>Add</Button>
+                    <Button size='sm'>Edit</Button>
+                    <Button size='sm'>Delete</Button>
+                  </ButtonGroup>
+
+                  {/* component to display the planned services */}
+                  <CustomDataGrid columns={songsColumns} rows={songsRows}/>
+                  <ButtonGroup variant='solid' spacing='0.5rem'>
+                    <Button size='sm'>Add</Button>
+                    <Button size='sm'>Edit</Button>
+                    <Button size='sm'>Delete</Button>
+                  </ButtonGroup>
+                </Stack>
               </div>
             )
           }
