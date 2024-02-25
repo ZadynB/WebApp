@@ -1,8 +1,8 @@
 import express from "express";
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
-// import { Song } from "./models/songModel.js";
 import songsRoute from './routes/songsRoute.js';
+import servicesRoute from './routes/servicesRoute.js';
 import cors from 'cors';
 
 const app = express();
@@ -26,6 +26,7 @@ app.get('/', (request, response) => {
 
 // middleware for the songs routes
 app.use('/songs', songsRoute);
+app.use('/services', servicesRoute);
 
 // connecting to the database
 mongoose

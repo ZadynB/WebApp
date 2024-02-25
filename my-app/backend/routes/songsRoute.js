@@ -7,14 +7,14 @@ const router = express.Router();
 router.post('/', async (request, response) => {
   try {
     if (!request.body.title || !request.body.songWriter) {
-    return response.status(400).send({
-      message: 'Must use all required fields: title & songWriter'
-    });
+      return response.status(400).send({
+        message: 'Must use all required fields: title & songWriter'
+      });
     }
 
     const newSong = {
-    title: request.body.title,
-    songWriter: request.body.songWriter
+      title: request.body.title,
+      songWriter: request.body.songWriter
     }
     const song = await Song.create(newSong);
     return response.status(201).send(song);

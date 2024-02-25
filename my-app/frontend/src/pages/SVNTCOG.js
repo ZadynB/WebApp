@@ -86,7 +86,6 @@ function SVNTCOG () {
     axios
       .get('http://localhost:5555/songs')
       .then((response) => {
-        console.log(response.data.data);
         setSongs(response.data.data);
         setLoading(false);
       })
