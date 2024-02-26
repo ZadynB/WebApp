@@ -85,6 +85,7 @@ Log:
 
 [02/27/2024]
 - added new model and route for service songs
+- added new model and route for singer songs
 
 To fix/do:
 [Solved/Done]
@@ -114,6 +115,7 @@ To fix/do:
 [In Progress]
 - start checking out back end stuff
     -> continue implementing backend functionality
+    -> checkout documentation for data grid onRowSelect()
 
 
 

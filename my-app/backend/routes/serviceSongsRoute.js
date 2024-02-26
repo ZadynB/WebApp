@@ -18,7 +18,7 @@ router.post('/', async (request, response) => {
       author: request.body.author,
       singer: request.body.singer,
       key: request.body.key
-    }
+    };
     const serviceSong = await ServiceSong.create(newServiceSong);
     return response.status(201).send(serviceSong);
   } catch (error) {

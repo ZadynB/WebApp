@@ -16,7 +16,7 @@ router.post('/', async (request, response) => {
       date: request.body.date,
       worshipLeader: request.body.worshipLeader,
       numSongs: request.body.numSongs
-    }
+    };
     const service = await Service.create(newService);
     return response.status(201).send(service);
   } catch (error) {

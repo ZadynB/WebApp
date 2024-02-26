@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import songsRoute from './routes/songsRoute.js';
 import servicesRoute from './routes/servicesRoute.js';
 import serviceSongsRoute from './routes/serviceSongsRoute.js';
+import singerSong from "./routes/singerSongsRoute.js";
 import cors from 'cors';
 
 const app = express();
@@ -29,6 +30,7 @@ app.get('/', (request, response) => {
 app.use('/songs', songsRoute);
 app.use('/services', servicesRoute);
 app.use('/serviceSongs', serviceSongsRoute);
+app.use('/singerSongs', singerSong);
 
 // connecting to the database
 mongoose

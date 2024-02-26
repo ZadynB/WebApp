@@ -15,7 +15,7 @@ router.post('/', async (request, response) => {
     const newSong = {
       title: request.body.title,
       songWriter: request.body.songWriter
-    }
+    };
     const song = await Song.create(newSong);
     return response.status(201).send(song);
   } catch (error) {
