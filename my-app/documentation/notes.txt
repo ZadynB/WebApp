@@ -83,6 +83,9 @@ Log:
 - fix issue with getting appropriate array for data grid
 - added date format
 
+[02/27/2024]
+- added new model and route for service songs
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
