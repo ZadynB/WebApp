@@ -79,6 +79,10 @@ Log:
 - added buttons to compliment the data grid
 - added services route
 
+[02/26/2024]
+- fix issue with getting appropriate array for data grid
+- added date format
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

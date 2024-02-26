@@ -9,6 +9,7 @@ import CustomDataGrid from '../components/CustomDataGrid';
 
 function SVNTCOG () {
   const [songs, setSongs] = useState([]);
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
@@ -30,69 +31,37 @@ function SVNTCOG () {
     {'id': '2', 'name': 'Create a Clean Heart', 'songWriter': 'Dionne', 'key': 'C#'},
   ];
 
-  const serviceRows = [
-    {'id': '1', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '2', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '3', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '4', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '5', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '6', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '7', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '8', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '9', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '10', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '11', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '12', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '13', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '14', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '15', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '16', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '17', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '18', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '19', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '20', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '21', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '22', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '23', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '24', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '25', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '26', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '27', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '28', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '29', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '30', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '31', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '32', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '33', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '34', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '35', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '36', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '37', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '38', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '39', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '40', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '41', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '42', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '43', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '44', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '45', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '46', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-    {'id': '47', 'date': '02/20/2024', 'worshipLeader': 'Dionne', 'numSongs': '3'},
-    {'id': '48', 'date': '02/25/2024', 'worshipLeader': 'Zadyn', 'numSongs': '4'},
-  ];
-
   useEffect(() => {
     setLoading(true);
-    axios
-      .get('http://localhost:5555/songs')
-      .then((response) => {
-        setSongs(response.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
+
+    try {
+      // call to route to get songs
+      axios
+        .get('http://localhost:5555/songs')
+        .then((response) => {
+          setSongs(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        });
+
+      // call to route to get services
+      axios
+        .get('http://localhost:5555/services')
+        .then((response) => {
+          setServices(response.data.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
       });
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
+    }
+    
   }, []);
 
   return (
@@ -105,7 +74,6 @@ function SVNTCOG () {
         exit={{opacity: 0}}
       >
         <div className='svntcog-main'>
-          <br></br>
           <h2>SVNTCOG App</h2>
           <Divider
             variant='middle'
@@ -124,7 +92,7 @@ function SVNTCOG () {
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
-                  <CustomDataGrid columns={serviceColumns} rows={serviceRows}/>
+                  <CustomDataGrid columns={serviceColumns} rows={services}/>
                   <ButtonGroup variant='solid' spacing='0.5rem'>
                     <Button size='sm'>Add</Button>
                     <Button size='sm'>Edit</Button>
