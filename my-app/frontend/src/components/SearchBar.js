@@ -3,6 +3,7 @@ import { Search } from "@mui/icons-material";
 
 function SearchBar(props) {
   const options = props.options;
+
   return (
     <FormControl id='search-bar' sx={{width: '100%'}}>
       <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
@@ -14,8 +15,8 @@ function SearchBar(props) {
         disableClearable
         getOptionLabel={(option) => option.title+option.author}
         options={options}
-        renderOption={(props, option) => (
-          <AutocompleteOption {...props}>
+        renderOption={(properties, option) => (
+          <AutocompleteOption {...properties} onClick={() => props.onOptionClick(option)}>
             <ListItemContent sx={{fontSize:'sm'}}>
               {option.title}
               <Typography level='body-xs'>

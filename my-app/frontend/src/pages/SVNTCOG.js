@@ -91,10 +91,18 @@ function SVNTCOG () {
         setInfo({
           title: song.title + ', ' + song.author,
           desc: 'Singer: ' + rowParams.row.singer + ', Key: ' + rowParams.row.key + '\n\n' + song.lyrics
-        })
+        });
         setOpen(true);
       }
     }
+  };
+
+  const displaySongLyrics = (option) => {
+    setInfo({
+      title: option.title + ', ' + option.author,
+      desc: '\n\n' + option.lyrics
+    });
+    setOpen(true);
   };
 
 
@@ -123,7 +131,7 @@ function SVNTCOG () {
           {loading ? (<CircularProgress size='md' className='spinner'/>) :
             (
               <div style={{width: '100%'}}>
-                <SearchBar options={songs}/>
+                <SearchBar options={songs} onOptionClick={displaySongLyrics}/>
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}

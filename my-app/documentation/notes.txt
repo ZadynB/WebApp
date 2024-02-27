@@ -89,6 +89,7 @@ Log:
 - added functionality to display the service songs on click of service
 - updated model for Song to have lyrics and updated all other affected areas
 - added info modal to display the service song lyrics
+- added functionality to display lyrics from search bar
 
 To fix/do:
 [Solved/Done]
