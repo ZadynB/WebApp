@@ -10,6 +10,7 @@ import CustomDataGrid from '../components/CustomDataGrid';
 function SVNTCOG () {
   const [songs, setSongs] = useState([]);
   const [services, setServices] = useState([]);
+  const [serviceSongs, setServiceSongs] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
@@ -21,14 +22,10 @@ function SVNTCOG () {
   ];
 
   const songsColumns = [
-    { field: 'name', headerName: 'Name', flex: 1, headerAlign: 'center', align: 'center'},
-    { field: 'songWriter', headerName: 'Author', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'song', headerName: 'Name', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'singer', headerName: 'Singer', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'author', headerName: 'Author', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'key', headerName: 'Key', flex: 1, headerAlign: 'center', align: 'center'}
-  ];
-
-  const songsRows = [
-    {'id': '1', 'name': 'Hide Me Now', 'songWriter': 'Hillsong', 'key': 'C'},
-    {'id': '2', 'name': 'Create a Clean Heart', 'songWriter': 'Dionne', 'key': 'C#'},
   ];
 
   useEffect(() => {
@@ -64,6 +61,27 @@ function SVNTCOG () {
     
   }, []);
 
+  const displayServiceSongs = (rowParams) => {
+    // call to route to get the service songs
+    try {
+      axios
+        .get('http://localhost:5555/serviceSongs/byParentId', {
+          params: {
+            parentId: rowParams.row.id
+          }
+        })
+        .then((response) => {
+          setServiceSongs(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        })
+    } catch (error) {
+      console.log(error.message);
+    }
+    
+  };
+
   return (
     <AnimatePresence mode='wait'>
       <motion.div 
@@ -92,7 +110,7 @@ function SVNTCOG () {
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
-                  <CustomDataGrid columns={serviceColumns} rows={services}/>
+                  <CustomDataGrid columns={serviceColumns} rows={services} isServiceTable={true} displayServiceSongs={displayServiceSongs}/>
                   <ButtonGroup variant='solid' spacing='0.5rem'>
                     <Button size='sm'>Add</Button>
                     <Button size='sm'>Edit</Button>
@@ -100,7 +118,7 @@ function SVNTCOG () {
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
-                  <CustomDataGrid columns={songsColumns} rows={songsRows}/>
+                  <CustomDataGrid columns={songsColumns} rows={serviceSongs} isServiceTable={false}/>
                   <ButtonGroup variant='solid' spacing='0.5rem'>
                     <Button size='sm'>Add</Button>
                     <Button size='sm'>Edit</Button>

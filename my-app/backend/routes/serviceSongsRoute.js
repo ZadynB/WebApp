@@ -45,11 +45,24 @@ router.get('/', async (request, response) => {
 // route for getting service songs by parentId
 router.get('/byParentId', async (request, response) => {
   try {
-    const serviceSongs = await ServiceSong.find({parentId: request.body.parentId});
+    let pid = request.query.parentId;
+    const serviceSongs = await ServiceSong.find({parentId: pid});
+
+    let arr = [];
+    for (const serviceSong of serviceSongs) {
+      arr.push({
+        id: serviceSong._id,
+        parentId: serviceSong.parentId,
+        song: serviceSong.song,
+        singer: serviceSong.singer,
+        author: serviceSong.author,
+        key: serviceSong.key
+      })
+    }
 
     return response.status(200).json({
       count: serviceSongs.length,
-      data: serviceSongs
+      data: arr
     });
   } catch (error) {
     console.log(error.message);
