@@ -6,15 +6,16 @@ const router = express.Router();
 // route for creating a song
 router.post('/', async (request, response) => {
   try {
-    if (!request.body.title || !request.body.songWriter) {
+    if (!request.body.title || !request.body.author || !request.body.lyrics) {
       return response.status(400).send({
-        message: 'Must use all required fields: title & songWriter'
+        message: 'Must use all required fields: title, author & lyrics'
       });
     }
 
     const newSong = {
       title: request.body.title,
-      songWriter: request.body.songWriter
+      author: request.body.author,
+      lyrics: request.body.lyrics
     };
     const song = await Song.create(newSong);
     return response.status(201).send(song);
@@ -55,9 +56,9 @@ router.get('/:id', async (request, response) => {
 // route for updating a song
 router.put('/:id', async (request, response) => {
   try {
-    if (!request.body.title || !request.body.songWriter) {
+    if (!request.body.title || !request.body.author || !request.body.lyrics) {
       return response.status(400).send({
-        message: 'Must use all required fields: title & songWriter'
+        message: 'Must use all required fields: title, author & lyrics'
       });
     }
     

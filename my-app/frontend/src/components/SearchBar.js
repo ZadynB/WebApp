@@ -12,14 +12,14 @@ function SearchBar(props) {
         type="search"
         freeSolo
         disableClearable
-        getOptionLabel={(option) => option.title+option.songWriter}
+        getOptionLabel={(option) => option.title+option.author}
         options={options}
         renderOption={(props, option) => (
           <AutocompleteOption {...props}>
             <ListItemContent sx={{fontSize:'sm'}}>
               {option.title}
               <Typography level='body-xs'>
-                {option.songWriter}
+                {option.author}
               </Typography>
             </ListItemContent>
           </AutocompleteOption>

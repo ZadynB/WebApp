@@ -2,7 +2,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 
 function CustomDataGrid(props) {
-  const isServiceTable = props.isServiceTable;
   const dark = getComputedStyle(document.body).getPropertyValue('--dark');
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
@@ -36,9 +35,7 @@ function CustomDataGrid(props) {
         rows={props.rows}
         sx={{ color: 'white', bgcolor: dark, '& .MuiDataGrid-columnHeaders': {bgcolor: blue2}}}
         onRowClick={(params) => {
-          if (isServiceTable) {
-            props.displayServiceSongs(params)
-          }
+          props.onRowClick(params)
         }}
         hideFooter
       />

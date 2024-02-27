@@ -6,12 +6,15 @@ import axios from 'axios';
 import { CircularProgress, Button, ButtonGroup, Stack } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
+import InfoModal from '../components/InfoModal';
 
 function SVNTCOG () {
   const [songs, setSongs] = useState([]);
   const [services, setServices] = useState([]);
   const [serviceSongs, setServiceSongs] = useState([]);
+  const [info, setInfo] = useState({title: '', desc: ''});
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
@@ -79,8 +82,22 @@ function SVNTCOG () {
     } catch (error) {
       console.log(error.message);
     }
-    
   };
+
+  const displayServiceSongInfo = (rowParams) => {
+    // getting the lyrics by matching the title and author
+    for (const song of songs) {
+      if (song.author === rowParams.row.author && song.title === rowParams.row.song) {
+        setInfo({
+          title: song.title + ', ' + song.author,
+          desc: 'Singer: ' + rowParams.row.singer + ', Key: ' + rowParams.row.key + '\n\n' + song.lyrics
+        })
+        setOpen(true);
+      }
+    }
+  };
+
+
 
   return (
     <AnimatePresence mode='wait'>
@@ -110,7 +127,7 @@ function SVNTCOG () {
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
-                  <CustomDataGrid columns={serviceColumns} rows={services} isServiceTable={true} displayServiceSongs={displayServiceSongs}/>
+                  <CustomDataGrid columns={serviceColumns} rows={services} onRowClick={displayServiceSongs}/>
                   <ButtonGroup variant='solid' spacing='0.5rem'>
                     <Button size='sm'>Add</Button>
                     <Button size='sm'>Edit</Button>
@@ -118,13 +135,14 @@ function SVNTCOG () {
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
-                  <CustomDataGrid columns={songsColumns} rows={serviceSongs} isServiceTable={false}/>
+                  <CustomDataGrid columns={songsColumns} rows={serviceSongs} onRowClick={displayServiceSongInfo}/>
                   <ButtonGroup variant='solid' spacing='0.5rem'>
                     <Button size='sm'>Add</Button>
                     <Button size='sm'>Edit</Button>
                     <Button size='sm'>Delete</Button>
                   </ButtonGroup>
                 </Stack>
+                <InfoModal isOpen={open} setIsOpen={(newValue) => setOpen(newValue)} info={info}/>
               </div>
             )
           }

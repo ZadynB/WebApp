@@ -6,7 +6,11 @@ const songSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    songWriter: {
+    author: {
+      type: String,
+      required: true
+    },
+    lyrics: {
       type: String,
       required: true
     }
