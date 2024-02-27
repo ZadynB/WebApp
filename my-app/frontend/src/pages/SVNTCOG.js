@@ -7,6 +7,15 @@ import { CircularProgress, Button, ButtonGroup, Stack } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
 import InfoModal from '../components/InfoModal';
+import { Add, Remove, Edit } from '@mui/icons-material';
+
+function sleep(duration) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, duration);
+  });
+}
 
 function SVNTCOG () {
   const [songs, setSongs] = useState([]);
@@ -15,6 +24,8 @@ function SVNTCOG () {
   const [info, setInfo] = useState({title: '', desc: ''});
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [serviceSelected, setServiceSelected] = useState(false);
+  const [serviceSongSelected, setServiceSongSelected] = useState(false);
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
@@ -33,35 +44,37 @@ function SVNTCOG () {
 
   useEffect(() => {
     setLoading(true);
+    (async () => {
+      await sleep(1e3);
 
-    try {
-      // call to route to get songs
-      axios
-        .get('http://localhost:5555/songs')
-        .then((response) => {
-          setSongs(response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
+      try {
+        // call to route to get songs
+        axios
+          .get('http://localhost:5555/songs')
+          .then((response) => {
+            setSongs(response.data.data);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoading(false);
+          });
+  
+        // call to route to get services
+        axios
+          .get('http://localhost:5555/services')
+          .then((response) => {
+            setServices(response.data.data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoading(false);
         });
-
-      // call to route to get services
-      axios
-        .get('http://localhost:5555/services')
-        .then((response) => {
-          setServices(response.data.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-      });
-    } catch (error) {
-      console.log(error.message);
-      setLoading(false);
-    }
-    
+      } catch (error) {
+        console.log(error.message);
+        setLoading(false);
+      }
+    })();    
   }, []);
 
   const displayServiceSongs = (rowParams) => {
@@ -75,6 +88,7 @@ function SVNTCOG () {
         })
         .then((response) => {
           setServiceSongs(response.data.data);
+          setServiceSelected(true);
         })
         .catch((error) => {
           console.log(error.message);
@@ -86,15 +100,16 @@ function SVNTCOG () {
 
   const displayServiceSongInfo = (rowParams) => {
     // getting the lyrics by matching the title and author
-    for (const song of songs) {
-      if (song.author === rowParams.row.author && song.title === rowParams.row.song) {
-        setInfo({
-          title: song.title + ', ' + song.author,
-          desc: 'Singer: ' + rowParams.row.singer + ', Key: ' + rowParams.row.key + '\n\n' + song.lyrics
-        });
-        setOpen(true);
-      }
-    }
+    // for (const song of songs) {
+    //   if (song.author === rowParams.row.author && song.title === rowParams.row.song) {
+    //     setInfo({
+    //       title: song.title + ', ' + song.author,
+    //       desc: 'Singer: ' + rowParams.row.singer + ', Key: ' + rowParams.row.key + '\n\n' + song.lyrics
+    //     });
+    //     setOpen(true);
+    //   }
+    // }
+    setServiceSongSelected(true);
   };
 
   const displaySongLyrics = (option) => {
@@ -104,8 +119,6 @@ function SVNTCOG () {
     });
     setOpen(true);
   };
-
-
 
   return (
     <AnimatePresence mode='wait'>
@@ -137,17 +150,17 @@ function SVNTCOG () {
                   {/* component to display the planned services */}
                   <CustomDataGrid columns={serviceColumns} rows={services} onRowClick={displayServiceSongs}/>
                   <ButtonGroup variant='solid' spacing='0.5rem'>
-                    <Button size='sm'>Add</Button>
-                    <Button size='sm'>Edit</Button>
-                    <Button size='sm'>Delete</Button>
+                    <Button size='sm' startDecorator={<Add />}>Add</Button>
+                    <Button size='sm' startDecorator={<Edit />} disabled={!serviceSelected}>Edit</Button>
+                    <Button size='sm' startDecorator={<Remove />} disabled={!serviceSelected}>Delete</Button>
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
                   <CustomDataGrid columns={songsColumns} rows={serviceSongs} onRowClick={displayServiceSongInfo}/>
                   <ButtonGroup variant='solid' spacing='0.5rem'>
-                    <Button size='sm'>Add</Button>
-                    <Button size='sm'>Edit</Button>
-                    <Button size='sm'>Delete</Button>
+                    <Button size='sm' startDecorator={<Add />} disabled={!serviceSelected}>Add</Button>
+                    <Button size='sm' startDecorator={<Edit />} disabled={!serviceSongSelected}>Edit</Button>
+                    <Button size='sm' startDecorator={<Remove />} disabled={!serviceSongSelected}>Delete</Button>
                   </ButtonGroup>
                 </Stack>
                 <InfoModal isOpen={open} setIsOpen={(newValue) => setOpen(newValue)} info={info}/>

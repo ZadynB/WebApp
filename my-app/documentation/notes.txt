@@ -90,6 +90,8 @@ Log:
 - updated model for Song to have lyrics and updated all other affected areas
 - added info modal to display the service song lyrics
 - added functionality to display lyrics from search bar
+- added loading effect
+- added disabled effect on buttons depending on when a row is clicked
 
 To fix/do:
 [Solved/Done]
@@ -120,6 +122,7 @@ To fix/do:
 - start checking out back end stuff
     -> continue implementing backend functionality
     -> checkout documentation for data grid onRowSelect()
+    -> add state for selectedRow from dataGrid
 
 
 
