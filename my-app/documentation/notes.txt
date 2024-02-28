@@ -97,6 +97,7 @@ Log:
 - added selectedRow states
 - added addService.js
 - added functionality to post a new service
+- added functionality to update a service
 
 To fix/do:
 [Solved/Done]

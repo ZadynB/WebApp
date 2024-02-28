@@ -1,18 +1,24 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
-// import Modal from '@mui/joy/Modal';
-// import ModalClose from '@mui/joy/ModalClose';
-// import Typography from '@mui/joy/Typography';
-// import Sheet from '@mui/joy/Sheet';
 import { Stack, Modal, ModalClose, Typography, Sheet, Input, Button } from '@mui/joy';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-function AddService(props) {
-  const open = props.isOpen
+function AddEditService(props) {
+  const open = props.isOpen;
+  const edit = props.isEdit;
+  const info = props.info;
+  
   const [date, setDate] = React.useState(dayjs('01-01-2024'));
   const [worshipLeader, setWorshipLeader] = React.useState('');
+
+  React.useEffect(() => {
+    if (edit) {
+      setDate(dayjs(info.date));
+      setWorshipLeader(info.worshipLeader);
+    }
+  }, [edit, info.date, info.worshipLeader]);
 
   return (
     <React.Fragment>
@@ -42,49 +48,44 @@ function AddService(props) {
             fontWeight="lg"
             mb={1}
           >
-            Add Service
+            { edit ? 'Edit Service' : 'Add Service'}
           </Typography>
           <form
             onSubmit={(event) => {
               event.preventDefault();
 
-              // extracting date
-              let dateStr = date.$y;
-              if (date.$M + 1 < 10) {
-                dateStr = dateStr + '-0' + (date.$M + 1);
-              } else {
-                dateStr = dateStr + '-' + (date.$M + 1);
-              }
-
-              if (date.$D < 10) {
-                dateStr = dateStr + '-0' + date.$D;
-              } else {
-                dateStr = dateStr + '-' + date.$D;
-              }
-              let newDate = new Date(dateStr);
-
               const serviceObj = {
-                date: newDate,
+                date: date.$d,
                 worshipLeader: worshipLeader,
-                numSongs: 0
               };
-              props.onSubmit(serviceObj);
+
+              if (!edit) {
+                props.onCreate(serviceObj);
+              } else {
+                serviceObj.numSongs = info.numSongs;
+                props.onUpdate(serviceObj, info.id);
+              }
+              
               props.setIsOpen(false);
             }}
           >
             <Stack spacing={1}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker 
+                <DatePicker
+                  id='add-edit-date-picker'
                   value={date}
                   onChange={(newValue) => setDate(newValue)}
                 />
               </LocalizationProvider>
               <Input 
+                id='add-edit-textfield'
                 placeholder='Worship Leader...'
                 value={worshipLeader}
                 onChange={(newValue) => setWorshipLeader(newValue.target.value)}
               />
-              <Button type='submit'>Create</Button>
+              <Button type='submit'>
+                { edit ? 'Update': 'Create'}
+              </Button>
             </Stack>
           </form>
         </Sheet>
@@ -93,4 +94,4 @@ function AddService(props) {
   );
 }
 
-export default AddService;
+export default AddEditService;

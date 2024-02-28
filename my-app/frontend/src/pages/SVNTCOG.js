@@ -7,7 +7,7 @@ import { CircularProgress, Button, ButtonGroup, Stack } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
 import InfoModal from '../components/InfoModal';
-import AddService from '../components/AddService';
+import AddEditService from '../components/AddEditService';
 import { Add, Remove, Edit } from '@mui/icons-material';
 
 function sleep(duration) {
@@ -19,6 +19,7 @@ function sleep(duration) {
 }
 
 function SVNTCOG () {
+  const [refresh, setRefresh] = useState(false);
   const [songs, setSongs] = useState([]);
   const [services, setServices] = useState([]);
   const [serviceSongs, setServiceSongs] = useState([]);
@@ -28,7 +29,8 @@ function SVNTCOG () {
   const [openAddService, setOpenAddService] = useState(false);
   const [serviceSelected, setServiceSelected] = useState({});
   const [serviceSongSelected, setServiceSongSelected] = useState({});
-
+  const [edit, setEdit] = useState(false);
+  
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
   const serviceColumns = [
@@ -78,7 +80,7 @@ function SVNTCOG () {
         setLoading(false);
       }
     })();    
-  }, []);
+  }, [refresh]);
 
   const displayServiceSongs = (rowParams) => {
     // call to route to get the service songs
@@ -116,25 +118,39 @@ function SVNTCOG () {
 
   const addService = (serviceObj) => {
     // route to add service
-    console.log(serviceObj);
     setLoading(true);
-    (async () => {
-      await sleep(1e3);
-      try {
-        axios
-          .post('http://localhost:5555/services', serviceObj)
-          .then((response) => {
-            console.log(response);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.log(error.message);
-            setLoading(false);
-          })
-      } catch (error) {
-        console.log(error.message);
-      }
-    })();
+    try {
+      axios
+        .post('http://localhost:5555/services', serviceObj)
+        .then((response) => {
+          // console.log(response);
+          setRefresh(!refresh);
+        })
+        .catch((error) => {
+          console.log(error.message);
+          setLoading(false);
+        })
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const editService = (serviceObj, id) => {
+    //route to edit service
+    setLoading(true);
+    try {
+      axios
+        .put(`http://localhost:5555/services/${id}`, serviceObj)
+        .then((response) => {
+          setRefresh(!refresh);
+        })
+        .catch((error) => {
+          console.log(error.message);
+          setLoading(false);
+        })
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -172,8 +188,27 @@ function SVNTCOG () {
                     onRowClick={displayServiceSongs}
                   />
                   <ButtonGroup variant='solid' spacing='0.5rem'>
-                    <Button size='sm' startDecorator={<Add />} onClick={() => setOpenAddService(true)}>Add</Button>
-                    <Button size='sm' startDecorator={<Edit />} disabled={serviceSelected.id === undefined ? true : false}>Edit</Button>
+                    <Button
+                      size='sm'
+                      startDecorator={<Add />}
+                      onClick={() => {
+                        setEdit(false);
+                        setOpenAddService(true);
+                      }}
+                    >
+                      Add
+                    </Button>
+                    <Button
+                      size='sm'
+                      startDecorator={<Edit />}
+                      disabled={serviceSelected.id === undefined ? true : false}
+                      onClick={() => {
+                        setEdit(true);
+                        setOpenAddService(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
                     <Button size='sm' startDecorator={<Remove />} disabled={serviceSelected.id === undefined ? true : false}>Delete</Button>
                   </ButtonGroup>
 
@@ -190,8 +225,24 @@ function SVNTCOG () {
                     <Button size='sm' startDecorator={<Remove />} disabled={serviceSongSelected.id === undefined ? true : false}>Delete</Button>
                   </ButtonGroup>
                 </Stack>
-                <InfoModal isOpen={openInfo} setIsOpen={(newValue) => setOpenInfo(newValue)} info={info}/>
-                <AddService isOpen={openAddService} setIsOpen={(newValue) => setOpenAddService(newValue)} onSubmit={addService}/>
+
+                <InfoModal
+                  isOpen={openInfo}
+                  setIsOpen={(newValue) => setOpenInfo(newValue)}
+                  info={info}
+                />
+
+                {openAddService ? (
+                  <AddEditService
+                    isOpen={openAddService}
+                    setIsOpen={(newValue) => setOpenAddService(newValue)}
+                    isEdit={edit}
+                    onCreate={addService}
+                    onUpdate={editService}
+                    info={serviceSelected}
+                  />
+                ) : <></>}
+                
               </div>
             )
           }

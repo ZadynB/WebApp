@@ -15,7 +15,7 @@ router.post('/', async (request, response) => {
     const newService = {
       date: request.body.date,
       worshipLeader: request.body.worshipLeader,
-      numSongs: request.body.numSongs
+      numSongs: 0
     };
     const service = await Service.create(newService);
     return response.status(201).send(service);
@@ -33,10 +33,19 @@ router.get('/', async (request, response) => {
     let arr = [];
     for (const service of services) {
       let dateStr = '';
-      if (service.date.getMonth().length > 1 ) {
-        dateStr = service.date.getFullYear() + '-' + service.date.getMonth() + '-' + service.date.getDate();
+      
+      // concatenating month string
+      if ((service.date.getMonth() + 1).toString().length > 1 ) {
+        dateStr = service.date.getFullYear().toString() + '-' + (service.date.getMonth() + 1).toString();
       } else {
-        dateStr = service.date.getFullYear() + '-0' + service.date.getMonth() + '-' + service.date.getDate();
+        dateStr = service.date.getFullYear().toString() + '-0' + (service.date.getMonth() + 1).toString();
+      }
+
+      //concatenating date string
+      if (service.date.getDate().toString().length > 1) {
+        dateStr = dateStr + '-' + service.date.getDate().toString();
+      } else {
+        dateStr = dateStr + '-0' + service.date.getDate().toString();
       }
 
       arr.push({
@@ -73,9 +82,9 @@ router.get('/:id', async (request, response) => {
 // route for updating a service
 router.put('/:id', async (request, response) => {
   try {
-    if (!request.body.date || !request.body.worshipLeader || !request.body.numSongs) {
+    if (!request.body.date || !request.body.worshipLeader) {
       return response.status(400).send({
-        message: 'Must use all required fields: date, worship leader & number of songs'
+        message: 'Must use all required fields: date and worship leader'
       });
     }
     
