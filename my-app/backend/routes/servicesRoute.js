@@ -6,9 +6,9 @@ const router = express.Router();
 // route for creating a service
 router.post('/', async (request, response) => {
   try {
-    if (!request.body.date || !request.body.worshipLeader || !request.body.numSongs) {
+    if (!request.body.date || !request.body.worshipLeader ) {
       return response.status(400).send({
-        message: 'Must use all required fields: name, worship leader and number of songs'
+        message: 'Must use all required fields: date and worship leader'
       });
     }
 

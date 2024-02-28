@@ -93,6 +93,11 @@ Log:
 - added loading effect
 - added disabled effect on buttons depending on when a row is clicked
 
+[02/28/2024]
+- added selectedRow states
+- added addService.js
+- added functionality to post a new service
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

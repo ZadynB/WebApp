@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 function CustomDataGrid(props) {
   const dark = getComputedStyle(document.body).getPropertyValue('--dark');
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
+  
 
   return (
     <Box className='dataGrid-box'>

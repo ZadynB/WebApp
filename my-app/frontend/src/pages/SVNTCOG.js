@@ -7,6 +7,7 @@ import { CircularProgress, Button, ButtonGroup, Stack } from '@mui/joy';
 import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
 import InfoModal from '../components/InfoModal';
+import AddService from '../components/AddService';
 import { Add, Remove, Edit } from '@mui/icons-material';
 
 function sleep(duration) {
@@ -23,9 +24,10 @@ function SVNTCOG () {
   const [serviceSongs, setServiceSongs] = useState([]);
   const [info, setInfo] = useState({title: '', desc: ''});
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [serviceSelected, setServiceSelected] = useState(false);
-  const [serviceSongSelected, setServiceSongSelected] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
+  const [openAddService, setOpenAddService] = useState(false);
+  const [serviceSelected, setServiceSelected] = useState({});
+  const [serviceSongSelected, setServiceSongSelected] = useState({});
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
@@ -43,6 +45,7 @@ function SVNTCOG () {
   ];
 
   useEffect(() => {
+    console.log('here');
     setLoading(true);
     (async () => {
       await sleep(1e3);
@@ -88,7 +91,8 @@ function SVNTCOG () {
         })
         .then((response) => {
           setServiceSongs(response.data.data);
-          setServiceSelected(true);
+          setServiceSelected(rowParams.row);
+          setServiceSongSelected({});
         })
         .catch((error) => {
           console.log(error.message);
@@ -99,17 +103,7 @@ function SVNTCOG () {
   };
 
   const displayServiceSongInfo = (rowParams) => {
-    // getting the lyrics by matching the title and author
-    // for (const song of songs) {
-    //   if (song.author === rowParams.row.author && song.title === rowParams.row.song) {
-    //     setInfo({
-    //       title: song.title + ', ' + song.author,
-    //       desc: 'Singer: ' + rowParams.row.singer + ', Key: ' + rowParams.row.key + '\n\n' + song.lyrics
-    //     });
-    //     setOpen(true);
-    //   }
-    // }
-    setServiceSongSelected(true);
+    setServiceSongSelected(rowParams.row);
   };
 
   const displaySongLyrics = (option) => {
@@ -117,7 +111,30 @@ function SVNTCOG () {
       title: option.title + ', ' + option.author,
       desc: '\n\n' + option.lyrics
     });
-    setOpen(true);
+    setOpenInfo(true);
+  };
+
+  const addService = (serviceObj) => {
+    // route to add service
+    console.log(serviceObj);
+    setLoading(true);
+    (async () => {
+      await sleep(1e3);
+      try {
+        axios
+          .post('http://localhost:5555/services', serviceObj)
+          .then((response) => {
+            console.log(response);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log(error.message);
+            setLoading(false);
+          })
+      } catch (error) {
+        console.log(error.message);
+      }
+    })();
   };
 
   return (
@@ -148,22 +165,33 @@ function SVNTCOG () {
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
-                  <CustomDataGrid columns={serviceColumns} rows={services} onRowClick={displayServiceSongs}/>
+                  <CustomDataGrid
+                    id="ServiceTable"
+                    columns={serviceColumns}
+                    rows={services}
+                    onRowClick={displayServiceSongs}
+                  />
                   <ButtonGroup variant='solid' spacing='0.5rem'>
-                    <Button size='sm' startDecorator={<Add />}>Add</Button>
-                    <Button size='sm' startDecorator={<Edit />} disabled={!serviceSelected}>Edit</Button>
-                    <Button size='sm' startDecorator={<Remove />} disabled={!serviceSelected}>Delete</Button>
+                    <Button size='sm' startDecorator={<Add />} onClick={() => setOpenAddService(true)}>Add</Button>
+                    <Button size='sm' startDecorator={<Edit />} disabled={serviceSelected.id === undefined ? true : false}>Edit</Button>
+                    <Button size='sm' startDecorator={<Remove />} disabled={serviceSelected.id === undefined ? true : false}>Delete</Button>
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
-                  <CustomDataGrid columns={songsColumns} rows={serviceSongs} onRowClick={displayServiceSongInfo}/>
+                  <CustomDataGrid
+                    id="SongTable"
+                    columns={songsColumns}
+                    rows={serviceSongs}
+                    onRowClick={displayServiceSongInfo}
+                  />
                   <ButtonGroup variant='solid' spacing='0.5rem'>
-                    <Button size='sm' startDecorator={<Add />} disabled={!serviceSelected}>Add</Button>
-                    <Button size='sm' startDecorator={<Edit />} disabled={!serviceSongSelected}>Edit</Button>
-                    <Button size='sm' startDecorator={<Remove />} disabled={!serviceSongSelected}>Delete</Button>
+                    <Button size='sm' startDecorator={<Add />} disabled={serviceSelected.id === undefined ? true : false}>Add</Button>
+                    <Button size='sm' startDecorator={<Edit />} disabled={serviceSongSelected.id === undefined ? true : false}>Edit</Button>
+                    <Button size='sm' startDecorator={<Remove />} disabled={serviceSongSelected.id === undefined ? true : false}>Delete</Button>
                   </ButtonGroup>
                 </Stack>
-                <InfoModal isOpen={open} setIsOpen={(newValue) => setOpen(newValue)} info={info}/>
+                <InfoModal isOpen={openInfo} setIsOpen={(newValue) => setOpenInfo(newValue)} info={info}/>
+                <AddService isOpen={openAddService} setIsOpen={(newValue) => setOpenAddService(newValue)} onSubmit={addService}/>
               </div>
             )
           }
