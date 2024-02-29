@@ -8,9 +8,7 @@ function AddEditService(props) {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
-    console.log('test');
     if (title !== '' && desc !== '') {
-      console.log('open');
       setOpen(true);
     }
   }, [title, desc, open]);

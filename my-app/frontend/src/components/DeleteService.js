@@ -71,19 +71,7 @@ function DeleteService(props) {
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
-
-                  // const serviceObj = {
-                  //   date: date.$d,
-                  //   worshipLeader: worshipLeader,
-                  // };
-
-                  // if (!edit) {
-                  //   props.onCreate(serviceObj);
-                  // } else {
-                  //   serviceObj.numSongs = info.numSongs;
-                  //   props.onUpdate(serviceObj, info.id);
-                  // }
-                  
+                  props.onDelete(info.id);
                   setOpen(false);
                 }}
               >

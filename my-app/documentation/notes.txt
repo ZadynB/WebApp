@@ -101,6 +101,7 @@ Log:
 
 [02/29/2024]
 - reworked all modals in svntcog app to have transitions
+- added delete functionality for services
 
 To fix/do:
 [Solved/Done]

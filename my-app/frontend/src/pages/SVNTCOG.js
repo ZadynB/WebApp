@@ -45,7 +45,7 @@ function SVNTCOG () {
   ];
 
   useEffect(() => {
-    console.log('here');
+    console.log('refreshed');
     setLoading(true);
     (async () => {
       await sleep(1e3);
@@ -107,7 +107,7 @@ function SVNTCOG () {
     }
   };
 
-  const displayServiceSongInfo = (rowParams) => {
+  const selectServiceSong = (rowParams) => {
     setServiceSongSelected(rowParams.row);
   };
 
@@ -145,6 +145,54 @@ function SVNTCOG () {
         .put(`http://localhost:5555/services/${id}`, serviceObj)
         .then((response) => {
           setRefresh(!refresh);
+        })
+        .catch((error) => {
+          console.log(error.message);
+          setLoading(false);
+        })
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteService = (id) => {
+    // route to delete service
+    console.log(id);
+    setLoading(true);
+
+    // need to delete all of the children service songs first
+    try {
+      // get service songs
+      axios
+        .get('http://localhost:5555/serviceSongs/byParentId', {
+          params: {
+            parentId: id
+          }
+        })
+        .then((response) => {
+          // console.log(response.data.data);
+          // delete service songs
+          for (const serviceSong of response.data.data) {
+            axios
+              .delete(`http://localhost:5555/serviceSongs/${serviceSong.id}`)
+              .catch((error) => {
+                console.log(error.message);
+                setLoading(false);
+              })
+          }
+        })
+        .then(() => {
+          // delete the service
+          axios
+            .delete(`http://localhost:5555/services/${id}`)
+            .then((response) => {
+              // console.log(response);
+              setRefresh(!refresh);
+            })
+            .catch((error) => {
+              console.log(error.message);
+              setLoading(false);
+            })
         })
         .catch((error) => {
           console.log(error.message);
@@ -196,6 +244,7 @@ function SVNTCOG () {
                       info={serviceSelected}
                     />
                     <DeleteService
+                      onDelete={deleteService}
                       info={serviceSelected}
                     />
                   </ButtonGroup>
@@ -205,7 +254,7 @@ function SVNTCOG () {
                     id="SongTable"
                     columns={songsColumns}
                     rows={serviceSongs}
-                    onRowClick={displayServiceSongInfo}
+                    onRowClick={selectServiceSong}
                   />
                   <ButtonGroup variant='solid' spacing='0.5rem'>
                     <Button size='sm' startDecorator={<Add />} disabled={serviceSelected.id === undefined ? true : false}>Add</Button>
