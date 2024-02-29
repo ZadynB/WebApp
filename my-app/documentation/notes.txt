@@ -99,6 +99,9 @@ Log:
 - added functionality to post a new service
 - added functionality to update a service
 
+[02/29/2024]
+- reworked all modals in svntcog app to have transitions
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -121,6 +124,7 @@ To fix/do:
     -> create app tiles
 - add css for data grids to look nice on mobile
 - create custome pagination for the data grid
+- implemented transition for modal
 
 
 
@@ -129,8 +133,7 @@ To fix/do:
     -> continue implementing backend functionality
     -> checkout documentation for data grid onRowSelect()
     -> add state for selectedRow from dataGrid
-
-
+    -> look at the transition some more
 
 
 

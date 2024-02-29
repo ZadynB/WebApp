@@ -8,6 +8,7 @@ import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
 import InfoModal from '../components/InfoModal';
 import AddEditService from '../components/AddEditService';
+import DeleteService from '../components/DeleteService';
 import { Add, Remove, Edit } from '@mui/icons-material';
 
 function sleep(duration) {
@@ -25,11 +26,8 @@ function SVNTCOG () {
   const [serviceSongs, setServiceSongs] = useState([]);
   const [info, setInfo] = useState({title: '', desc: ''});
   const [loading, setLoading] = useState(false);
-  const [openInfo, setOpenInfo] = useState(false);
-  const [openAddService, setOpenAddService] = useState(false);
   const [serviceSelected, setServiceSelected] = useState({});
   const [serviceSongSelected, setServiceSongSelected] = useState({});
-  const [edit, setEdit] = useState(false);
   
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
@@ -75,6 +73,11 @@ function SVNTCOG () {
             console.log(error);
             setLoading(false);
         });
+
+        setServiceSelected({});
+        setServiceSongSelected({});
+        setServiceSongs([]);
+        setInfo({ title: '', desc: '' });
       } catch (error) {
         console.log(error.message);
         setLoading(false);
@@ -111,9 +114,8 @@ function SVNTCOG () {
   const displaySongLyrics = (option) => {
     setInfo({
       title: option.title + ', ' + option.author,
-      desc: '\n\n' + option.lyrics
+      desc:  option.lyrics
     });
-    setOpenInfo(true);
   };
 
   const addService = (serviceObj) => {
@@ -188,28 +190,14 @@ function SVNTCOG () {
                     onRowClick={displayServiceSongs}
                   />
                   <ButtonGroup variant='solid' spacing='0.5rem'>
-                    <Button
-                      size='sm'
-                      startDecorator={<Add />}
-                      onClick={() => {
-                        setEdit(false);
-                        setOpenAddService(true);
-                      }}
-                    >
-                      Add
-                    </Button>
-                    <Button
-                      size='sm'
-                      startDecorator={<Edit />}
-                      disabled={serviceSelected.id === undefined ? true : false}
-                      onClick={() => {
-                        setEdit(true);
-                        setOpenAddService(true);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button size='sm' startDecorator={<Remove />} disabled={serviceSelected.id === undefined ? true : false}>Delete</Button>
+                    <AddEditService
+                      onCreate={addService}
+                      onUpdate={editService}
+                      info={serviceSelected}
+                    />
+                    <DeleteService
+                      info={serviceSelected}
+                    />
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
@@ -227,22 +215,9 @@ function SVNTCOG () {
                 </Stack>
 
                 <InfoModal
-                  isOpen={openInfo}
-                  setIsOpen={(newValue) => setOpenInfo(newValue)}
                   info={info}
+                  setInfo={(info) => {setInfo(info)}}
                 />
-
-                {openAddService ? (
-                  <AddEditService
-                    isOpen={openAddService}
-                    setIsOpen={(newValue) => setOpenAddService(newValue)}
-                    isEdit={edit}
-                    onCreate={addService}
-                    onUpdate={editService}
-                    info={serviceSelected}
-                  />
-                ) : <></>}
-                
               </div>
             )
           }

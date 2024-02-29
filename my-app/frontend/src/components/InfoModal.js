@@ -1,53 +1,86 @@
 import * as React from 'react';
-import Modal from '@mui/joy/Modal';
-import ModalClose from '@mui/joy/ModalClose';
-import Typography from '@mui/joy/Typography';
-import Sheet from '@mui/joy/Sheet';
+import { Modal, ModalClose, Typography, ModalDialog } from '@mui/joy';
+import { Transition } from 'react-transition-group';
 
-function InfoModal(props) {
-  const open = props.isOpen;
+function AddEditService(props) {
   const title = props.info.title;
   const desc = props.info.desc;
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log('test');
+    if (title !== '' && desc !== '') {
+      console.log('open');
+      setOpen(true);
+    }
+  }, [title, desc, open]);
 
   return (
     <React.Fragment>
-      <Modal
-        aria-labelledby="modal-title"
-        aria-describedby="modal-desc"
-        open={open}
-        onClose={() => props.setIsOpen(false)}
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      >
-        <Sheet
-          variant="outlined"
-          sx={{
-            maxWidth: 500,
-            borderRadius: 'md',
-            p: 3,
-            boxShadow: 'lg',
-            width: '85%',
-            height: '80%',
-            overflow: 'auto'
-          }}
-        >
-          <ModalClose variant="plain" sx={{ m: 1 }} />
-          <Typography
-            component="h2"
-            id="modal-title"
-            level="h4"
-            textColor="inherit"
-            fontWeight="lg"
-            mb={1}
+      <Transition in={open} timeout={400}>
+        {(state) => (
+          <Modal
+            aria-labelledby="modal-title"
+            aria-describedby="modal-desc"
+            open={!['exited', 'exiting'].includes(state)}
+            onClose={() => {
+              props.setInfo({ title: '', desc: '' });
+              setOpen(false);
+            }}
+            sx={{ 
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              visibility: state === 'exited' ? 'hidden' : 'visible', 
+            }}
+            slotProps={{
+              backdrop: {
+                sx: {
+                  opacity: 0,
+                  backdropFilter: 'none',
+                  transition: `opacity 400ms, backdrop-filter 400ms`,
+                  ...{
+                    entering: { opacity: 1, backdropFilter: `blur(8px)` },
+                    entered: { opacity: 1, backdropFilter: `blur(8px)` },
+                  }[state],
+                },
+              },
+            }}
+            keepMounted
           >
-            {title}
-          </Typography>
-          <Typography id="modal-desc" textColor="text.tertiary" style={{whiteSpace: 'pre-line', fontSize: '10pt'}}>
-            {desc}
-          </Typography>
-        </Sheet>
-      </Modal>
+            <ModalDialog
+              sx={{
+                width: '85%',
+                height: '80%',
+                overflow: 'auto',
+                opacity: 0,
+                transition: `opacity 300ms`,
+                ...{
+                  entering: { opacity: 1 },
+                  entered: { opacity: 1 },
+                }[state],
+              }}              
+            >
+              <ModalClose variant="plain" sx={{ m: 1 }} />
+              <Typography
+                component="h2"
+                id="modal-title"
+                level="h4"
+                textColor="inherit"
+                fontWeight="lg"
+                mb={1}
+              >
+                {title}
+              </Typography>
+              <Typography id="modal-desc" textColor="text.tertiary" style={{whiteSpace: 'pre-line', fontSize: '10pt'}}>
+                {desc}
+              </Typography>
+            </ModalDialog>
+          </Modal>
+        )}
+      </Transition>
     </React.Fragment>
   );
-};
+}
 
-export default InfoModal;
+export default AddEditService;

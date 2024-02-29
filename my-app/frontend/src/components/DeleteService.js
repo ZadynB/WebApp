@@ -1,51 +1,23 @@
 import * as React from 'react';
-import dayjs from 'dayjs';
-import { Stack, Modal, ModalClose, Typography, Input, Button, ModalDialog } from '@mui/joy';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Stack, Modal, ModalClose, Typography, Button, ModalDialog } from '@mui/joy';
 import { Transition } from 'react-transition-group';
-import { Add, Edit } from '@mui/icons-material';
+import { Remove } from '@mui/icons-material';
 
-function AddEditService(props) {
+function DeleteService(props) {
   const info = props.info;
-
   const [open, setOpen] = React.useState(false);
-  const [edit, setEdit] = React.useState(false);
-  const [date, setDate] = React.useState(dayjs('01-01-2024'));
-  const [worshipLeader, setWorshipLeader] = React.useState('');
-
-  React.useEffect(() => {
-    if (edit) {
-      setDate(dayjs(info.date));
-      setWorshipLeader(info.worshipLeader);
-    }
-  }, [edit, info.date, info.worshipLeader]);
 
   return (
     <React.Fragment>
       <Button
         size='sm'
-        startDecorator={<Add />}
+        startDecorator={<Remove />}
         onClick={() => {
-          setEdit(false);
-          setDate(dayjs('01-01-2024'));
-          setWorshipLeader('');
-          setOpen(true);
-        }}
-      >
-        Add
-      </Button>
-      <Button
-        size='sm'
-        startDecorator={<Edit />}
-        onClick={() => {
-          setEdit(true);
           setOpen(true);
         }}
         disabled={ Object.keys(info).length === 0 ? true : false }
       >
-        Edit
+        Delete
       </Button>
       <Transition in={open} timeout={400}>
         {(state) => (
@@ -94,49 +66,39 @@ function AddEditService(props) {
                 fontWeight="lg"
                 mb={1}
               >
-                { edit ? 'Edit Service' : 'Add Service'}
+                Delete Service
               </Typography>
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
 
-                  const serviceObj = {
-                    date: date.$d,
-                    worshipLeader: worshipLeader,
-                  };
+                  // const serviceObj = {
+                  //   date: date.$d,
+                  //   worshipLeader: worshipLeader,
+                  // };
 
-                  if (!edit) {
-                    props.onCreate(serviceObj);
-                  } else {
-                    serviceObj.numSongs = info.numSongs;
-                    props.onUpdate(serviceObj, info.id);
-                  }
+                  // if (!edit) {
+                  //   props.onCreate(serviceObj);
+                  // } else {
+                  //   serviceObj.numSongs = info.numSongs;
+                  //   props.onUpdate(serviceObj, info.id);
+                  // }
                   
                   setOpen(false);
                 }}
               >
                 <Stack spacing={1}>
-                  <Typography id="modal-field-1" textColor="text.tertiary">
-                    Date
+                  <Typography id="modal-desc-1" textColor="text.tertiary">
+                    Date: <code>{info.date}</code>
                   </Typography>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      id='add-edit-date-picker'
-                      value={date}
-                      onChange={(newValue) => setDate(newValue)}
-                    />
-                  </LocalizationProvider>
-                  <Typography id="modal-field-2" textColor="text.tertiary">
-                    Worship Leader
+                  <Typography id="modal-desc-2" textColor="text.tertiary">
+                    Worship Leader: <code>{info.worshipLeader}</code>
                   </Typography>
-                  <Input 
-                    id='add-edit-textfield'
-                    placeholder='Worship Leader...'
-                    value={worshipLeader}
-                    onChange={(newValue) => setWorshipLeader(newValue.target.value)}
-                  />
+                  <Typography id="modal-desc-3" textColor="text.tertiary">
+                    Are you sure you want to delete this service?
+                  </Typography>
                   <Button type='submit' color='primary'>
-                    { edit ? 'Update': 'Create'}
+                    Delete
                   </Button>
                 </Stack>
               </form>
@@ -148,4 +110,4 @@ function AddEditService(props) {
   );
 }
 
-export default AddEditService;
+export default DeleteService;
