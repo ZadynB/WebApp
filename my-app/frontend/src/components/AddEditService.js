@@ -15,6 +15,8 @@ function AddEditService(props) {
   const [date, setDate] = React.useState(dayjs('01-01-2024'));
   const [worshipLeader, setWorshipLeader] = React.useState('');
 
+  const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
+
   React.useEffect(() => {
     if (edit) {
       setDate(dayjs(info.date));
@@ -33,6 +35,9 @@ function AddEditService(props) {
           setWorshipLeader('');
           setOpen(true);
         }}
+        sx={{
+          backgroundColor: orange
+        }}
       >
         Add
       </Button>
@@ -42,6 +47,9 @@ function AddEditService(props) {
         onClick={() => {
           setEdit(true);
           setOpen(true);
+        }}
+        sx={{
+          backgroundColor: orange
         }}
         disabled={ Object.keys(info).length === 0 ? true : false }
       >

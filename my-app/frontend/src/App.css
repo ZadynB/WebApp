@@ -220,6 +220,12 @@ body {
     text-align: center;
   }
 
+  .notification {
+    position: fixed;
+    width: 90%;
+    top: 6%;
+  }
+
   .project-item {
     display: none;
   }
@@ -345,6 +351,12 @@ body {
 
   .modal-text {
     text-align: justify;
+  }
+
+  .notification {
+    position: fixed;
+    width: 60%;
+    top: 6%;
   }
 
   .project-item {

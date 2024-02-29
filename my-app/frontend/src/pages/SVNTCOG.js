@@ -1,15 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import Divider from '@mui/material/Divider';
 import { useState, useEffect } from 'react';
+import { useSpringRef, animated, useSpring } from '@react-spring/web';
+import Divider from '@mui/material/Divider';
 import axios from 'axios';
-import { CircularProgress, Button, ButtonGroup, Stack } from '@mui/joy';
+import CircularProgress from '@mui/joy/CircularProgress';
+import Button from '@mui/joy/Button';
+import ButtonGroup from '@mui/joy/ButtonGroup';
+import Stack from '@mui/joy/Stack';
 import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
 import InfoModal from '../components/InfoModal';
 import AddEditService from '../components/AddEditService';
 import DeleteService from '../components/DeleteService';
-import { Add, Remove, Edit } from '@mui/icons-material';
+import Add from '@mui/icons-material/Add';
+import Remove from '@mui/icons-material/Remove';
+import Edit from '@mui/icons-material/Edit';
+import Info from '@mui/icons-material/Info';
+import CloseRounded from '@mui/icons-material/CloseRounded';
+import Alert from '@mui/joy/Alert';
+import IconButton from '@mui/joy/IconButton';
+import Box from '@mui/material/Box';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -21,6 +33,7 @@ function sleep(duration) {
 
 function SVNTCOG () {
   const [refresh, setRefresh] = useState(false);
+  const [status, setStatus] = useState('neutral');
   const [songs, setSongs] = useState([]);
   const [services, setServices] = useState([]);
   const [serviceSongs, setServiceSongs] = useState([]);
@@ -28,7 +41,8 @@ function SVNTCOG () {
   const [loading, setLoading] = useState(false);
   const [serviceSelected, setServiceSelected] = useState({});
   const [serviceSongSelected, setServiceSongSelected] = useState({});
-  
+  const [notification, setNotification] = useState('');
+
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
 
   const serviceColumns = [
@@ -43,6 +57,16 @@ function SVNTCOG () {
     { field: 'author', headerName: 'Author', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'key', headerName: 'Key', flex: 1, headerAlign: 'center', align: 'center'}
   ];
+
+  const springRef = useSpringRef();
+  const spring = useSpring({
+    from: notification !== '' ? { opacity: 0, y: 0 } : { opacity: 1, y: 10 },
+    to: notification !== '' ? { opacity: 1, y: 10 } : { opacity: 0, y: 0 },
+    ref: springRef,
+    config: {
+      duration: 150,
+    },
+  }); 
 
   useEffect(() => {
     console.log('refreshed');
@@ -85,6 +109,16 @@ function SVNTCOG () {
     })();    
   }, [refresh]);
 
+  useEffect(() => {
+    (async () => {
+      if (notification !== '') {
+        await sleep(1.5e3);
+      }
+      springRef.start();
+    })();
+    
+  }, [notification, springRef]);
+
   const displayServiceSongs = (rowParams) => {
     // call to route to get the service songs
     try {
@@ -125,11 +159,14 @@ function SVNTCOG () {
       axios
         .post('http://localhost:5555/services', serviceObj)
         .then((response) => {
-          // console.log(response);
           setRefresh(!refresh);
+          setStatus('success');
+          setNotification('Successfully created service!');
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log(error.response.data.message);
+          setStatus('danger');
+          setNotification(error.response.data.message);
           setLoading(false);
         })
     } catch (error) {
@@ -145,9 +182,13 @@ function SVNTCOG () {
         .put(`http://localhost:5555/services/${id}`, serviceObj)
         .then((response) => {
           setRefresh(!refresh);
+          setStatus('success');
+          setNotification('Successfully updated service!');
         })
         .catch((error) => {
           console.log(error.message);
+          setStatus('danger');
+          setNotification('Error updating service!');
           setLoading(false);
         })
     } catch (error) {
@@ -157,7 +198,6 @@ function SVNTCOG () {
 
   const deleteService = (id) => {
     // route to delete service
-    console.log(id);
     setLoading(true);
 
     // need to delete all of the children service songs first
@@ -170,7 +210,6 @@ function SVNTCOG () {
           }
         })
         .then((response) => {
-          // console.log(response.data.data);
           // delete service songs
           for (const serviceSong of response.data.data) {
             axios
@@ -186,8 +225,9 @@ function SVNTCOG () {
           axios
             .delete(`http://localhost:5555/services/${id}`)
             .then((response) => {
-              // console.log(response);
               setRefresh(!refresh);
+              setStatus('success');
+              setNotification('Successfully deleted service!');
             })
             .catch((error) => {
               console.log(error.message);
@@ -196,6 +236,8 @@ function SVNTCOG () {
         })
         .catch((error) => {
           console.log(error.message);
+          setStatus('danger');
+          setNotification('Error deleting service!');
           setLoading(false);
         })
     } catch (error) {
@@ -267,6 +309,41 @@ function SVNTCOG () {
                   info={info}
                   setInfo={(info) => {setInfo(info)}}
                 />
+
+                {/* div for notifications */}
+                <ClickAwayListener
+                  onClickAway={() => {setNotification('')}}
+                >
+                  <animated.div
+                    className='notification'
+                    style={{ ...spring}}
+                  >
+                    <Box>
+                      <Alert
+                        variant="solid"
+                        size='sm'
+                        color={status}
+                        startDecorator={<Info />}
+                        endDecorator={
+                          <IconButton
+                            variant="plain"
+                            size="sm"
+                            onClick={() => {
+                              setNotification('');
+                            }}
+                            sx={{
+                              color: 'white'
+                            }}
+                          >
+                            <CloseRounded />
+                          </IconButton>
+                        }
+                      >
+                        {notification}
+                      </Alert>
+                    </Box>
+                  </animated.div>
+                </ClickAwayListener>
               </div>
             )
           }

@@ -7,6 +7,8 @@ function DeleteService(props) {
   const info = props.info;
   const [open, setOpen] = React.useState(false);
 
+  const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
+
   return (
     <React.Fragment>
       <Button
@@ -14,6 +16,9 @@ function DeleteService(props) {
         startDecorator={<Remove />}
         onClick={() => {
           setOpen(true);
+        }}
+        sx={{
+          backgroundColor: orange
         }}
         disabled={ Object.keys(info).length === 0 ? true : false }
       >
