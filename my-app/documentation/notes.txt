@@ -105,6 +105,13 @@ Log:
 - updated UI for buttons
 - added notification alerts
 
+[03/01/2024]
+- added functionality that shows the songs table only if a service is selected
+- added default routes for singerSongsRoute.js
+- added popup for adding/editing service songs
+- added functionality to open popup for add/edit of service songs
+- updated the searchbar.js component by giving it functionality to search on singer songs
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -137,6 +144,8 @@ To fix/do:
     -> checkout documentation for data grid onRowSelect()
     -> add state for selectedRow from dataGrid
     -> look at the transition some more
+    -> set notifications for errors as well
+    -> replace message with meaningful messages
 
 
 

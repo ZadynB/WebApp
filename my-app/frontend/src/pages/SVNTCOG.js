@@ -13,15 +13,16 @@ import CustomDataGrid from '../components/CustomDataGrid';
 import InfoModal from '../components/InfoModal';
 import AddEditService from '../components/AddEditService';
 import DeleteService from '../components/DeleteService';
-import Add from '@mui/icons-material/Add';
+import AddEditServiceSong from '../components/AddEditServiceSong';
 import Remove from '@mui/icons-material/Remove';
-import Edit from '@mui/icons-material/Edit';
 import Info from '@mui/icons-material/Info';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import Alert from '@mui/joy/Alert';
 import IconButton from '@mui/joy/IconButton';
 import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Collapse from '@mui/material/Collapse';
+import FormLabel from '@mui/joy/FormLabel';
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -35,6 +36,7 @@ function SVNTCOG () {
   const [refresh, setRefresh] = useState(false);
   const [status, setStatus] = useState('neutral');
   const [songs, setSongs] = useState([]);
+  const [singerSongs, setSingerSongs] = useState([]);
   const [services, setServices] = useState([]);
   const [serviceSongs, setServiceSongs] = useState([]);
   const [info, setInfo] = useState({title: '', desc: ''});
@@ -85,6 +87,17 @@ function SVNTCOG () {
             console.log(error);
             setLoading(false);
           });
+
+        // call to route to get singer songs
+        axios
+          .get('http://localhost:5555/singerSongs')
+          .then((response) => {
+            setSingerSongs(response.data.data);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoading(false);
+          })
   
         // call to route to get services
         axios
@@ -196,6 +209,14 @@ function SVNTCOG () {
     }
   };
 
+  const addServiceSong = (serviceSongObj) => {
+    console.log('added');
+  };
+
+  const editServiceSong = (serviceSongObj, id) => {
+    console.log('edited');
+  };
+
   const deleteService = (id) => {
     // route to delete service
     setLoading(true);
@@ -269,7 +290,8 @@ function SVNTCOG () {
           {loading ? (<CircularProgress size='md' className='spinner'/>) :
             (
               <div style={{width: '100%'}}>
-                <SearchBar options={songs} onOptionClick={displaySongLyrics}/>
+                <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
+                <SearchBar type='songList' options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
@@ -292,17 +314,26 @@ function SVNTCOG () {
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
-                  <CustomDataGrid
-                    id="SongTable"
-                    columns={songsColumns}
-                    rows={serviceSongs}
-                    onRowClick={selectServiceSong}
-                  />
-                  <ButtonGroup variant='solid' spacing='0.5rem'>
-                    <Button size='sm' startDecorator={<Add />} disabled={serviceSelected.id === undefined ? true : false}>Add</Button>
-                    <Button size='sm' startDecorator={<Edit />} disabled={serviceSongSelected.id === undefined ? true : false}>Edit</Button>
-                    <Button size='sm' startDecorator={<Remove />} disabled={serviceSongSelected.id === undefined ? true : false}>Delete</Button>
-                  </ButtonGroup>
+                  <Collapse in={Object.keys(serviceSelected).length !== 0 ? true : false} style={{width: '100%'}}>
+                    <Stack spacing={1} alignItems='center' direction='column'>
+                      <CustomDataGrid
+                        id="SongTable"
+                        columns={songsColumns}
+                        rows={serviceSongs}
+                        onRowClick={selectServiceSong}
+                      />
+                      <ButtonGroup variant='solid' spacing='0.5rem'>
+                        {/* <Button size='sm' startDecorator={<Add />} disabled={serviceSelected.id === undefined ? true : false}>Add</Button>
+                        <Button size='sm' startDecorator={<Edit />} disabled={serviceSongSelected.id === undefined ? true : false}>Edit</Button> */}
+                        <AddEditServiceSong
+                          onCreate={addServiceSong}
+                          onUpdate={editServiceSong}
+                          info={{selected: serviceSongSelected, singerSongs: singerSongs, songs: songs}}
+                        />
+                        <Button size='sm' startDecorator={<Remove />} disabled={serviceSongSelected.id === undefined ? true : false}>Delete</Button>
+                      </ButtonGroup>
+                    </Stack>
+                  </Collapse>
                 </Stack>
 
                 <InfoModal
