@@ -211,10 +211,13 @@ function SVNTCOG () {
 
   const addServiceSong = (serviceSongObj) => {
     console.log('added');
+    console.log(serviceSongObj);
   };
 
   const editServiceSong = (serviceSongObj, id) => {
     console.log('edited');
+    console.log(serviceSongObj);
+    console.log(id);
   };
 
   const deleteService = (id) => {
@@ -328,7 +331,7 @@ function SVNTCOG () {
                         <AddEditServiceSong
                           onCreate={addServiceSong}
                           onUpdate={editServiceSong}
-                          info={{selected: serviceSongSelected, singerSongs: singerSongs, songs: songs}}
+                          info={{selectedService: serviceSelected, selectedSong: serviceSongSelected, singerSongs: singerSongs, songs: songs}}
                         />
                         <Button size='sm' startDecorator={<Remove />} disabled={serviceSongSelected.id === undefined ? true : false}>Delete</Button>
                       </ButtonGroup>
@@ -342,8 +345,13 @@ function SVNTCOG () {
                 />
 
                 {/* div for notifications */}
+                
                 <ClickAwayListener
-                  onClickAway={() => {setNotification('')}}
+                  onClickAway={() => {
+                    if (notification !== '') {
+                      setNotification('');
+                    }
+                  }}
                 >
                   <animated.div
                     className='notification'

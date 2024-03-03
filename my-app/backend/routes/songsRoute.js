@@ -30,9 +30,19 @@ router.get('/', async (request, response) => {
   try {
     const songs = await Song.find({});
 
+    let arr = []
+    for (const song of songs) {
+      arr.push({
+        id: song._id,
+        title: song.title,
+        author: song.author,
+        lyrics: song.lyrics
+      })
+    }
+
     return response.status(200).json({
       count: songs.length,
-      data: songs
+      data: arr
     });
   } catch (error) {
     console.log(error.message);

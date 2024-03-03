@@ -3,40 +3,48 @@ import Stack from '@mui/joy/Stack';
 import Modal from '@mui/joy/Modal';
 import ModalClose from '@mui/joy/ModalClose';
 import Typography from '@mui/joy/Typography';
-import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import ModalDialog from '@mui/joy/ModalDialog';
 import { Transition } from 'react-transition-group';
 import Add from '@mui/icons-material/Add';
 import Edit from '@mui/icons-material/Edit';
 import SearchBar from './SearchBar';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Divider from '@mui/material/Divider';
+import Input from '@mui/joy/Input';
 
 function AddEditServiceSong(props) {
-  const selected = props.info.selected;
+  const selectedSong = props.info.selectedSong;
+  const selectedService = props.info.selectedService;
   const singerSongs = props.info.singerSongs;
   const songs = props.info.songs;
 
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
-  const [createNew, setCreateNew] = React.useState(false);
-  // const [worshipLeader, setWorshipLeader] = React.useState('');
+  const [createNew, setCreateNew] = React.useState(true);
+  const [singer, setSinger] = React.useState('');
+  const [key, setKey] = React.useState('');
+  const [singerSongData, setSingerSongData] = React.useState({song: '', author: '', singer: '', key: ''});
+  const [songData, setSongData] = React.useState({title: '', author: ''})
 
   const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
 
-  // React.useEffect(() => {
-  //   if (edit) {
-  //     setWorshipLeader(info.worshipLeader);
-  //   }
-  // }, [edit, info.worshipLeader]);
+  const singerRef = React.createRef();
 
-  const selectSingerSong = () => {
-    console.log('singer song selected');
+  const selectSingerSong = (option) => {
+    setSingerSongData({
+      song: option.song,
+      author: option.author,
+      singer: option.singer,
+      key: option.key
+    });
   }
 
-  const selectSong = () => {
-    console.log('song selected');
+  const selectSong = (option) => {
+    setSongData({
+      title: option.title,
+      author: option.author
+    })
+    // console.log('song selected');
   }
 
   return (
@@ -46,7 +54,8 @@ function AddEditServiceSong(props) {
         startDecorator={<Add />}
         onClick={() => {
           setEdit(false);
-          // setWorshipLeader('');
+          setSinger('');
+          setKey('');
           setOpen(true);
         }}
         sx={{
@@ -65,7 +74,7 @@ function AddEditServiceSong(props) {
         sx={{
           backgroundColor: orange
         }}
-        disabled={ Object.keys(selected).length === 0 ? true : false }
+        disabled={ Object.keys(selectedSong).length === 0 ? true : false }
       >
         Edit
       </Button>
@@ -122,6 +131,37 @@ function AddEditServiceSong(props) {
                 onSubmit={(event) => {
                   event.preventDefault();
 
+                  const serviceSongObj = {};
+
+                  if (!edit) {
+                    if (createNew) {
+                      serviceSongObj.parentId = selectedService.id;
+                      serviceSongObj.song = songData.title;
+                      serviceSongObj.author = songData.author;
+                      serviceSongObj.singer = singer;
+                      serviceSongObj.key = key;
+                    } else {
+                      serviceSongObj.parentId = selectedService.id;
+                      serviceSongObj.song = singerSongData.song;
+                      serviceSongObj.author = singerSongData.author
+                      serviceSongObj.singer = singerSongData.singer
+                      serviceSongObj.key = singerSongData.key
+                    }
+                    props.onCreate(serviceSongObj);
+                  } else {
+
+                  }
+                  // if (createNew) {
+                  //   console.log ('here');
+                  //   // for add and edit
+                  //   if (!edit) {
+                  //     serviceSongObj.parentId = selectedService.id
+                  //     serviceSongObj.song = 
+                  //   }
+                  // } else {
+                  //   console.log('there');
+                  //   // for only add
+                  // }
                   // const serviceObj = {
                   //   worshipLeader: worshipLeader,
                   // };
@@ -132,7 +172,9 @@ function AddEditServiceSong(props) {
                   //   serviceObj.numSongs = selected.numSongs;
                   //   props.onUpdate(serviceObj, selected.id);
                   // }
-                  
+                  console.log(singerRef.current.children[0].children[0].value);
+                  singerRef.current.children[0].children[0].value = '';
+                  console.log(singerRef.current.children[0].children[0].value);
                   setOpen(false);
                 }}
               >
@@ -142,11 +184,15 @@ function AddEditServiceSong(props) {
                       <Typography id="modal-field-1" textColor="text.tertiary">
                         Create from existing
                       </Typography>
-                      <ClickAwayListener onClickAway={() => {setCreateNew(true)}}>
-                        <div>
-                          <SearchBar type='singerSongList' options={singerSongs} onOptionClick={selectSingerSong} disabled={createNew}/>
-                        </div>
-                      </ClickAwayListener>
+                      <div 
+                        onClick={() => {
+                          setCreateNew(false);
+                          setSinger('');
+                          setKey('');
+                        }}
+                      >
+                        <SearchBar ref={singerRef} type='singerSongList' options={singerSongs} onOptionClick={selectSingerSong} disabled={createNew}/>
+                      </div>
                       <Divider
                         variant='middle'
                         sx={{
@@ -161,7 +207,11 @@ function AddEditServiceSong(props) {
                     <></>
                   )}
 
-                  <ClickAwayListener onClickAway={() => {setCreateNew(false)}}>
+                  <div
+                    onClick={() => {
+                      setCreateNew(true);
+                    }}
+                  >
                     <Stack spacing={1}>
                       {!edit ? (
                         <Typography id="modal-field-2" textColor="text.tertiary">
@@ -176,18 +226,18 @@ function AddEditServiceSong(props) {
                         id='add-edit-singer'
                         placeholder='Singer...'
                         disabled={!createNew}
-                        // value={worshipLeader}
-                        // onChange={(newValue) => setWorshipLeader(newValue.target.value)}
+                        value={singer}
+                        onChange={(newValue) => setSinger(newValue.target.value)}
                       />
                       <Input 
                         id='add-edit-key'
                         placeholder='Key...'
                         disabled={!createNew}
-                        // value={worshipLeader}
-                        // onChange={(newValue) => setWorshipLeader(newValue.target.value)}
+                        value={key}
+                        onChange={(newValue) => setKey(newValue.target.value)}
                       />
                     </Stack>
-                  </ClickAwayListener>
+                  </div>
                   
                   <Button type='submit' color='primary'>
                     { edit ? 'Update': 'Create'}

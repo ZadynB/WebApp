@@ -112,6 +112,10 @@ Log:
 - added functionality to open popup for add/edit of service songs
 - updated the searchbar.js component by giving it functionality to search on singer songs
 
+[03/03/2024]
+- updated the searchbar.js functionality
+- updated singerSong and ServiceSong routes
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
