@@ -67,6 +67,7 @@ function AddEditService(props) {
                 textColor="inherit"
                 fontWeight="lg"
                 mb={1}
+                style={{whiteSpace: 'pre-line'}}
               >
                 {title}
               </Typography>

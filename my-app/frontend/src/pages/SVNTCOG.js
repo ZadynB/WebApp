@@ -34,6 +34,7 @@ function sleep(duration) {
 
 function SVNTCOG () {
   const [refresh, setRefresh] = useState(false);
+  const [showSongsTable, setShowSongsTable] = useState(false);
   const [status, setStatus] = useState('neutral');
   const [songs, setSongs] = useState([]);
   const [singerSongs, setSingerSongs] = useState([]);
@@ -145,6 +146,7 @@ function SVNTCOG () {
           setServiceSongs(response.data.data);
           setServiceSelected(rowParams.row);
           setServiceSongSelected({});
+          setShowSongsTable(true);
         })
         .catch((error) => {
           console.log(error.message);
@@ -160,7 +162,7 @@ function SVNTCOG () {
 
   const displaySongLyrics = (option) => {
     setInfo({
-      title: option.title + ', ' + option.author,
+      title: option.title + '\n' + option.author,
       desc:  option.lyrics
     });
   };
@@ -209,9 +211,66 @@ function SVNTCOG () {
     }
   };
 
-  const addServiceSong = (serviceSongObj) => {
+  const addServiceSong = (serviceSongObj, isNewSong) => {
     console.log('added');
     console.log(serviceSongObj);
+    
+    // if isNewSong then check if it exists first and then create new singer song
+    // then create the service song
+    setLoading(true);
+    if (isNewSong) {
+      const singerSongObj = {
+        singer: serviceSongObj.singer,
+        author: serviceSongObj.author,
+        song: serviceSongObj.song,
+        key: serviceSongObj.key
+      }
+      try {
+        axios
+          .post('http://localhost:5555/singerSongs', singerSongObj)
+          .then((response) => {
+            axios
+              .post('http://localhost:5555/serviceSongs', serviceSongObj)
+              .then((response) => {
+                setRefresh(!refresh);
+                setStatus('success');
+                setNotification('Successfully created service song!');
+              })
+              .catch((error) => {
+                console.log(error.response.data.message);
+                setStatus('danger');
+                setNotification(error.response.data.message);
+                setLoading(false);
+              })
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            setStatus('danger');
+            setNotification(error.response.data.message);
+            setLoading(false);
+          })
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else {
+      try {
+        axios
+          .post('http://localhost:5555/serviceSongs', serviceSongObj)
+          .then((response) => {
+            setRefresh(!refresh);
+            setStatus('success');
+            setNotification('Successfully created service song!');
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            setStatus('danger');
+            setNotification(error.response.data.message);
+            setLoading(false);
+          })
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
   };
 
   const editServiceSong = (serviceSongObj, id) => {
@@ -317,7 +376,7 @@ function SVNTCOG () {
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
-                  <Collapse in={Object.keys(serviceSelected).length !== 0 ? true : false} style={{width: '100%'}}>
+                  <Collapse in={showSongsTable} style={{width: '100%'}}>
                     <Stack spacing={1} alignItems='center' direction='column'>
                       <CustomDataGrid
                         id="SongTable"
@@ -326,8 +385,6 @@ function SVNTCOG () {
                         onRowClick={selectServiceSong}
                       />
                       <ButtonGroup variant='solid' spacing='0.5rem'>
-                        {/* <Button size='sm' startDecorator={<Add />} disabled={serviceSelected.id === undefined ? true : false}>Add</Button>
-                        <Button size='sm' startDecorator={<Edit />} disabled={serviceSongSelected.id === undefined ? true : false}>Edit</Button> */}
                         <AddEditServiceSong
                           onCreate={addServiceSong}
                           onUpdate={editServiceSong}

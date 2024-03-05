@@ -29,6 +29,7 @@ function AddEditServiceSong(props) {
   const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
 
   const singerRef = React.createRef();
+  const songRef = React.createRef();
 
   const selectSingerSong = (option) => {
     setSingerSongData({
@@ -44,7 +45,6 @@ function AddEditServiceSong(props) {
       title: option.title,
       author: option.author
     })
-    // console.log('song selected');
   }
 
   return (
@@ -57,6 +57,7 @@ function AddEditServiceSong(props) {
           setSinger('');
           setKey('');
           setOpen(true);
+          setCreateNew(true);
         }}
         sx={{
           backgroundColor: orange
@@ -70,6 +71,7 @@ function AddEditServiceSong(props) {
         onClick={() => {
           setEdit(true);
           setOpen(true);
+          setCreateNew(true);
         }}
         sx={{
           backgroundColor: orange
@@ -132,6 +134,7 @@ function AddEditServiceSong(props) {
                   event.preventDefault();
 
                   const serviceSongObj = {};
+                  let isNewSong;
 
                   if (!edit) {
                     if (createNew) {
@@ -140,14 +143,27 @@ function AddEditServiceSong(props) {
                       serviceSongObj.author = songData.author;
                       serviceSongObj.singer = singer;
                       serviceSongObj.key = key;
+
+                      isNewSong = true;
+                      for (const song of singerSongs) {
+                        if (song.singer === serviceSongObj.singer && 
+                          song.author === serviceSongObj.author && 
+                          song.song === serviceSongObj.song &&
+                          song.key === serviceSongObj.key)
+                        {
+                          isNewSong = false;
+                          break;
+                        }
+                      }
                     } else {
                       serviceSongObj.parentId = selectedService.id;
                       serviceSongObj.song = singerSongData.song;
                       serviceSongObj.author = singerSongData.author
                       serviceSongObj.singer = singerSongData.singer
                       serviceSongObj.key = singerSongData.key
+                      isNewSong = false;
                     }
-                    props.onCreate(serviceSongObj);
+                    props.onCreate(serviceSongObj, isNewSong);
                   } else {
 
                   }
@@ -172,9 +188,10 @@ function AddEditServiceSong(props) {
                   //   serviceObj.numSongs = selected.numSongs;
                   //   props.onUpdate(serviceObj, selected.id);
                   // }
-                  console.log(singerRef.current.children[0].children[0].value);
-                  singerRef.current.children[0].children[0].value = '';
-                  console.log(singerRef.current.children[0].children[0].value);
+                  
+                  // reset search bars
+                  singerRef.current.children[1].click();
+                  songRef.current.children[1].click();
                   setOpen(false);
                 }}
               >
@@ -186,6 +203,8 @@ function AddEditServiceSong(props) {
                       </Typography>
                       <div 
                         onClick={() => {
+                          //reset search bar
+                          songRef.current.children[1].click();
                           setCreateNew(false);
                           setSinger('');
                           setKey('');
@@ -209,7 +228,11 @@ function AddEditServiceSong(props) {
 
                   <div
                     onClick={() => {
-                      setCreateNew(true);
+                      if (!edit) {
+                        //reset search bar of singer song list
+                        singerRef.current.children[1].click();
+                        setCreateNew(true);
+                      }
                     }}
                   >
                     <Stack spacing={1}>
@@ -221,7 +244,7 @@ function AddEditServiceSong(props) {
                         <></>
                       )}
                       
-                      <SearchBar type='songList' options={songs} onOptionClick={selectSong} disabled={!createNew}/>
+                      <SearchBar ref={songRef} type='songList' options={songs} onOptionClick={selectSong} disabled={!createNew}/>
                       <Input 
                         id='add-edit-singer'
                         placeholder='Singer...'

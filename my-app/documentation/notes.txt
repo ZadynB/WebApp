@@ -116,6 +116,11 @@ Log:
 - updated the searchbar.js functionality
 - updated singerSong and ServiceSong routes
 
+[03/05/2024]
+- added fix for clearing search bars
+- added functionality to add service songs
+- fixed issue with reloading songs table on refresh when adding a new song
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
