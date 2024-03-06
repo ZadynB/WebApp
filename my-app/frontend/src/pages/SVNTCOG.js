@@ -14,6 +14,7 @@ import InfoModal from '../components/InfoModal';
 import AddEditService from '../components/AddEditService';
 import DeleteService from '../components/DeleteService';
 import AddEditServiceSong from '../components/AddEditServiceSong';
+import DeleteServiceSong from '../components/DeleteServiceSong';
 import Remove from '@mui/icons-material/Remove';
 import Info from '@mui/icons-material/Info';
 import CloseRounded from '@mui/icons-material/CloseRounded';
@@ -44,6 +45,7 @@ function SVNTCOG () {
   const [loading, setLoading] = useState(false);
   const [serviceSelected, setServiceSelected] = useState({});
   const [serviceSongSelected, setServiceSongSelected] = useState({});
+  const [editValue, setEditValue] = useState({});
   const [notification, setNotification] = useState('');
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
@@ -69,7 +71,7 @@ function SVNTCOG () {
     config: {
       duration: 150,
     },
-  }); 
+  });
 
   useEffect(() => {
     console.log('refreshed');
@@ -158,6 +160,25 @@ function SVNTCOG () {
 
   const selectServiceSong = (rowParams) => {
     setServiceSongSelected(rowParams.row);
+
+    // find song and set the lyrics for the edit value
+    let lyrics = '';
+    let songId = '';
+    for (const song of songs) {
+      if (song.author === rowParams.row.author &&
+          song.title === rowParams.row.song)
+      {
+        songId = song.id;
+        lyrics = song.lyrics;
+        break;
+      }
+    }
+    setEditValue({
+      id: songId,
+      author: rowParams.row.author,
+      title: rowParams.row.song,
+      lyrics: lyrics
+    })
   };
 
   const displaySongLyrics = (option) => {
@@ -211,74 +232,6 @@ function SVNTCOG () {
     }
   };
 
-  const addServiceSong = (serviceSongObj, isNewSong) => {
-    console.log('added');
-    console.log(serviceSongObj);
-    
-    // if isNewSong then check if it exists first and then create new singer song
-    // then create the service song
-    setLoading(true);
-    if (isNewSong) {
-      const singerSongObj = {
-        singer: serviceSongObj.singer,
-        author: serviceSongObj.author,
-        song: serviceSongObj.song,
-        key: serviceSongObj.key
-      }
-      try {
-        axios
-          .post('http://localhost:5555/singerSongs', singerSongObj)
-          .then((response) => {
-            axios
-              .post('http://localhost:5555/serviceSongs', serviceSongObj)
-              .then((response) => {
-                setRefresh(!refresh);
-                setStatus('success');
-                setNotification('Successfully created service song!');
-              })
-              .catch((error) => {
-                console.log(error.response.data.message);
-                setStatus('danger');
-                setNotification(error.response.data.message);
-                setLoading(false);
-              })
-          })
-          .catch((error) => {
-            console.log(error.response.data.message);
-            setStatus('danger');
-            setNotification(error.response.data.message);
-            setLoading(false);
-          })
-      } catch (error) {
-        console.log(error.message);
-      }
-    } else {
-      try {
-        axios
-          .post('http://localhost:5555/serviceSongs', serviceSongObj)
-          .then((response) => {
-            setRefresh(!refresh);
-            setStatus('success');
-            setNotification('Successfully created service song!');
-          })
-          .catch((error) => {
-            console.log(error.response.data.message);
-            setStatus('danger');
-            setNotification(error.response.data.message);
-            setLoading(false);
-          })
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-  };
-
-  const editServiceSong = (serviceSongObj, id) => {
-    console.log('edited');
-    console.log(serviceSongObj);
-    console.log(id);
-  };
-
   const deleteService = (id) => {
     // route to delete service
     setLoading(true);
@@ -314,6 +267,8 @@ function SVNTCOG () {
             })
             .catch((error) => {
               console.log(error.message);
+              setStatus('danger');
+              setNotification('Error deleting service!');
               setLoading(false);
             })
         })
@@ -327,6 +282,145 @@ function SVNTCOG () {
       console.log(error.message);
     }
   };
+
+  const addServiceSong = (serviceSongObj, isNewSong) => {
+    console.log('added');
+    console.log(serviceSongObj);
+    
+    // if isNewSong then check if it exists first and then create new singer song
+    // then create the service song
+    setLoading(true);
+    if (isNewSong) {
+      const singerSongObj = {
+        singer: serviceSongObj.singer,
+        author: serviceSongObj.author,
+        song: serviceSongObj.song,
+        key: serviceSongObj.key
+      }
+      try {
+        axios
+          .post('http://localhost:5555/singerSongs', singerSongObj)
+          .then((response) => {
+            axios
+              .post('http://localhost:5555/serviceSongs', serviceSongObj)
+              .then((response) => {
+                // update the num songs on the service
+                const serviceObj = {
+                  date: serviceSelected.date,
+                  worshipLeader: serviceSelected.worshipLeader,
+                  numSongs: serviceSelected.numSongs + 1
+                };
+                axios
+                  .put(`http://localhost:5555/services/${serviceSelected.id}`, serviceObj)
+                  .then((response) => {
+                    setRefresh(!refresh);
+                    setStatus('success');
+                    setNotification('Successfully created service song!');
+                  })
+                  .catch((error) => {
+                    console.log(error.response.data.message);
+                    setStatus('danger');
+                    setNotification(error.response.data.message);
+                    setLoading(false);
+                  })
+              })
+              .catch((error) => {
+                console.log(error.response.data.message);
+                setStatus('danger');
+                setNotification(error.response.data.message);
+                setLoading(false);
+              })
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            setStatus('danger');
+            setNotification(error.response.data.message);
+            setLoading(false);
+          })
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else {
+      try {
+        axios
+          .post('http://localhost:5555/serviceSongs', serviceSongObj)
+          .then((response) => {
+            // update the num songs on the service
+            const serviceObj = {
+              date: serviceSelected.date,
+              worshipLeader: serviceSelected.worshipLeader,
+              numSongs: serviceSelected.numSongs + 1
+            };
+            axios
+              .put(`http://localhost:5555/services/${serviceSelected.id}`, serviceObj)
+              .then((response) => {
+                setRefresh(!refresh);
+                setStatus('success');
+                setNotification('Successfully created service song!');
+              })
+              .catch((error) => {
+                console.log(error.response.data.message);
+                setStatus('danger');
+                setNotification(error.response.data.message);
+                setLoading(false);
+              })
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            setStatus('danger');
+            setNotification(error.response.data.message);
+            setLoading(false);
+          })
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  };
+
+  const editServiceSong = (serviceSongObj, id) => {
+    console.log('edited');
+    console.log(serviceSongObj);
+    console.log(id);
+  };
+
+  const deleteServiceSong = (id) => {
+    // route to delete service song
+    setLoading(true);
+
+    try {
+      axios
+        .delete(`http://localhost:5555/serviceSongs/${id}`)
+        .then((response) => {
+          // update the num songs on the service
+          const serviceObj = {
+            date: serviceSelected.date,
+            worshipLeader: serviceSelected.worshipLeader,
+            numSongs: serviceSelected.numSongs - 1
+          }
+          axios
+            .put(`http://localhost:5555/services/${serviceSelected.id}`, serviceObj)
+            .then((response) => {
+              setRefresh(!refresh);
+              setStatus('success');
+              setNotification('Successfully deleted service song!');
+            })
+            .catch((error) => {
+              console.log(error.message);
+              setStatus('danger');
+              setNotification('Error deleting service!');
+              setLoading(false);
+            })
+        })
+        .catch((error) => {
+          console.log(error.message);
+          setStatus('danger');
+          setNotification('Error deleting service!');
+          setLoading(false);
+        })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <AnimatePresence mode='wait'>
@@ -353,7 +447,7 @@ function SVNTCOG () {
             (
               <div style={{width: '100%'}}>
                 <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
-                <SearchBar type='songList' options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
+                <SearchBar type='songList' editValue={{}} options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
@@ -388,9 +482,12 @@ function SVNTCOG () {
                         <AddEditServiceSong
                           onCreate={addServiceSong}
                           onUpdate={editServiceSong}
-                          info={{selectedService: serviceSelected, selectedSong: serviceSongSelected, singerSongs: singerSongs, songs: songs}}
+                          info={{selectedService: serviceSelected, selectedSong: serviceSongSelected, singerSongs: singerSongs, songs: songs, editValue: editValue}}
                         />
-                        <Button size='sm' startDecorator={<Remove />} disabled={serviceSongSelected.id === undefined ? true : false}>Delete</Button>
+                        <DeleteServiceSong
+                          onDelete={deleteServiceSong}
+                          info={serviceSongSelected}
+                        />
                       </ButtonGroup>
                     </Stack>
                   </Collapse>
@@ -402,7 +499,6 @@ function SVNTCOG () {
                 />
 
                 {/* div for notifications */}
-                
                 <ClickAwayListener
                   onClickAway={() => {
                     if (notification !== '') {

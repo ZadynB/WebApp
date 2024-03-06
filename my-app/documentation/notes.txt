@@ -121,6 +121,11 @@ Log:
 - added functionality to add service songs
 - fixed issue with reloading songs table on refresh when adding a new song
 
+[03/06/2024]
+- added deleteServiceSong.js
+- added functionality to update the num songs for service
+- fixed issue with search bar getting edit value
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -155,6 +160,7 @@ To fix/do:
     -> look at the transition some more
     -> set notifications for errors as well
     -> replace message with meaningful messages
+    -> fix issue with search bar.js and the default value [SOLVED]
 
 
 

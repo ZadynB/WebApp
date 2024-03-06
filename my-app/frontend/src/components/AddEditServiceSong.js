@@ -17,6 +17,7 @@ function AddEditServiceSong(props) {
   const selectedService = props.info.selectedService;
   const singerSongs = props.info.singerSongs;
   const songs = props.info.songs;
+  const editValue = props.info.editValue;
 
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
@@ -30,6 +31,14 @@ function AddEditServiceSong(props) {
 
   const singerRef = React.createRef();
   const songRef = React.createRef();
+
+  React.useEffect(() => {
+    if (edit) {
+      setSinger(selectedSong.singer);
+      setKey(selectedSong.key);
+      // console.log(songRef.current.children[0].children[0].value);
+    }
+  }, [edit, selectedSong.key, selectedSong.singer])
 
   const selectSingerSong = (option) => {
     setSingerSongData({
@@ -86,7 +95,7 @@ function AddEditServiceSong(props) {
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
             open={!['exited', 'exiting'].includes(state)}
-            onClose={() => setOpen(false)}
+            onClose={() => {setOpen(false); setEdit(false); setCreateNew(true);}}
             sx={{ 
               display: 'flex',
               justifyContent: 'center',
@@ -165,7 +174,11 @@ function AddEditServiceSong(props) {
                     }
                     props.onCreate(serviceSongObj, isNewSong);
                   } else {
-
+                    serviceSongObj.song = songData.title;
+                    serviceSongObj.author = songData.author;
+                    serviceSongObj.singer = singer;
+                    serviceSongObj.key = key;
+                    props.onUpdate(serviceSongObj, selectedSong.id);
                   }
                   // if (createNew) {
                   //   console.log ('here');
@@ -210,7 +223,7 @@ function AddEditServiceSong(props) {
                           setKey('');
                         }}
                       >
-                        <SearchBar ref={singerRef} type='singerSongList' options={singerSongs} onOptionClick={selectSingerSong} disabled={createNew}/>
+                        <SearchBar ref={singerRef} type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={selectSingerSong} disabled={createNew}/>
                       </div>
                       <Divider
                         variant='middle'
@@ -244,7 +257,12 @@ function AddEditServiceSong(props) {
                         <></>
                       )}
                       
-                      <SearchBar ref={songRef} type='songList' options={songs} onOptionClick={selectSong} disabled={!createNew}/>
+                      {!edit ? (
+                        <SearchBar ref={songRef} type='songList' editValue={{}} options={songs} onOptionClick={selectSong} disabled={!createNew}/>
+                      ) : (
+                        <SearchBar ref={songRef} type='songList' editValue={editValue} options={songs} onOptionClick={selectSong} disabled={!createNew}/>
+                      )}
+                      
                       <Input 
                         id='add-edit-singer'
                         placeholder='Singer...'
