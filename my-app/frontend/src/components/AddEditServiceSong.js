@@ -36,7 +36,6 @@ function AddEditServiceSong(props) {
     if (edit) {
       setSinger(selectedSong.singer);
       setKey(selectedSong.key);
-      // console.log(songRef.current.children[0].children[0].value);
     }
   }, [edit, selectedSong.key, selectedSong.singer])
 
@@ -173,6 +172,7 @@ function AddEditServiceSong(props) {
                       isNewSong = false;
                     }
                     props.onCreate(serviceSongObj, isNewSong);
+                    singerRef.current.children[1].click();
                   } else {
                     serviceSongObj.song = songData.title;
                     serviceSongObj.author = songData.author;
@@ -180,30 +180,7 @@ function AddEditServiceSong(props) {
                     serviceSongObj.key = key;
                     props.onUpdate(serviceSongObj, selectedSong.id);
                   }
-                  // if (createNew) {
-                  //   console.log ('here');
-                  //   // for add and edit
-                  //   if (!edit) {
-                  //     serviceSongObj.parentId = selectedService.id
-                  //     serviceSongObj.song = 
-                  //   }
-                  // } else {
-                  //   console.log('there');
-                  //   // for only add
-                  // }
-                  // const serviceObj = {
-                  //   worshipLeader: worshipLeader,
-                  // };
 
-                  // if (!edit) {
-                  //   props.onCreate(serviceObj);
-                  // } else {
-                  //   serviceObj.numSongs = selected.numSongs;
-                  //   props.onUpdate(serviceObj, selected.id);
-                  // }
-                  
-                  // reset search bars
-                  singerRef.current.children[1].click();
                   songRef.current.children[1].click();
                   setOpen(false);
                 }}

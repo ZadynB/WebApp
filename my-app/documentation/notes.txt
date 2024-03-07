@@ -125,6 +125,8 @@ Log:
 - added deleteServiceSong.js
 - added functionality to update the num songs for service
 - fixed issue with search bar getting edit value
+- added functionality to update service song
+- fixed edge case where if there are no services, the songs table still shows
 
 To fix/do:
 [Solved/Done]
@@ -155,12 +157,9 @@ To fix/do:
 [In Progress]
 - start checking out back end stuff
     -> continue implementing backend functionality
-    -> checkout documentation for data grid onRowSelect()
-    -> add state for selectedRow from dataGrid
-    -> look at the transition some more
     -> set notifications for errors as well
     -> replace message with meaningful messages
-    -> fix issue with search bar.js and the default value [SOLVED]
+    -> fix bug with duplicates
 
 
 

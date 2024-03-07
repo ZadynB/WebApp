@@ -106,6 +106,9 @@ function SVNTCOG () {
         axios
           .get('http://localhost:5555/services')
           .then((response) => {
+            if (response.data.data.length === 0) {
+              setShowSongsTable(false);
+            }
             setServices(response.data.data);
             setLoading(false);
           })
@@ -378,9 +381,25 @@ function SVNTCOG () {
   };
 
   const editServiceSong = (serviceSongObj, id) => {
-    console.log('edited');
-    console.log(serviceSongObj);
-    console.log(id);
+    // route to edit service song
+    setLoading(true);
+    try {
+      axios
+        .put(`http://localhost:5555/serviceSongs/${id}`, serviceSongObj)
+        .then((response) => {
+          setRefresh(!refresh);
+          setStatus('success');
+          setNotification('Successfully updated service song!');
+        })
+        .catch((error) => {
+          console.log(error.message);
+          setStatus('danger');
+          setNotification('Error updating service!');
+          setLoading(false);
+        })
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const deleteServiceSong = (id) => {
