@@ -61,7 +61,7 @@ function SVNTCOG () {
   }
 
   const songsColumns = [
-    { field: 'song', headerName: 'Name', flex: 1, headerAlign: 'center', align: 'center'},
+    { field: 'song', headerName: 'Song', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'singer', headerName: 'Singer', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'author', headerName: 'Author', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'key', headerName: 'Key', flex: 1, headerAlign: 'center', align: 'center'}

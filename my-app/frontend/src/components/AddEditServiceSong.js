@@ -9,6 +9,7 @@ import { Transition } from 'react-transition-group';
 import Add from '@mui/icons-material/Add';
 import Edit from '@mui/icons-material/Edit';
 import SearchBar from './SearchBar';
+import KeySearchBar from './KeySearchBar';
 import Divider from '@mui/material/Divider';
 import Input from '@mui/joy/Input';
 
@@ -28,16 +29,19 @@ function AddEditServiceSong(props) {
   const [songData, setSongData] = React.useState({title: '', author: ''})
 
   const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
+  const keys = ['A', 'A#/Bb', 'B/Cb', 'C/B#', 'C#/Db', 'D', 'D#/Eb', 'E/Fb', 'F/E#', 'F#/Gb', 'G', 'G#/Ab'];
 
   const singerRef = React.createRef();
   const songRef = React.createRef();
+  const keyRef = React.createRef();
 
   React.useEffect(() => {
     if (edit) {
       setSinger(selectedSong.singer);
       setKey(selectedSong.key);
+      setSongData({title: selectedSong.song, author: selectedSong.author});
     }
-  }, [edit, selectedSong.key, selectedSong.singer])
+  }, [edit, selectedSong])
 
   const selectSingerSong = (option) => {
     setSingerSongData({
@@ -55,17 +59,43 @@ function AddEditServiceSong(props) {
     })
   }
 
+  const selectKey = (option) => {
+    console.log(option);
+    setKey(option);
+  }
+
   return (
     <React.Fragment>
       <Button
         size='sm'
         startDecorator={<Add />}
         onClick={() => {
+
+          // reset search bars
+          if (!edit) {
+            //safety check
+            if (singerRef.current.children.length >= 3) {
+              singerRef.current.children[1].click();
+            }
+          }
+
+          //safety check
+          if (songRef.current.children.length >= 3) {
+            console.log('song');
+            songRef.current.children[1].click();
+          }
+
+          //safety check
+          if (keyRef.current.children.length >= 3) {
+            console.log('key');
+            keyRef.current.children[1].click();
+          }
+
           setEdit(false);
           setSinger('');
           setKey('');
-          setOpen(true);
           setCreateNew(true);
+          setOpen(true);
         }}
         sx={{
           backgroundColor: orange
@@ -79,8 +109,8 @@ function AddEditServiceSong(props) {
         startDecorator={<Edit />}
         onClick={() => {
           setEdit(true);
-          setOpen(true);
           setCreateNew(true);
+          setOpen(true);
         }}
         sx={{
           backgroundColor: orange
@@ -95,7 +125,9 @@ function AddEditServiceSong(props) {
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
             open={!['exited', 'exiting'].includes(state)}
-            onClose={() => {setOpen(false); setEdit(false); setCreateNew(true);}}
+            onClose={() => {
+              setOpen(false);
+            }}
             sx={{ 
               display: 'flex',
               justifyContent: 'center',
@@ -199,7 +231,16 @@ function AddEditServiceSong(props) {
                       <div 
                         onClick={() => {
                           //reset search bar
-                          songRef.current.children[1].click();
+                          //safety check
+                          if (songRef.current.children.length >= 3) {
+                            songRef.current.children[1].click();
+                          }
+                          
+                          //safety check
+                          if(keyRef.current.children.length >= 3) {
+                            keyRef.current.children[1].click();
+                          }
+
                           setCreateNew(false);
                           setSinger('');
                           setKey('');
@@ -225,7 +266,10 @@ function AddEditServiceSong(props) {
                     onClick={() => {
                       if (!edit) {
                         //reset search bar of singer song list
-                        singerRef.current.children[1].click();
+                        //safety check
+                        if (singerRef.current.children.length >= 3) {
+                          singerRef.current.children[1].click();
+                        }
                         setCreateNew(true);
                       }
                     }}
@@ -254,12 +298,19 @@ function AddEditServiceSong(props) {
                         value={singer}
                         onChange={(newValue) => setSinger(newValue.target.value)}
                       />
-                      <Input 
+                      {/* <Input 
                         id='add-edit-key'
                         placeholder='Key...'
                         disabled={!createNew}
                         value={key}
                         onChange={(newValue) => setKey(newValue.target.value)}
+                      /> */}
+                      <KeySearchBar
+                        ref={keyRef}
+                        options={keys}
+                        disabled={!createNew}
+                        editValue={key}
+                        onOptionClick={selectKey}
                       />
                     </Stack>
                   </div>

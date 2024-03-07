@@ -132,6 +132,8 @@ Log:
 - fixed bug with duplicates in search bar
 - hid the author column in service songs table
 - fixed bug with updating the service date to a wrong date
+- added new KeySearchBar instead of input
+- updated functionality to properly use the key search bar instead
 
 To fix/do:
 [Solved/Done]
@@ -164,6 +166,7 @@ To fix/do:
     -> continue implementing backend functionality
     -> set notifications for errors as well
     -> replace message with meaningful messages
+    -> find way to change the singer input to a search bar as well (add a button to manually add a new singer to the list?)
 
 
 
