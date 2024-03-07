@@ -1,10 +1,12 @@
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
+import { useState } from 'react';
 
 function CustomDataGrid(props) {
+  const [visibleColumns, setVisibleColumns] = useState(props.visibleColumns);
+
   const dark = getComputedStyle(document.body).getPropertyValue('--dark');
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
-  
 
   return (
     <Box className='dataGrid-box'>
@@ -39,6 +41,10 @@ function CustomDataGrid(props) {
           props.onRowClick(params)
         }}
         hideFooter
+        columnVisibilityModel={visibleColumns}
+        onColumnVisibilityModelChange={(model) => {
+          setVisibleColumns(model)
+        }}
       />
     </Box>
   )

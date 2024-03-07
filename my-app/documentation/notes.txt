@@ -128,6 +128,11 @@ Log:
 - added functionality to update service song
 - fixed edge case where if there are no services, the songs table still shows
 
+[03/07/2024]
+- fixed bug with duplicates in search bar
+- hid the author column in service songs table
+- fixed bug with updating the service date to a wrong date
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -159,7 +164,6 @@ To fix/do:
     -> continue implementing backend functionality
     -> set notifications for errors as well
     -> replace message with meaningful messages
-    -> fix bug with duplicates
 
 
 

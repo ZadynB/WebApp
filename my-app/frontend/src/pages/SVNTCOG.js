@@ -5,7 +5,6 @@ import { useSpringRef, animated, useSpring } from '@react-spring/web';
 import Divider from '@mui/material/Divider';
 import axios from 'axios';
 import CircularProgress from '@mui/joy/CircularProgress';
-import Button from '@mui/joy/Button';
 import ButtonGroup from '@mui/joy/ButtonGroup';
 import Stack from '@mui/joy/Stack';
 import SearchBar from '../components/SearchBar';
@@ -15,7 +14,6 @@ import AddEditService from '../components/AddEditService';
 import DeleteService from '../components/DeleteService';
 import AddEditServiceSong from '../components/AddEditServiceSong';
 import DeleteServiceSong from '../components/DeleteServiceSong';
-import Remove from '@mui/icons-material/Remove';
 import Info from '@mui/icons-material/Info';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import Alert from '@mui/joy/Alert';
@@ -24,6 +22,7 @@ import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Collapse from '@mui/material/Collapse';
 import FormLabel from '@mui/joy/FormLabel';
+import dayjs from 'dayjs';
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -53,8 +52,13 @@ function SVNTCOG () {
   const serviceColumns = [
     { field: 'date', headerName: 'Date', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'worshipLeader', headerName: 'Worship Leader', flex: 1, headerAlign: 'center', align: 'center'},
-    { field: 'numSongs', headerName: 'No. of Songs', flex: 1, headerAlign: 'center', align: 'center'}
+    { field: 'numSongs', headerName: 'Songs', flex: 1, headerAlign: 'center', align: 'center'}
   ];
+  const serviceVisibilityColumns = {
+    date: true,
+    worshipLeader: true,
+    numSongs: true
+  }
 
   const songsColumns = [
     { field: 'song', headerName: 'Name', flex: 1, headerAlign: 'center', align: 'center'},
@@ -62,6 +66,12 @@ function SVNTCOG () {
     { field: 'author', headerName: 'Author', flex: 1, headerAlign: 'center', align: 'center'},
     { field: 'key', headerName: 'Key', flex: 1, headerAlign: 'center', align: 'center'}
   ];
+  const songsVisibilityColumns = {
+    song: true,
+    singer: true,
+    author: false,
+    key: true
+  }
 
   const springRef = useSpringRef();
   const spring = useSpring({
@@ -287,9 +297,6 @@ function SVNTCOG () {
   };
 
   const addServiceSong = (serviceSongObj, isNewSong) => {
-    console.log('added');
-    console.log(serviceSongObj);
-    
     // if isNewSong then check if it exists first and then create new singer song
     // then create the service song
     setLoading(true);
@@ -309,7 +316,7 @@ function SVNTCOG () {
               .then((response) => {
                 // update the num songs on the service
                 const serviceObj = {
-                  date: serviceSelected.date,
+                  date: dayjs(serviceSelected.date).$d,
                   worshipLeader: serviceSelected.worshipLeader,
                   numSongs: serviceSelected.numSongs + 1
                 };
@@ -350,7 +357,7 @@ function SVNTCOG () {
           .then((response) => {
             // update the num songs on the service
             const serviceObj = {
-              date: serviceSelected.date,
+              date: dayjs(serviceSelected.date).$d,
               worshipLeader: serviceSelected.worshipLeader,
               numSongs: serviceSelected.numSongs + 1
             };
@@ -461,12 +468,14 @@ function SVNTCOG () {
             }}
           >
           </Divider>
-          <br></br>
+          {/* <br></br> */}
           {loading ? (<CircularProgress size='md' className='spinner'/>) :
             (
               <div style={{width: '100%'}}>
                 <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
                 <SearchBar type='songList' editValue={{}} options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
+                <FormLabel sx={{color: 'white'}}>Search singer songs</FormLabel>
+                <SearchBar type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={()=>{}} disabled={false}/>
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
@@ -475,6 +484,7 @@ function SVNTCOG () {
                     columns={serviceColumns}
                     rows={services}
                     onRowClick={displayServiceSongs}
+                    visibleColumns={serviceVisibilityColumns}
                   />
                   <ButtonGroup variant='solid' spacing='0.5rem'>
                     <AddEditService
@@ -496,6 +506,7 @@ function SVNTCOG () {
                         columns={songsColumns}
                         rows={serviceSongs}
                         onRowClick={selectServiceSong}
+                        visibleColumns={songsVisibilityColumns}
                       />
                       <ButtonGroup variant='solid' spacing='0.5rem'>
                         <AddEditServiceSong

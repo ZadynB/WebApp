@@ -70,6 +70,7 @@ function AddEditServiceSong(props) {
         sx={{
           backgroundColor: orange
         }}
+        disabled={Object.keys(selectedService).length === 0 ? true: false}
       >
         Add
       </Button>
@@ -84,7 +85,7 @@ function AddEditServiceSong(props) {
         sx={{
           backgroundColor: orange
         }}
-        disabled={ Object.keys(selectedSong).length === 0 ? true : false }
+        disabled={Object.keys(selectedSong).length === 0 ? true : false}
       >
         Edit
       </Button>
@@ -144,7 +145,10 @@ function AddEditServiceSong(props) {
                   const serviceSongObj = {};
                   let isNewSong;
 
+                  // do onUpdate if state is in edit mode
+                  // otherwise do onCreate if state is not in edit mode
                   if (!edit) {
+                    // determine if service song is created from scratch or from a previous singer song
                     if (createNew) {
                       serviceSongObj.parentId = selectedService.id;
                       serviceSongObj.song = songData.title;
@@ -181,6 +185,7 @@ function AddEditServiceSong(props) {
                     props.onUpdate(serviceSongObj, selectedSong.id);
                   }
 
+                  // clear the search bar input value
                   songRef.current.children[1].click();
                   setOpen(false);
                 }}
@@ -234,6 +239,8 @@ function AddEditServiceSong(props) {
                         <></>
                       )}
                       
+                      {/* if edit mode is not on, then use the create mode search bar for new values */}
+                      {/* otherwise, use the edit mode search bar */}
                       {!edit ? (
                         <SearchBar ref={songRef} type='songList' editValue={{}} options={songs} onOptionClick={selectSong} disabled={!createNew}/>
                       ) : (

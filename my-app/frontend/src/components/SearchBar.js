@@ -52,6 +52,7 @@ const SearchBar = forwardRef((props, ref) => {
   return (
     <FormControl sx={{width: '100%'}}>
       {Object.keys(editValue).length !== 0 ? (
+        // search bar for editing values
         <Autocomplete
           placeholder='Search...'
           disabled={disabled}
@@ -76,6 +77,7 @@ const SearchBar = forwardRef((props, ref) => {
           }}
         />
       ) : (
+        // search bar for new values
         <Autocomplete
           placeholder='Search...'
           disabled={disabled}
@@ -83,7 +85,7 @@ const SearchBar = forwardRef((props, ref) => {
             if (type === 'songList') {
               return (option.title + ', ' + option.author);
             } else if (type === 'singerSongList') {
-              return (option.song + ', ' + option.singer);
+              return (option.song + ', ' + option.singer + ', ' + option.key);
             }
           }}
           options={options}
