@@ -38,6 +38,7 @@ function SVNTCOG () {
   const [status, setStatus] = useState('neutral');
   const [songs, setSongs] = useState([]);
   const [singerSongs, setSingerSongs] = useState([]);
+  const [singers, setSingers] = useState([]);
   const [services, setServices] = useState([]);
   const [serviceSongs, setServiceSongs] = useState([]);
   const [info, setInfo] = useState({title: '', desc: ''});
@@ -100,6 +101,17 @@ function SVNTCOG () {
             console.log(error);
             setLoading(false);
           });
+
+        // call to route to get singers
+        axios
+          .get('http://localhost:5555/singer')
+          .then((response) => {
+            setSingers(response.data.data);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoading(false);
+          })
 
         // call to route to get singer songs
         axios
@@ -512,7 +524,7 @@ function SVNTCOG () {
                         <AddEditServiceSong
                           onCreate={addServiceSong}
                           onUpdate={editServiceSong}
-                          info={{selectedService: serviceSelected, selectedSong: serviceSongSelected, singerSongs: singerSongs, songs: songs, editValue: editValue}}
+                          info={{selectedService: serviceSelected, selectedSong: serviceSongSelected, singerSongs: singerSongs, songs: songs, singers: singers, editValue: editValue}}
                         />
                         <DeleteServiceSong
                           onDelete={deleteServiceSong}

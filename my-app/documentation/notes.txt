@@ -135,6 +135,10 @@ Log:
 - added new KeySearchBar instead of input
 - updated functionality to properly use the key search bar instead
 
+[03/13/2024]
+- added singer model and route
+- added singerSearchBar.js
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

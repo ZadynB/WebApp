@@ -10,13 +10,23 @@ import Add from '@mui/icons-material/Add';
 import Edit from '@mui/icons-material/Edit';
 import SearchBar from './SearchBar';
 import KeySearchBar from './KeySearchBar';
+import SingerSearchBar from './SingerSearchBar';
 import Divider from '@mui/material/Divider';
 import Input from '@mui/joy/Input';
+
+function getSingers(singersData) {
+  let arr = [];
+  for (const singer of singersData) {
+    arr.push(singer.name);
+  }
+  return arr;
+}
 
 function AddEditServiceSong(props) {
   const selectedSong = props.info.selectedSong;
   const selectedService = props.info.selectedService;
   const singerSongs = props.info.singerSongs;
+  const singers = getSingers(props.info.singers);
   const songs = props.info.songs;
   const editValue = props.info.editValue;
 
@@ -34,6 +44,7 @@ function AddEditServiceSong(props) {
   const singerRef = React.createRef();
   const songRef = React.createRef();
   const keyRef = React.createRef();
+  const singerSearchRef = React.createRef();
 
   React.useEffect(() => {
     if (edit) {
@@ -64,6 +75,11 @@ function AddEditServiceSong(props) {
     setKey(option);
   }
 
+  const selectSinger = (option) => {
+    console.log(option);
+    setSinger(option);
+  }
+
   return (
     <React.Fragment>
       <Button
@@ -89,6 +105,12 @@ function AddEditServiceSong(props) {
           if (keyRef.current.children.length >= 3) {
             console.log('key');
             keyRef.current.children[1].click();
+          }
+
+          //safety check
+          if (singerSearchRef.current.children.length >= 3) {
+            console.log('singer');
+            singerSearchRef.current.children[1].click();
           }
 
           setEdit(false);
@@ -241,6 +263,12 @@ function AddEditServiceSong(props) {
                             keyRef.current.children[1].click();
                           }
 
+                          //safety check
+                          if (singerSearchRef.current.children.length >= 3) {
+                            console.log('singer');
+                            singerSearchRef.current.children[1].click();
+                          }
+
                           setCreateNew(false);
                           setSinger('');
                           setKey('');
@@ -291,20 +319,20 @@ function AddEditServiceSong(props) {
                         <SearchBar ref={songRef} type='songList' editValue={editValue} options={songs} onOptionClick={selectSong} disabled={!createNew}/>
                       )}
                       
-                      <Input 
+                      {/* <Input 
                         id='add-edit-singer'
                         placeholder='Singer...'
                         disabled={!createNew}
                         value={singer}
                         onChange={(newValue) => setSinger(newValue.target.value)}
-                      />
-                      {/* <Input 
-                        id='add-edit-key'
-                        placeholder='Key...'
-                        disabled={!createNew}
-                        value={key}
-                        onChange={(newValue) => setKey(newValue.target.value)}
                       /> */}
+                      <SingerSearchBar
+                        ref={singerSearchRef}
+                        options={singers}
+                        disabled={!createNew}
+                        editValue={singer}
+                        onOptionClick={selectSinger}
+                      />
                       <KeySearchBar
                         ref={keyRef}
                         options={keys}
