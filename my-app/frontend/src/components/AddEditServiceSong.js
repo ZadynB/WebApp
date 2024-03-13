@@ -12,12 +12,13 @@ import SearchBar from './SearchBar';
 import KeySearchBar from './KeySearchBar';
 import SingerSearchBar from './SingerSearchBar';
 import Divider from '@mui/material/Divider';
-import Input from '@mui/joy/Input';
 
 function getSingers(singersData) {
   let arr = [];
   for (const singer of singersData) {
-    arr.push(singer.name);
+    arr.push({
+      name: singer.name
+    });
   }
   return arr;
 }
@@ -37,6 +38,7 @@ function AddEditServiceSong(props) {
   const [key, setKey] = React.useState('');
   const [singerSongData, setSingerSongData] = React.useState({song: '', author: '', singer: '', key: ''});
   const [songData, setSongData] = React.useState({title: '', author: ''})
+  const [isNewSinger, setIsNewSinger] = React.useState(false);
 
   const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
   const keys = ['A', 'A#/Bb', 'B/Cb', 'C/B#', 'C#/Db', 'D', 'D#/Eb', 'E/Fb', 'F/E#', 'F#/Gb', 'G', 'G#/Ab'];
@@ -78,6 +80,13 @@ function AddEditServiceSong(props) {
   const selectSinger = (option) => {
     console.log(option);
     setSinger(option);
+    setIsNewSinger(false);
+  }
+
+  const selectNewSinger = (option) => {
+    console.log(option);
+    setSinger({name: option.inputValue});
+    setIsNewSinger(true);
   }
 
   return (
@@ -105,12 +114,6 @@ function AddEditServiceSong(props) {
           if (keyRef.current.children.length >= 3) {
             console.log('key');
             keyRef.current.children[1].click();
-          }
-
-          //safety check
-          if (singerSearchRef.current.children.length >= 3) {
-            console.log('singer');
-            singerSearchRef.current.children[1].click();
           }
 
           setEdit(false);
@@ -207,7 +210,11 @@ function AddEditServiceSong(props) {
                       serviceSongObj.parentId = selectedService.id;
                       serviceSongObj.song = songData.title;
                       serviceSongObj.author = songData.author;
-                      serviceSongObj.singer = singer;
+                      if (Object.keys(singer).length !== 0 ) {
+                        serviceSongObj.singer = singer.name;
+                      } else {
+                        serviceSongObj.singer = singer;
+                      }
                       serviceSongObj.key = key;
 
                       isNewSong = true;
@@ -229,7 +236,7 @@ function AddEditServiceSong(props) {
                       serviceSongObj.key = singerSongData.key
                       isNewSong = false;
                     }
-                    props.onCreate(serviceSongObj, isNewSong);
+                    props.onCreate(serviceSongObj, isNewSong, isNewSinger);
                     singerRef.current.children[1].click();
                   } else {
                     serviceSongObj.song = songData.title;
@@ -261,12 +268,6 @@ function AddEditServiceSong(props) {
                           //safety check
                           if(keyRef.current.children.length >= 3) {
                             keyRef.current.children[1].click();
-                          }
-
-                          //safety check
-                          if (singerSearchRef.current.children.length >= 3) {
-                            console.log('singer');
-                            singerSearchRef.current.children[1].click();
                           }
 
                           setCreateNew(false);
@@ -319,20 +320,15 @@ function AddEditServiceSong(props) {
                         <SearchBar ref={songRef} type='songList' editValue={editValue} options={songs} onOptionClick={selectSong} disabled={!createNew}/>
                       )}
                       
-                      {/* <Input 
-                        id='add-edit-singer'
-                        placeholder='Singer...'
-                        disabled={!createNew}
-                        value={singer}
-                        onChange={(newValue) => setSinger(newValue.target.value)}
-                      /> */}
                       <SingerSearchBar
                         ref={singerSearchRef}
                         options={singers}
                         disabled={!createNew}
                         editValue={singer}
                         onOptionClick={selectSinger}
+                        onNewOptionClick={selectNewSinger}
                       />
+
                       <KeySearchBar
                         ref={keyRef}
                         options={keys}

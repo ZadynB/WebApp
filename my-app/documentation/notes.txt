@@ -138,6 +138,8 @@ Log:
 [03/13/2024]
 - added singer model and route
 - added singerSearchBar.js
+- added code to reset search bar
+- added code to add code to create singer entry
 
 To fix/do:
 [Solved/Done]
@@ -170,7 +172,10 @@ To fix/do:
     -> continue implementing backend functionality
     -> set notifications for errors as well
     -> replace message with meaningful messages
-    -> find way to change the singer input to a search bar as well (add a button to manually add a new singer to the list?)
+
+
+[Limitations]
+- SearhBar should have been separated further into a singersSongSearchBar and SongSearchBar
 
 
 

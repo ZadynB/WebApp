@@ -308,7 +308,7 @@ function SVNTCOG () {
     }
   };
 
-  const addServiceSong = (serviceSongObj, isNewSong) => {
+  const addServiceSong = (serviceSongObj, isNewSong, isNewSinger) => {
     // if isNewSong then check if it exists first and then create new singer song
     // then create the service song
     setLoading(true);
@@ -320,45 +320,102 @@ function SVNTCOG () {
         key: serviceSongObj.key
       }
       try {
-        axios
-          .post('http://localhost:5555/singerSongs', singerSongObj)
-          .then((response) => {
-            axios
-              .post('http://localhost:5555/serviceSongs', serviceSongObj)
-              .then((response) => {
-                // update the num songs on the service
-                const serviceObj = {
-                  date: dayjs(serviceSelected.date).$d,
-                  worshipLeader: serviceSelected.worshipLeader,
-                  numSongs: serviceSelected.numSongs + 1
-                };
-                axios
-                  .put(`http://localhost:5555/services/${serviceSelected.id}`, serviceObj)
-                  .then((response) => {
-                    setRefresh(!refresh);
-                    setStatus('success');
-                    setNotification('Successfully created service song!');
-                  })
-                  .catch((error) => {
-                    console.log(error.response.data.message);
-                    setStatus('danger');
-                    setNotification(error.response.data.message);
-                    setLoading(false);
-                  })
-              })
-              .catch((error) => {
-                console.log(error.response.data.message);
-                setStatus('danger');
-                setNotification(error.response.data.message);
-                setLoading(false);
-              })
-          })
-          .catch((error) => {
-            console.log(error.response.data.message);
-            setStatus('danger');
-            setNotification(error.response.data.message);
-            setLoading(false);
-          })
+        // add new singer to the singers list
+        if (isNewSinger) {
+          const singerObj = {
+            name: serviceSongObj.singer
+          };
+
+          axios
+            .post('http://localhost:5555/singer', singerObj)
+            .then((response) => {
+              axios
+                .post('http://localhost:5555/singerSongs', singerSongObj)
+                .then((response) => {
+                  axios
+                    .post('http://localhost:5555/serviceSongs', serviceSongObj)
+                    .then((response) => {
+                      // update the num songs on the service
+                      const serviceObj = {
+                        date: dayjs(serviceSelected.date).$d,
+                        worshipLeader: serviceSelected.worshipLeader,
+                        numSongs: serviceSelected.numSongs + 1
+                      };
+                      axios
+                        .put(`http://localhost:5555/services/${serviceSelected.id}`, serviceObj)
+                        .then((response) => {
+                          setRefresh(!refresh);
+                          setStatus('success');
+                          setNotification('Successfully created service song!');
+                        })
+                        .catch((error) => {
+                          console.log(error.response.data.message);
+                          setStatus('danger');
+                          setNotification(error.response.data.message);
+                          setLoading(false);
+                        })
+                    })
+                    .catch((error) => {
+                      console.log(error.response.data.message);
+                      setStatus('danger');
+                      setNotification(error.response.data.message);
+                      setLoading(false);
+                    })
+                })
+                .catch((error) => {
+                  console.log(error.response.data.message);
+                  setStatus('danger');
+                  setNotification(error.response.data.message);
+                  setLoading(false);
+                })
+            })
+            .catch((error) => {
+              console.log(error.response.data.message);
+              setStatus('danger');
+              setNotification(error.response.data.message);
+              setLoading(false);
+            })
+        } else {
+          axios
+            .post('http://localhost:5555/singerSongs', singerSongObj)
+            .then((response) => {
+              axios
+                .post('http://localhost:5555/serviceSongs', serviceSongObj)
+                .then((response) => {
+                  // update the num songs on the service
+                  const serviceObj = {
+                    date: dayjs(serviceSelected.date).$d,
+                    worshipLeader: serviceSelected.worshipLeader,
+                    numSongs: serviceSelected.numSongs + 1
+                  };
+                  axios
+                    .put(`http://localhost:5555/services/${serviceSelected.id}`, serviceObj)
+                    .then((response) => {
+                      setRefresh(!refresh);
+                      setStatus('success');
+                      setNotification('Successfully created service song!');
+                    })
+                    .catch((error) => {
+                      console.log(error.response.data.message);
+                      setStatus('danger');
+                      setNotification(error.response.data.message);
+                      setLoading(false);
+                    })
+                })
+                .catch((error) => {
+                  console.log(error.response.data.message);
+                  setStatus('danger');
+                  setNotification(error.response.data.message);
+                  setLoading(false);
+                })
+            })
+            .catch((error) => {
+              console.log(error.response.data.message);
+              setStatus('danger');
+              setNotification(error.response.data.message);
+              setLoading(false);
+            })
+        }
       } catch (error) {
         console.log(error.message);
       }
