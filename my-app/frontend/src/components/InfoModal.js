@@ -5,6 +5,8 @@ import { Transition } from 'react-transition-group';
 function AddEditService(props) {
   const title = props.info.title;
   const desc = props.info.desc;
+  const view_width = window.innerWidth;
+
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -71,7 +73,7 @@ function AddEditService(props) {
               >
                 {title}
               </Typography>
-              <Typography id="modal-desc" textColor="text.tertiary" style={{whiteSpace: 'pre-line', fontSize: '10pt'}}>
+              <Typography id="modal-desc" textColor="text.tertiary" style={{whiteSpace: 'pre-line', fontSize: view_width > 916 ? '15pt' : '10pt'}}>
                 {desc}
               </Typography>
             </ModalDialog>

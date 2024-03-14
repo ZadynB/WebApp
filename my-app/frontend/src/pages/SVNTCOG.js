@@ -24,6 +24,7 @@ import Collapse from '@mui/material/Collapse';
 import FormLabel from '@mui/joy/FormLabel';
 import dayjs from 'dayjs';
 import SwapHorizRounded from '@mui/icons-material/SwapHorizRounded';
+import FileDownload from '@mui/icons-material/FileDownload';
 // import BezierEasing from "bezier-easing";
 
 function sleep(duration) {
@@ -52,6 +53,7 @@ function SVNTCOG () {
   const [notification, setNotification] = useState('');
 
   const blue2 = getComputedStyle(document.body).getPropertyValue('--blue2');
+  const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
 
   const serviceColumns = [
     { field: 'date', headerName: 'Date', flex: 1, headerAlign: 'center', align: 'center'},
@@ -562,6 +564,7 @@ function SVNTCOG () {
             (
               <div style={{width: '100%'}}>
                 <Stack spacing={1} direction='row' alignItems='flex-end'>
+                  {/* transition to switch between the two search bars */}
                   {trans((style, item) => (
                     <animated.div style={{...style, width: '100%'}}>
                       {item ? (
@@ -608,6 +611,14 @@ function SVNTCOG () {
                       onDelete={deleteService}
                       info={serviceSelected}
                     />
+                    <IconButton 
+                      disabled={Object.keys(serviceSelected).length === 0}
+                      sx={{
+                        backgroundColor: orange
+                      }}
+                    >
+                      <FileDownload />
+                    </IconButton>
                   </ButtonGroup>
 
                   {/* component to display the planned services */}

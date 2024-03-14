@@ -143,6 +143,8 @@ Log:
 
 [03/14/2024]
 - added switch mechanism for the songs and singer songs search bars
+- adjusted the fontsize of the lyrics in the infoModal based on the viewport width
+- added ui for the export button
 
 To fix/do:
 [Solved/Done]
