@@ -141,6 +141,9 @@ Log:
 - added code to reset search bar
 - added code to add code to create singer entry
 
+[03/14/2024]
+- added switch mechanism for the songs and singer songs search bars
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

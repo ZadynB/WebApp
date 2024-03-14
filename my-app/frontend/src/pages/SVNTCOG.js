@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useSpringRef, animated, useSpring } from '@react-spring/web';
+import { useSpringRef, animated, useSpring, useTransition } from '@react-spring/web';
 import Divider from '@mui/material/Divider';
 import axios from 'axios';
 import CircularProgress from '@mui/joy/CircularProgress';
@@ -23,6 +23,8 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Collapse from '@mui/material/Collapse';
 import FormLabel from '@mui/joy/FormLabel';
 import dayjs from 'dayjs';
+import SwapHorizRounded from '@mui/icons-material/SwapHorizRounded';
+// import BezierEasing from "bezier-easing";
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -35,6 +37,7 @@ function sleep(duration) {
 function SVNTCOG () {
   const [refresh, setRefresh] = useState(false);
   const [showSongsTable, setShowSongsTable] = useState(false);
+  const [showSongs, setShowSongs] = useState(true);
   const [status, setStatus] = useState('neutral');
   const [songs, setSongs] = useState([]);
   const [singerSongs, setSingerSongs] = useState([]);
@@ -82,6 +85,19 @@ function SVNTCOG () {
     config: {
       duration: 150,
     },
+  });
+
+  const transRef = useSpringRef();
+  const trans = useTransition(showSongs, {
+    from: {opacity: 0, x: showSongs ? 10 : -10},
+    enter: [{opacity: 1, x: showSongs ? -5 : 5 }, {opacity: 1, x: 0}],
+    leave: {opacity: 0, x: showSongs ? -15 : 15},
+    ref: transRef,
+    keys: null,
+    exitBeforeEnter: true,
+    config: {
+      duration: 350,
+    }
   });
 
   useEffect(() => {
@@ -159,6 +175,10 @@ function SVNTCOG () {
     })();
     
   }, [notification, springRef]);
+
+  useEffect(() => {
+    transRef.start();
+  }, [transRef, showSongs]);
 
   const displayServiceSongs = (rowParams) => {
     // call to route to get the service songs
@@ -537,14 +557,37 @@ function SVNTCOG () {
             }}
           >
           </Divider>
-          {/* <br></br> */}
+          <br></br>
           {loading ? (<CircularProgress size='md' className='spinner'/>) :
             (
               <div style={{width: '100%'}}>
-                <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
-                <SearchBar type='songList' editValue={{}} options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
-                <FormLabel sx={{color: 'white'}}>Search singer songs</FormLabel>
-                <SearchBar type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={()=>{}} disabled={false}/>
+                <Stack spacing={1} direction='row' alignItems='flex-end'>
+                  {trans((style, item) => (
+                    <animated.div style={{...style, width: '100%'}}>
+                      {item ? (
+                        <Stack spacing={1} direction='column' sx={{flex: 1}}>
+                          <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
+                          <SearchBar type='songList' editValue={{}} options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
+                        </Stack>
+                      ) : (
+                        <Stack spacing={1} direction='column' sx={{flex: 1}}>
+                          <FormLabel sx={{color: 'white'}}>Search singer songs</FormLabel>
+                          <SearchBar type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={()=>{}} disabled={false}/>
+                        </Stack>
+                      )}
+                    </animated.div>
+                  ))}
+                  
+                  <IconButton
+                    variant='solid'
+                    color='primary'
+                    size='md'
+                    onClick={() => {setShowSongs(!showSongs)}}
+                  >
+                    <SwapHorizRounded />
+                  </IconButton>
+                </Stack>
+                
                 <br></br>
                 <Stack spacing={1} alignItems='center' direction='column'>
                   {/* component to display the planned services */}
