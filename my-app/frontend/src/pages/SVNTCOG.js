@@ -25,7 +25,8 @@ import FormLabel from '@mui/joy/FormLabel';
 import dayjs from 'dayjs';
 import SwapHorizRounded from '@mui/icons-material/SwapHorizRounded';
 import FileDownload from '@mui/icons-material/FileDownload';
-// import BezierEasing from "bezier-easing";
+import PDFFile from '../components/PDFFile';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -537,7 +538,12 @@ function SVNTCOG () {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
+
+  const handleExportResult = (status, notification) => {
+    setStatus(status);
+    setNotification(notification);
+  };
 
   return (
     <AnimatePresence mode='wait'>
@@ -611,14 +617,27 @@ function SVNTCOG () {
                       onDelete={deleteService}
                       info={serviceSelected}
                     />
-                    <IconButton 
-                      disabled={Object.keys(serviceSelected).length === 0}
-                      sx={{
-                        backgroundColor: orange
-                      }}
-                    >
-                      <FileDownload />
-                    </IconButton>
+
+                    {/* export/download pdf file button */}
+                    <Collapse in={Object.keys(serviceSelected).length !== 0 ? true : false} orientation='horizontal'>
+                      <PDFDownloadLink
+                        document={<PDFFile data={{service: serviceSelected, songs: songs}} handleRenderResult={handleExportResult}/>}
+                        fileName={serviceSelected.date + '-' + serviceSelected.worshipLeader + '-service'}
+                      >
+                        {({loading}) => (loading ? 
+                          <IconButton>
+                            <CircularProgress />
+                          </IconButton> : 
+                          <IconButton
+                            sx={{
+                              backgroundColor: orange
+                            }}
+                          >
+                            <FileDownload />
+                          </IconButton>
+                        )}
+                      </PDFDownloadLink>
+                    </Collapse>
                   </ButtonGroup>
 
                   {/* component to display the planned services */}
@@ -645,7 +664,8 @@ function SVNTCOG () {
                     </Stack>
                   </Collapse>
                 </Stack>
-
+                
+                {/* modal to display info/lyrics */}
                 <InfoModal
                   info={info}
                   setInfo={(info) => {setInfo(info)}}

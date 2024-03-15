@@ -146,6 +146,9 @@ Log:
 - adjusted the fontsize of the lyrics in the infoModal based on the viewport width
 - added ui for the export button
 
+[03/15/2024]
+- added export functionality using react-pdf
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -177,6 +180,7 @@ To fix/do:
     -> continue implementing backend functionality
     -> set notifications for errors as well
     -> replace message with meaningful messages
+- make the pdf file look better by adding more styling, etc.
 
 
 [Limitations]
