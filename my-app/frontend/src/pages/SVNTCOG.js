@@ -335,6 +335,16 @@ function SVNTCOG () {
     // if isNewSong then check if it exists first and then create new singer song
     // then create the service song
     setLoading(true);
+    if (serviceSongObj.singer === '' ||
+        serviceSongObj.author === '' ||
+        serviceSongObj.song === '' ||
+        serviceSongObj.key === '') {
+      setStatus('danger');
+      setNotification('Must use all required fields: singer, song and key!');
+      setLoading(false);
+      return;
+    }
+
     if (isNewSong) {
       const singerSongObj = {
         singer: serviceSongObj.singer,
