@@ -36,7 +36,23 @@ function CustomDataGrid(props) {
         }}
         columns={props.columns}
         rows={props.rows}
-        sx={{ color: 'white', bgcolor: dark, '& .MuiDataGrid-columnHeaders': {bgcolor: blue2}}}
+        sx={{ 
+          color: 'white',
+          bgcolor: dark,
+          '& .MuiDataGrid-columnHeaders': {
+            bgcolor: blue2,
+          },
+          '& .MuiDataGrid-columnHeader': {
+            padding: '0 5px !important'
+          },
+          '& .MuiDataGrid-columnHeaderTitle': {
+            whiteSpace: "normal",
+            lineHeight: "normal"
+          },
+          '& .MuiDataGrid-menuIcon': {
+            width: '20px !important'
+          }
+        }}
         onRowClick={(params) => {
           props.onRowClick(params)
         }}

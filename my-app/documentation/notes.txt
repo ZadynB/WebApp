@@ -155,6 +155,7 @@ Log:
 [03/17/2024]
 - fixed bug with creating singer before singer song by adding check
 - fixed bug with duplicate service songs
+- updated the styling of data grid to show the full name of the column headers
 
 To fix/do:
 [Solved/Done]
