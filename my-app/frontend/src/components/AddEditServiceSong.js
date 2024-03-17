@@ -222,8 +222,7 @@ function AddEditServiceSong(props) {
                         if (song.singer === serviceSongObj.singer && 
                           song.author === serviceSongObj.author && 
                           song.song === serviceSongObj.song &&
-                          song.key === serviceSongObj.key)
-                        {
+                          song.key === serviceSongObj.key) {
                           isNewSong = false;
                           break;
                         }

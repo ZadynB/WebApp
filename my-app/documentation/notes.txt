@@ -154,6 +154,7 @@ Log:
 
 [03/17/2024]
 - fixed bug with creating singer before singer song by adding check
+- fixed bug with duplicate service songs
 
 To fix/do:
 [Solved/Done]

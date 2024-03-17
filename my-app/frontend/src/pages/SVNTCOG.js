@@ -172,7 +172,7 @@ function SVNTCOG () {
   useEffect(() => {
     (async () => {
       if (notification !== '') {
-        await sleep(1.5e3);
+        await sleep(0.25e3);
       }
       springRef.start();
     })();
@@ -335,14 +335,29 @@ function SVNTCOG () {
     // if isNewSong then check if it exists first and then create new singer song
     // then create the service song
     setLoading(true);
+
+    // check if serviceSongObj is valid
     if (serviceSongObj.singer === '' ||
         serviceSongObj.author === '' ||
         serviceSongObj.song === '' ||
         serviceSongObj.key === '') {
-      setStatus('danger');
-      setNotification('Must use all required fields: singer, song and key!');
-      setLoading(false);
-      return;
+          setStatus('danger');
+          setNotification('Must use all required fields: singer, song and key!');
+          setLoading(false);
+          return;
+    }
+
+    // check if there serviceSongObj already exists
+    for (const song of serviceSongs) {
+      if (song.song === serviceSongObj.song &&
+          song.author === serviceSongObj.author &&
+          song.singer === serviceSongObj.singer &&
+          song.key === serviceSongObj.key) {
+            setStatus('danger');
+            setNotification('Duplicate service songs are not allowed!');
+            setLoading(false);
+            return;
+          }
     }
 
     if (isNewSong) {
