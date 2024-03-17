@@ -149,6 +149,9 @@ Log:
 [03/15/2024]
 - added export functionality using react-pdf
 
+[03/16/2024]
+- fixed bug with updating the singer name
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

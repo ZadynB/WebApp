@@ -241,7 +241,11 @@ function AddEditServiceSong(props) {
                   } else {
                     serviceSongObj.song = songData.title;
                     serviceSongObj.author = songData.author;
-                    serviceSongObj.singer = singer;
+                    if (Object.keys(singer).length !== 0 && typeof (singer) === 'object') {
+                      serviceSongObj.singer = singer.name;
+                    } else {
+                      serviceSongObj.singer = singer;
+                    }
                     serviceSongObj.key = key;
                     props.onUpdate(serviceSongObj, selectedSong.id);
                   }
