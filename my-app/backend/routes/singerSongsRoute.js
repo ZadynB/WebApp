@@ -8,7 +8,7 @@ router.post('/', async (request, response) => {
   try {
     if (!request.body.singer || !request.body.author || !request.body.song || !request.body.key) {
       return response.status(400).send({
-        message: 'Must use all required fields: singer, author, song name and key of song'
+        message: 'Must use all required fields: singer, author, song name and the key of song.'
       });
     }
 
@@ -16,7 +16,8 @@ router.post('/', async (request, response) => {
       singer: request.body.singer,
       author: request.body.author,
       song: request.body.song,
-      key: request.body.key
+      key: request.body.key,
+      preferred: request.body.preferred
     };
     const singerSong = await SingerSong.create(newSingerSong);
     return response.status(201).send(singerSong);
@@ -38,7 +39,8 @@ router.get('/', async (request, response) => {
         song: song.song,
         author: song.author,
         singer: song.singer,
-        key: song.key
+        key: song.key,
+        preferred: song.preferred
       })
     }
 
@@ -70,7 +72,7 @@ router.put('/:id', async (request, response) => {
   try {
     if (!request.body.singer || !request.body.author || !request.body.song || !request.body.key) {
       return response.status(400).send({
-        message: 'Must use all required fields: song name, author, singer and key of song'
+        message: 'Must use all required fields: song name, author, singer and the key of song.'
       });
     }
     

@@ -21,12 +21,13 @@ import IconButton from '@mui/joy/IconButton';
 import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Collapse from '@mui/material/Collapse';
-import FormLabel from '@mui/joy/FormLabel';
+// import FormLabel from '@mui/joy/FormLabel';
 import dayjs from 'dayjs';
 import SwapHorizRounded from '@mui/icons-material/SwapHorizRounded';
 import FileDownload from '@mui/icons-material/FileDownload';
 import PDFFile from '../components/PDFFile';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import Typography from '@mui/joy/Typography';
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -331,7 +332,7 @@ function SVNTCOG () {
     }
   };
 
-  const addServiceSong = (serviceSongObj, isNewSong, isNewSinger) => {
+  const addServiceSong = (serviceSongObj, isNewSong, isNewSinger, isPreferred) => {
     // if isNewSong then check if it exists first and then create new singer song
     // then create the service song
     setLoading(true);
@@ -365,8 +366,10 @@ function SVNTCOG () {
         singer: serviceSongObj.singer,
         author: serviceSongObj.author,
         song: serviceSongObj.song,
-        key: serviceSongObj.key
+        key: serviceSongObj.key,
+        preferred: isPreferred
       }
+      
       try {
         // add new singer to the singers list
         if (isNewSinger) {
@@ -504,16 +507,81 @@ function SVNTCOG () {
     }
   };
 
-  const editServiceSong = (serviceSongObj, id) => {
+  const editServiceSong = (serviceSongObj, id, isPreferred) => {
     // route to edit service song
     setLoading(true);
     try {
+      let oldId = '';
+      let oldSingerSongObj = {};
+      let newId = '';
+      let newSingerSongObj = {};
+
+      let oldPreferredArr = singerSongs.filter((song) => song.song === serviceSongObj.song &&
+                                                  song.author === serviceSongObj.author &&
+                                                  song.singer === serviceSongObj.singer &&
+                                                  song.key !== serviceSongObj.key &&
+                                                  song.preferred === true);
+          
+      let newPreferredArr = singerSongs.filter((song) =>  song.song === serviceSongObj.song &&
+                                                  song.author === serviceSongObj.author &&
+                                                  song.singer === serviceSongObj.singer &&
+                                                  song.key === serviceSongObj.key);
+      // should only be 1 element in array
+      // change the old preferred key song to a non-preferred key song
+      if (oldPreferredArr.length !== 0) {
+        oldId = oldPreferredArr[0].id;
+        oldSingerSongObj.singer = oldPreferredArr[0].singer;
+        oldSingerSongObj.author = oldPreferredArr[0].author;
+        oldSingerSongObj.song = oldPreferredArr[0].song;
+        oldSingerSongObj.key = oldPreferredArr[0].key;
+        oldSingerSongObj.preferred = false;
+      }
+
+      // should only be 1 element in array
+      // get id of service song to update the preferred field (no matter if it is true or false)
+      if (newPreferredArr.length !== 0) {
+        newId = newPreferredArr[0].id;
+        newSingerSongObj.singer = newPreferredArr[0].singer;
+        newSingerSongObj.author = newPreferredArr[0].author;
+        newSingerSongObj.song = newPreferredArr[0].song;
+        newSingerSongObj.key = newPreferredArr[0].key;
+        newSingerSongObj.preferred = isPreferred;
+      }
+      
       axios
         .put(`http://localhost:5555/serviceSongs/${id}`, serviceSongObj)
         .then((response) => {
-          setRefresh(!refresh);
-          setStatus('success');
-          setNotification('Successfully updated service song!');
+          // update the newly set preferred key singer song
+          axios
+            .put(`http://localhost:5555/singerSongs/${newId}`, newSingerSongObj)
+            .catch((error) => {
+              console.log(error.message);
+                setStatus('danger');
+                setNotification('Error updating service!');
+                setLoading(false);
+            })
+
+          // update the old preferred key singer song if necessary
+          if (oldId !== '') {
+            console.log('here');
+            axios
+              .put(`http://localhost:5555/singerSongs/${oldId}`, oldSingerSongObj)
+              .then((response) => {
+                setRefresh(!refresh);
+                setStatus('success');
+                setNotification('Successfully updated service song!');
+              })
+              .catch((error) => {
+                console.log(error.message);
+                setStatus('danger');
+                setNotification('Error updating service!');
+                setLoading(false);
+              })
+          } else {
+            setRefresh(!refresh);
+            setStatus('success');
+            setNotification('Successfully updated service song!');
+          }
         })
         .catch((error) => {
           console.log(error.message);
@@ -599,13 +667,13 @@ function SVNTCOG () {
                   {trans((style, item) => (
                     <animated.div style={{...style, width: '100%'}}>
                       {item ? (
-                        <Stack spacing={1} direction='column' sx={{flex: 1}}>
-                          <FormLabel sx={{color: 'white'}}>Search songs</FormLabel>
+                        <Stack spacing={1} direction='column' alignItems='flex-start' sx={{flex: 1}}>
+                          <Typography sx={{color: 'white', fontWeight: 'bold', fontSize: '10pt', }}>Search songs</Typography>
                           <SearchBar type='songList' editValue={{}} options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
                         </Stack>
                       ) : (
-                        <Stack spacing={1} direction='column' sx={{flex: 1}}>
-                          <FormLabel sx={{color: 'white'}}>Search singer songs</FormLabel>
+                        <Stack spacing={1} direction='column' alignItems='flex-start' sx={{flex: 1}}>
+                          <Typography sx={{color: 'white', fontWeight: 'bold', fontSize: '10pt', }}>Search singer songs</Typography>
                           <SearchBar type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={()=>{}} disabled={false}/>
                         </Stack>
                       )}
@@ -650,7 +718,7 @@ function SVNTCOG () {
                         fileName={serviceSelected.date + '-' + serviceSelected.worshipLeader + '-service'}
                       >
                         {({loading}) => (loading ? 
-                          <IconButton>
+                          <IconButton disabled={true}>
                             <CircularProgress />
                           </IconButton> : 
                           <IconButton

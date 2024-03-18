@@ -157,6 +157,12 @@ Log:
 - fixed bug with duplicate service songs
 - updated the styling of data grid to show the full name of the column headers
 
+[03/18/2024]
+- updated the singer songs model and route to include the preferred field
+- added checkbox for the preferred field
+- reworked frontend code for creating and updating service and singer songs
+- updated singer songs dropdown list with preferred key symbol (*)
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

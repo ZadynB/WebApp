@@ -41,9 +41,16 @@ const SearchBar = forwardRef((props, ref) => {
           }}
         >
           {option.song}
-          <Typography level='body-xs'>
-            {option.singer}, {option.key}
-          </Typography>
+          {option.preferred ? (
+              <Typography level='body-xs'>
+                {option.singer}, {option.key} <code>*</code>
+              </Typography>
+            ) : (
+              <Typography level='body-xs'>
+                {option.singer}, {option.key}
+              </Typography>
+            )
+          }
         </ListItemContent>
       );
     }
@@ -60,7 +67,7 @@ const SearchBar = forwardRef((props, ref) => {
             if (type === 'songList') {
               return (option.title + ', ' + option.author);
             } else if (type === 'singerSongList') {
-              return (option.song + ', ' + option.singer);
+              return (option.song + ', ' + option.singer + (option.preferred ? '*' : ''));
             }
           }}
           isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -85,7 +92,7 @@ const SearchBar = forwardRef((props, ref) => {
             if (type === 'songList') {
               return (option.title + ', ' + option.author);
             } else if (type === 'singerSongList') {
-              return (option.song + ', ' + option.singer + ', ' + option.key);
+              return (option.song + ', ' + option.singer + (option.preferred ? '*' : ''));
             }
           }}
           options={options}

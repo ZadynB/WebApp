@@ -17,6 +17,10 @@ const singerSongSchema = mongoose.Schema(
     key: {
       type: String,
       required: true
+    },
+    preferred: {
+      type: Boolean,
+      required: true
     }
   },
   {

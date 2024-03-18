@@ -12,6 +12,7 @@ import SearchBar from './SearchBar';
 import KeySearchBar from './KeySearchBar';
 import SingerSearchBar from './SingerSearchBar';
 import Divider from '@mui/material/Divider';
+import Checkbox from '@mui/joy/Checkbox';
 
 function getSingers(singersData) {
   let arr = [];
@@ -39,6 +40,7 @@ function AddEditServiceSong(props) {
   const [singerSongData, setSingerSongData] = React.useState({song: '', author: '', singer: '', key: ''});
   const [songData, setSongData] = React.useState({title: '', author: ''})
   const [isNewSinger, setIsNewSinger] = React.useState(false);
+  const [preferred, setPreferred] = React.useState(false);
 
   const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
   const keys = ['A', 'A#/Bb', 'B/Cb', 'C/B#', 'C#/Db', 'D', 'D#/Eb', 'E/Fb', 'F/E#', 'F#/Gb', 'G', 'G#/Ab'];
@@ -47,14 +49,6 @@ function AddEditServiceSong(props) {
   const songRef = React.createRef();
   const keyRef = React.createRef();
   const singerSearchRef = React.createRef();
-
-  React.useEffect(() => {
-    if (edit) {
-      setSinger(selectedSong.singer);
-      setKey(selectedSong.key);
-      setSongData({title: selectedSong.song, author: selectedSong.author});
-    }
-  }, [edit, selectedSong])
 
   const selectSingerSong = (option) => {
     setSingerSongData({
@@ -133,6 +127,20 @@ function AddEditServiceSong(props) {
         size='sm'
         startDecorator={<Edit />}
         onClick={() => {
+
+          setSinger(selectedSong.singer);
+          setKey(selectedSong.key);
+          setSongData({title: selectedSong.song, author: selectedSong.author});
+
+          // setting the preferred checkbox
+          // filter singer songs with the same singer, author, name and key
+          let filteredSingerSongs = singerSongs.filter((song) => song.song === selectedSong.song && 
+                                                                  song.author === selectedSong.author &&
+                                                                  song.singer === selectedSong.singer &&
+                                                                  song.key === selectedSong.key);
+          // should have only 1 song in array
+          setPreferred(filteredSingerSongs[0].preferred);
+          
           setEdit(true);
           setCreateNew(true);
           setOpen(true);
@@ -201,6 +209,7 @@ function AddEditServiceSong(props) {
 
                   const serviceSongObj = {};
                   let isNewSong;
+                  let isPreferred;
 
                   // do onUpdate if state is in edit mode
                   // otherwise do onCreate if state is not in edit mode
@@ -216,6 +225,7 @@ function AddEditServiceSong(props) {
                         serviceSongObj.singer = singer;
                       }
                       serviceSongObj.key = key;
+                      isPreferred = preferred;
 
                       isNewSong = true;
                       for (const song of singerSongs) {
@@ -230,12 +240,13 @@ function AddEditServiceSong(props) {
                     } else {
                       serviceSongObj.parentId = selectedService.id;
                       serviceSongObj.song = singerSongData.song;
-                      serviceSongObj.author = singerSongData.author
-                      serviceSongObj.singer = singerSongData.singer
-                      serviceSongObj.key = singerSongData.key
+                      serviceSongObj.author = singerSongData.author;
+                      serviceSongObj.singer = singerSongData.singer;
+                      serviceSongObj.key = singerSongData.key;
                       isNewSong = false;
+                      isPreferred = singerSongData.preferred;
                     }
-                    props.onCreate(serviceSongObj, isNewSong, isNewSinger);
+                    props.onCreate(serviceSongObj, isNewSong, isNewSinger, isPreferred);
                     singerRef.current.children[1].click();
                   } else {
                     serviceSongObj.song = songData.title;
@@ -246,7 +257,8 @@ function AddEditServiceSong(props) {
                       serviceSongObj.singer = singer;
                     }
                     serviceSongObj.key = key;
-                    props.onUpdate(serviceSongObj, selectedSong.id);
+                    isPreferred = preferred;
+                    props.onUpdate(serviceSongObj, selectedSong.id, isPreferred);
                   }
 
                   // clear the search bar input value
@@ -276,6 +288,7 @@ function AddEditServiceSong(props) {
                           setCreateNew(false);
                           setSinger('');
                           setKey('');
+                          setPreferred(false);
                         }}
                       >
                         <SearchBar ref={singerRef} type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={selectSingerSong} disabled={createNew}/>
@@ -339,6 +352,22 @@ function AddEditServiceSong(props) {
                         editValue={key}
                         onOptionClick={selectKey}
                       />
+
+                      <Stack spacing={1} direction='row'>
+                        <Checkbox 
+                          checked={preferred}
+                          onChange={(event) => {
+                            setPreferred(event.target.checked);
+                          }}
+                          disabled={!createNew}
+                        />
+                        <Typography 
+                          textColor={createNew ? "text.tertiary" : '#babbba'}
+                        >
+                          Set as the preferred key?
+                        </Typography>
+                      </Stack>
+                      
                     </Stack>
                   </div>
                   
