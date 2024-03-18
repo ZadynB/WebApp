@@ -76,20 +76,24 @@ function ProjectContainer(props) {
 
   const createClickableImage = () => {
     if (props.content.hasImage) {
-      return (<Image 
-                src={images(`./${props.content.name}.jpg`)} 
-                style={{width: '100%', height: 'auto', objectFit:'cover'}}
-                onClick={handleZoomIn}
-              />);
+      return (
+        <Image 
+          src={images(`./${props.content.name}.jpg`)} 
+          style={{width: '100%', height: 'auto', objectFit:'cover'}}
+          onClick={handleZoomIn}
+        />
+      );
     }
     return;
   };
 
   const createImage = () => {
     if (props.content.hasImage) {
-      return (<Image 
-                src={images(`./${props.content.name}.jpg`)} 
-              />);
+      return (
+        <Image 
+          src={images(`./${props.content.name}.jpg`)} 
+        />
+      );
     }
     return;
   };

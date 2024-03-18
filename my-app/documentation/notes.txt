@@ -62,6 +62,107 @@ Log:
 - fixed transition for app grid
 - fixed styling of app grid
 
+[02/21/2024]
+- added backend routes to get and put data in database
+- added spinner to svntcog page
+- added search bar for the songs
+- added data grid to display example services
+
+[02/23/2024]
+- added more styling for mobile for the data grid
+
+[02/24/2024]
+- added more styling to data grid filtering
+
+[02/25/2024]
+- updated styling of data grid
+- added buttons to compliment the data grid
+- added services route
+
+[02/26/2024]
+- fix issue with getting appropriate array for data grid
+- added date format
+
+[02/27/2024]
+- added new model and route for service songs
+- added new model and route for singer songs
+- added functionality to display the service songs on click of service
+- updated model for Song to have lyrics and updated all other affected areas
+- added info modal to display the service song lyrics
+- added functionality to display lyrics from search bar
+- added loading effect
+- added disabled effect on buttons depending on when a row is clicked
+
+[02/28/2024]
+- added selectedRow states
+- added addService.js
+- added functionality to post a new service
+- added functionality to update a service
+
+[02/29/2024]
+- reworked all modals in svntcog app to have transitions
+- added delete functionality for services
+- updated UI for buttons
+- added notification alerts
+
+[03/01/2024]
+- added functionality that shows the songs table only if a service is selected
+- added default routes for singerSongsRoute.js
+- added popup for adding/editing service songs
+- added functionality to open popup for add/edit of service songs
+- updated the searchbar.js component by giving it functionality to search on singer songs
+
+[03/03/2024]
+- updated the searchbar.js functionality
+- updated singerSong and ServiceSong routes
+
+[03/05/2024]
+- added fix for clearing search bars
+- added functionality to add service songs
+- fixed issue with reloading songs table on refresh when adding a new song
+
+[03/06/2024]
+- added deleteServiceSong.js
+- added functionality to update the num songs for service
+- fixed issue with search bar getting edit value
+- added functionality to update service song
+- fixed edge case where if there are no services, the songs table still shows
+
+[03/07/2024]
+- fixed bug with duplicates in search bar
+- hid the author column in service songs table
+- fixed bug with updating the service date to a wrong date
+- added new KeySearchBar instead of input
+- updated functionality to properly use the key search bar instead
+
+[03/13/2024]
+- added singer model and route
+- added singerSearchBar.js
+- added code to reset search bar
+- added code to add code to create singer entry
+
+[03/14/2024]
+- added switch mechanism for the songs and singer songs search bars
+- adjusted the fontsize of the lyrics in the infoModal based on the viewport width
+- added ui for the export button
+
+[03/15/2024]
+- added export functionality using react-pdf
+
+[03/16/2024]
+- fixed bug with updating the singer name
+
+[03/17/2024]
+- fixed bug with creating singer before singer song by adding check
+- fixed bug with duplicate service songs
+- updated the styling of data grid to show the full name of the column headers
+
+[03/18/2024]
+- updated the singer songs model and route to include the preferred field
+- added checkbox for the preferred field
+- reworked frontend code for creating and updating service and singer songs
+- updated singer songs dropdown list with preferred key symbol (*)
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
@@ -82,10 +183,22 @@ To fix/do:
     -> set up the app grid using the Grid element
     -> set up transitions/springs for the app tiles
     -> create app tiles
+- add css for data grids to look nice on mobile
+- create custome pagination for the data grid
+- implemented transition for modal
+
 
 
 [In Progress]
 - start checking out back end stuff
+    -> continue implementing backend functionality
+    -> set notifications for errors as well
+    -> replace message with meaningful messages
+- make the pdf file look better by adding more styling, etc.
+
+
+[Limitations]
+- SearhBar should have been separated further into a singersSongSearchBar and SongSearchBar
 
 
 

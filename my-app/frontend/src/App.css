@@ -54,6 +54,23 @@ body {
   color: var(--orange);
 }
 
+/* css for custom data grid */
+.dataGrid-box p {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 8pt;
+}
+
+.dataGrid-box div {
+  color: white;
+}
+
+.dataGrid-box svg {
+  fill: white;
+}
+/* css for custom data grid */
+
 .highlight-text:hover {
   color: var(--orange);
 }
@@ -132,7 +149,7 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100%;
-    width: 57%;
+    width: 60%;
     margin: auto;
   }
 
@@ -152,6 +169,11 @@ body {
     border-radius: 8px;
     padding: 9px;
     box-sizing: border-box;
+  }
+
+  .dataGrid-box {
+    width: 100%;
+    height: 200px;
   }
 
   .figure {
@@ -198,6 +220,12 @@ body {
     text-align: center;
   }
 
+  .notification {
+    position: fixed;
+    width: 90%;
+    top: 6%;
+  }
+
   .project-item {
     display: none;
   }
@@ -220,6 +248,17 @@ body {
 
   .stackedNavbar-btn {
     visibility: hidden;
+  }
+
+  .svntcog-main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    justify-content: center;
   }
 }
 
@@ -262,6 +301,11 @@ body {
     border-radius: 8px;
     padding: 9px;
     box-sizing: border-box;
+  }
+
+  .dataGrid-box {
+    width: 100%;
+    height: 200px;
   }
 
   .figure {
@@ -309,6 +353,12 @@ body {
     text-align: justify;
   }
 
+  .notification {
+    position: fixed;
+    width: 60%;
+    top: 6%;
+  }
+
   .project-item {
     display: block;
   }
@@ -340,5 +390,16 @@ body {
   .stackedNavbar-item {
     font-size: 10pt !important;
     padding: 8px 16px;
+  }
+
+  .svntcog-main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+    margin: auto;
+    justify-content: center;
   }
 }
