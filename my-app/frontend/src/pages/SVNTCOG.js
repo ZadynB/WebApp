@@ -21,13 +21,13 @@ import IconButton from '@mui/joy/IconButton';
 import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Collapse from '@mui/material/Collapse';
-// import FormLabel from '@mui/joy/FormLabel';
 import dayjs from 'dayjs';
 import SwapHorizRounded from '@mui/icons-material/SwapHorizRounded';
 import FileDownload from '@mui/icons-material/FileDownload';
 import PDFFile from '../components/PDFFile';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Typography from '@mui/joy/Typography';
+import SongSearchBar from '../components/SongSearchBar';
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -563,7 +563,6 @@ function SVNTCOG () {
 
           // update the old preferred key singer song if necessary
           if (oldId !== '') {
-            console.log('here');
             axios
               .put(`http://localhost:5555/singerSongs/${oldId}`, oldSingerSongObj)
               .then((response) => {
@@ -669,7 +668,12 @@ function SVNTCOG () {
                       {item ? (
                         <Stack spacing={1} direction='column' alignItems='flex-start' sx={{flex: 1}}>
                           <Typography sx={{color: 'white', fontWeight: 'bold', fontSize: '10pt', }}>Search songs</Typography>
-                          <SearchBar type='songList' editValue={{}} options={songs} onOptionClick={displaySongLyrics} disabled={false}/>
+                          <SongSearchBar 
+                            options={songs}
+                            editValue={{}}
+                            onOptionClick={displaySongLyrics}
+                            disabled={false}
+                          />
                         </Stack>
                       ) : (
                         <Stack spacing={1} direction='column' alignItems='flex-start' sx={{flex: 1}}>

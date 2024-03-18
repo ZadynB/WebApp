@@ -13,6 +13,7 @@ import KeySearchBar from './KeySearchBar';
 import SingerSearchBar from './SingerSearchBar';
 import Divider from '@mui/material/Divider';
 import Checkbox from '@mui/joy/Checkbox';
+import SongSearchBar from './SongSearchBar';
 
 function getSingers(singersData) {
   let arr = [];
@@ -30,7 +31,6 @@ function AddEditServiceSong(props) {
   const singerSongs = props.info.singerSongs;
   const singers = getSingers(props.info.singers);
   const songs = props.info.songs;
-  const editValue = props.info.editValue;
 
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
@@ -38,7 +38,7 @@ function AddEditServiceSong(props) {
   const [singer, setSinger] = React.useState('');
   const [key, setKey] = React.useState('');
   const [singerSongData, setSingerSongData] = React.useState({song: '', author: '', singer: '', key: ''});
-  const [songData, setSongData] = React.useState({title: '', author: ''})
+  const [songData, setSongData] = React.useState({});
   const [isNewSinger, setIsNewSinger] = React.useState(false);
   const [preferred, setPreferred] = React.useState(false);
 
@@ -60,6 +60,7 @@ function AddEditServiceSong(props) {
   }
 
   const selectSong = (option) => {
+    console.log(option);
     setSongData({
       title: option.title,
       author: option.author
@@ -110,9 +111,13 @@ function AddEditServiceSong(props) {
             keyRef.current.children[1].click();
           }
 
-          setEdit(false);
+          // reset values
           setSinger('');
           setKey('');
+          setSongData({});
+          setPreferred(false);
+
+          setEdit(false);
           setCreateNew(true);
           setOpen(true);
         }}
@@ -128,6 +133,7 @@ function AddEditServiceSong(props) {
         startDecorator={<Edit />}
         onClick={() => {
 
+          // set values
           setSinger(selectedSong.singer);
           setKey(selectedSong.key);
           setSongData({title: selectedSong.song, author: selectedSong.author});
@@ -138,8 +144,14 @@ function AddEditServiceSong(props) {
                                                                   song.author === selectedSong.author &&
                                                                   song.singer === selectedSong.singer &&
                                                                   song.key === selectedSong.key);
-          // should have only 1 song in array
-          setPreferred(filteredSingerSongs[0].preferred);
+
+          // safety check
+          if (filteredSingerSongs.length !== 0) {
+            setPreferred(filteredSingerSongs[0].preferred);
+          } else {
+            setPreferred(false);
+          }
+          
           
           setEdit(true);
           setCreateNew(true);
@@ -328,13 +340,13 @@ function AddEditServiceSong(props) {
                         <></>
                       )}
                       
-                      {/* if edit mode is not on, then use the create mode search bar for new values */}
-                      {/* otherwise, use the edit mode search bar */}
-                      {!edit ? (
-                        <SearchBar ref={songRef} type='songList' editValue={{}} options={songs} onOptionClick={selectSong} disabled={!createNew}/>
-                      ) : (
-                        <SearchBar ref={songRef} type='songList' editValue={editValue} options={songs} onOptionClick={selectSong} disabled={!createNew}/>
-                      )}
+                      <SongSearchBar
+                        ref={songRef}
+                        options={songs}
+                        editValue={songData}
+                        onOptionClick={selectSong}
+                        disabled={!createNew}
+                      />
                       
                       <SingerSearchBar
                         ref={singerSearchRef}

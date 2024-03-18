@@ -162,6 +162,8 @@ Log:
 - added checkbox for the preferred field
 - reworked frontend code for creating and updating service and singer songs
 - updated singer songs dropdown list with preferred key symbol (*)
+- added new SongSearchBar.js to split the two search bars
+- updated frontend code to reflect appropriate changes
 
 To fix/do:
 [Solved/Done]
