@@ -552,35 +552,34 @@ function SVNTCOG () {
         .put(`http://localhost:5555/serviceSongs/${id}`, serviceSongObj)
         .then((response) => {
           // update the newly set preferred key singer song
-          axios
-            .put(`http://localhost:5555/singerSongs/${newId}`, newSingerSongObj)
-            .catch((error) => {
-              console.log(error.message);
-                setStatus('danger');
-                setNotification('Error updating service!');
-                setLoading(false);
-            })
-
+          // safety check
+          if (newId !== '') {
+            axios
+              .put(`http://localhost:5555/singerSongs/${newId}`, newSingerSongObj)
+              .catch((error) => {
+                console.log(error.message);
+                  setStatus('danger');
+                  setNotification('Error updating service!');
+                  setLoading(false);
+              })
+          }
+          
           // update the old preferred key singer song if necessary
+          // safety check
           if (oldId !== '') {
             axios
               .put(`http://localhost:5555/singerSongs/${oldId}`, oldSingerSongObj)
-              .then((response) => {
-                setRefresh(!refresh);
-                setStatus('success');
-                setNotification('Successfully updated service song!');
-              })
               .catch((error) => {
                 console.log(error.message);
                 setStatus('danger');
                 setNotification('Error updating service!');
                 setLoading(false);
               })
-          } else {
-            setRefresh(!refresh);
-            setStatus('success');
-            setNotification('Successfully updated service song!');
           }
+
+          setRefresh(!refresh);
+          setStatus('success');
+          setNotification('Successfully updated service song!');
         })
         .catch((error) => {
           console.log(error.message);

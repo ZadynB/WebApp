@@ -164,6 +164,7 @@ Log:
 - updated singer songs dropdown list with preferred key symbol (*)
 - added new SongSearchBar.js to split the two search bars
 - updated frontend code to reflect appropriate changes
+- fixed bug of error when updating a preferred key song
 
 To fix/do:
 [Solved/Done]
