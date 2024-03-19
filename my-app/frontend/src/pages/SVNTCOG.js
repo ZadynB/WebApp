@@ -237,45 +237,105 @@ function SVNTCOG () {
     });
   };
 
-  const addService = (serviceObj) => {
+  const addService = (serviceObj, isNewSinger) => {
     // route to add service
     setLoading(true);
     try {
-      axios
-        .post('http://localhost:5555/services', serviceObj)
-        .then((response) => {
-          setRefresh(!refresh);
-          setStatus('success');
-          setNotification('Successfully created service!');
-        })
-        .catch((error) => {
-          console.log(error.response.data.message);
-          setStatus('danger');
-          setNotification(error.response.data.message);
-          setLoading(false);
-        })
+      if (isNewSinger) {
+        const singerObj = {
+          name: serviceObj.worshipLeader
+        };
+
+        axios
+          .post('http://localhost:5555/singer', singerObj)
+          .then((response) => {
+            axios
+              .post('http://localhost:5555/services', serviceObj)
+              .then((response) => {
+                setRefresh(!refresh);
+                setStatus('success');
+                setNotification('Successfully created service!');
+              })
+              .catch((error) => {
+                console.log(error.response.data.message);
+                setStatus('danger');
+                setNotification(error.response.data.message);
+                setLoading(false);
+              })
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            setStatus('danger');
+            setNotification(error.response.data.message);
+            setLoading(false);
+          })
+      } else {
+        axios
+          .post('http://localhost:5555/services', serviceObj)
+          .then((response) => {
+            setRefresh(!refresh);
+            setStatus('success');
+            setNotification('Successfully created service!');
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            setStatus('danger');
+            setNotification(error.response.data.message);
+            setLoading(false);
+          })
+      }
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const editService = (serviceObj, id) => {
+  const editService = (serviceObj, id, isNewSinger) => {
     //route to edit service
     setLoading(true);
     try {
-      axios
-        .put(`http://localhost:5555/services/${id}`, serviceObj)
-        .then((response) => {
-          setRefresh(!refresh);
-          setStatus('success');
-          setNotification('Successfully updated service!');
-        })
-        .catch((error) => {
-          console.log(error.message);
-          setStatus('danger');
-          setNotification('Error updating service!');
-          setLoading(false);
-        })
+      if (isNewSinger) {
+        const singerObj = {
+          name: serviceObj.worshipLeader
+        };
+
+        axios
+          .post('http://localhost:5555/singer', singerObj)
+          .then((response) => {
+            axios
+              .put(`http://localhost:5555/services/${id}`, serviceObj)
+              .then((response) => {
+                setRefresh(!refresh);
+                setStatus('success');
+                setNotification('Successfully updated service!');
+              })
+              .catch((error) => {
+                console.log(error.message);
+                setStatus('danger');
+                setNotification('Error updating service!');
+                setLoading(false);
+              })
+          })
+          .catch((error) => {
+            console.log(error.message);
+            setStatus('danger');
+            setNotification('Error updating service!');
+            setLoading(false);
+          })
+      } else {
+        axios
+          .put(`http://localhost:5555/services/${id}`, serviceObj)
+          .then((response) => {
+            setRefresh(!refresh);
+            setStatus('success');
+            setNotification('Successfully updated service!');
+          })
+          .catch((error) => {
+            console.log(error.message);
+            setStatus('danger');
+            setNotification('Error updating service!');
+            setLoading(false);
+          })
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -712,7 +772,7 @@ function SVNTCOG () {
                     <AddEditService
                       onCreate={addService}
                       onUpdate={editService}
-                      info={serviceSelected}
+                      info={{serviceSelected: serviceSelected, singers: singers}}
                     />
                     <DeleteService
                       onDelete={deleteService}

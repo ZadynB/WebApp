@@ -6,23 +6,50 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Transition } from 'react-transition-group';
 import { Add, Edit } from '@mui/icons-material';
+import SingerSearchBar from './SingerSearchBar';
+
+function getSingers(singersData) {
+  let arr = [];
+  for (const singer of singersData) {
+    arr.push({
+      name: singer.name
+    });
+  }
+  return arr;
+}
 
 function AddEditService(props) {
-  const info = props.info;
+  const info = props.info.serviceSelected;
+  const singers = getSingers(props.info.singers);
 
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
   const [date, setDate] = React.useState(dayjs('01-01-2024'));
   const [worshipLeader, setWorshipLeader] = React.useState('');
+  const [isNewSinger, setIsNewSinger] = React.useState(false);
 
   const orange = getComputedStyle(document.body).getPropertyValue('--orange2');
+  
+  const singerSearchRef = React.createRef();
 
   React.useEffect(() => {
     if (edit) {
       setDate(dayjs(info.date));
-      setWorshipLeader(info.worshipLeader);
+      setWorshipLeader({name: info.worshipLeader});
     }
   }, [edit, info.date, info.worshipLeader]);
+
+  const selectSinger = (option) => {
+    console.log(option);
+    setWorshipLeader(option);
+    setIsNewSinger(false);
+  };
+
+  const selectNewSinger = (option) => {
+    console.log(option);
+    setWorshipLeader({name: option.inputValue});
+    setIsNewSinger(true);
+  }
 
   return (
     <React.Fragment>
@@ -110,14 +137,14 @@ function AddEditService(props) {
 
                   const serviceObj = {
                     date: date.$d,
-                    worshipLeader: worshipLeader,
+                    worshipLeader: worshipLeader.name,
                   };
 
                   if (!edit) {
-                    props.onCreate(serviceObj);
+                    props.onCreate(serviceObj, isNewSinger);
                   } else {
                     serviceObj.numSongs = info.numSongs;
-                    props.onUpdate(serviceObj, info.id);
+                    props.onUpdate(serviceObj, info.id, isNewSinger);
                   }
                   
                   setOpen(false);
@@ -137,11 +164,19 @@ function AddEditService(props) {
                   <Typography id="modal-field-2" textColor="text.tertiary">
                     Worship Leader
                   </Typography>
-                  <Input 
+                  {/* <Input 
                     id='add-edit-textfield'
                     placeholder='Worship Leader...'
                     value={worshipLeader}
                     onChange={(newValue) => setWorshipLeader(newValue.target.value)}
+                  /> */}
+                  <SingerSearchBar
+                    ref={singerSearchRef}
+                    options={singers}
+                    disabled={false}
+                    editValue={worshipLeader}
+                    onOptionClick={selectSinger}
+                    onNewOptionClick={selectNewSinger}
                   />
                   <Button type='submit' color='primary'>
                     { edit ? 'Update': 'Create'}

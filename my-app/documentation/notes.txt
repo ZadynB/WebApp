@@ -167,6 +167,10 @@ Log:
 - fixed bug of error when updating a preferred key song
 - added SingerSongSearchBar.js
 
+[03/19/2024]
+- replaced input component for worship leader with singer search bar
+- added functionality to add new singers
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)
