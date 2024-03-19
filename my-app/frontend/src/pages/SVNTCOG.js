@@ -7,7 +7,6 @@ import axios from 'axios';
 import CircularProgress from '@mui/joy/CircularProgress';
 import ButtonGroup from '@mui/joy/ButtonGroup';
 import Stack from '@mui/joy/Stack';
-import SearchBar from '../components/SearchBar';
 import CustomDataGrid from '../components/CustomDataGrid';
 import InfoModal from '../components/InfoModal';
 import AddEditService from '../components/AddEditService';
@@ -28,6 +27,7 @@ import PDFFile from '../components/PDFFile';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Typography from '@mui/joy/Typography';
 import SongSearchBar from '../components/SongSearchBar';
+import SingerSongSearchBar from '../components/SingerSongSearchBar';
 
 function sleep(duration) {
   return new Promise((resolve) => {
@@ -677,7 +677,12 @@ function SVNTCOG () {
                       ) : (
                         <Stack spacing={1} direction='column' alignItems='flex-start' sx={{flex: 1}}>
                           <Typography sx={{color: 'white', fontWeight: 'bold', fontSize: '10pt', }}>Search singer songs</Typography>
-                          <SearchBar type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={()=>{}} disabled={false}/>
+                          <SingerSongSearchBar
+                            editValue={{}}
+                            options={singerSongs}
+                            onOptionClick={()=>{}}
+                            disabled={false}
+                          />
                         </Stack>
                       )}
                     </animated.div>

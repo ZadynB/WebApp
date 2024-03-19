@@ -165,6 +165,7 @@ Log:
 - added new SongSearchBar.js to split the two search bars
 - updated frontend code to reflect appropriate changes
 - fixed bug of error when updating a preferred key song
+- added SingerSongSearchBar.js
 
 To fix/do:
 [Solved/Done]
@@ -198,10 +199,6 @@ To fix/do:
     -> set notifications for errors as well
     -> replace message with meaningful messages
 - make the pdf file look better by adding more styling, etc.
-
-
-[Limitations]
-- SearhBar should have been separated further into a singersSongSearchBar and SongSearchBar
 
 
 

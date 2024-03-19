@@ -8,12 +8,12 @@ import ModalDialog from '@mui/joy/ModalDialog';
 import { Transition } from 'react-transition-group';
 import Add from '@mui/icons-material/Add';
 import Edit from '@mui/icons-material/Edit';
-import SearchBar from './SearchBar';
 import KeySearchBar from './KeySearchBar';
 import SingerSearchBar from './SingerSearchBar';
 import Divider from '@mui/material/Divider';
 import Checkbox from '@mui/joy/Checkbox';
 import SongSearchBar from './SongSearchBar';
+import SingerSongSearchBar from './SingerSongSearchBar';
 
 function getSingers(singersData) {
   let arr = [];
@@ -303,7 +303,13 @@ function AddEditServiceSong(props) {
                           setPreferred(false);
                         }}
                       >
-                        <SearchBar ref={singerRef} type='singerSongList' editValue={{}} options={singerSongs} onOptionClick={selectSingerSong} disabled={createNew}/>
+                        <SingerSongSearchBar
+                          ref={singerRef}
+                          editValue={{}}
+                          options={singerSongs}
+                          onOptionClick={selectSingerSong}
+                          disabled={createNew}
+                        />
                       </div>
                       <Divider
                         variant='middle'
