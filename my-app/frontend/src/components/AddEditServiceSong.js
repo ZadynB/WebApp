@@ -60,7 +60,6 @@ function AddEditServiceSong(props) {
   }
 
   const selectSong = (option) => {
-    console.log(option);
     setSongData({
       title: option.title,
       author: option.author
@@ -68,18 +67,15 @@ function AddEditServiceSong(props) {
   }
 
   const selectKey = (option) => {
-    console.log(option);
     setKey(option);
   }
 
   const selectSinger = (option) => {
-    console.log(option);
     setSinger(option);
     setIsNewSinger(false);
   }
 
   const selectNewSinger = (option) => {
-    console.log(option);
     setSinger({name: option.inputValue});
     setIsNewSinger(true);
   }
@@ -101,13 +97,11 @@ function AddEditServiceSong(props) {
 
           //safety check
           if (songRef.current.children.length >= 3) {
-            console.log('song');
             songRef.current.children[1].click();
           }
 
           //safety check
           if (keyRef.current.children.length >= 3) {
-            console.log('key');
             keyRef.current.children[1].click();
           }
 
@@ -270,7 +264,7 @@ function AddEditServiceSong(props) {
                     }
                     serviceSongObj.key = key;
                     isPreferred = preferred;
-                    props.onUpdate(serviceSongObj, selectedSong.id, isPreferred);
+                    props.onUpdate(serviceSongObj, selectedSong.id, isPreferred, isNewSinger);
                   }
 
                   // clear the search bar input value

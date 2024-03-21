@@ -171,6 +171,13 @@ Log:
 - replaced input component for worship leader with singer search bar
 - added functionality to add new singers
 
+[03/21/2024]
+- fixed bug where a new entry would be displayed if an extra letter was entered into the singer search bar
+- updated functionality of the editServiceSong function
+    -> new singer songs are added if there are new combinations
+    -> creates a new singer if it is marked as such
+    -> updated duplicate entry check
+
 To fix/do:
 [Solved/Done]
 - figure out a way to change the section on the About page efficiently (Proxy??)

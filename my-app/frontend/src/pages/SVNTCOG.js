@@ -567,9 +567,44 @@ function SVNTCOG () {
     }
   };
 
-  const editServiceSong = (serviceSongObj, id, isPreferred) => {
+  const editServiceSong = (serviceSongObj, id, isPreferred, isNewSinger) => {
     // route to edit service song
     setLoading(true);
+
+    // check if serviceSongObj is valid
+    if (serviceSongObj.singer === '' ||
+        serviceSongObj.author === '' ||
+        serviceSongObj.song === '' ||
+        serviceSongObj.key === '') {
+          setStatus('danger');
+          setNotification('Must use all required fields: singer, song and key!');
+          setLoading(false);
+          return;
+    }
+
+    // check if there serviceSongObj already exists
+    let filteredServiceSongs = serviceSongs.filter((song) => song.song === serviceSongObj.song &&
+                                                            song.author === serviceSongObj.author &&
+                                                            song.singer === serviceSongObj.singer &&
+                                                            song.key === serviceSongObj.key);
+    if (filteredServiceSongs.length > 1) {
+      setStatus('danger');
+      setNotification('Duplicate service songs are not allowed!');
+      setLoading(false);
+      return;
+    }
+
+    // check if it could be a new singer song combination
+    let found = false;
+    for (const song of singerSongs) {
+      if (song.song === serviceSongObj.song &&
+          song.author === serviceSongObj.author &&
+          song.singer === serviceSongObj.singer &&
+          song.key === serviceSongObj.key) {
+            found = true;
+          }
+    }
+    
     try {
       let oldId = '';
       let oldSingerSongObj = {};
@@ -608,6 +643,147 @@ function SVNTCOG () {
         newSingerSongObj.preferred = isPreferred;
       }
       
+      // create new singer song combination
+      if (!found) {
+        // create new singer if it is new
+        if (isNewSinger) {
+          const singerObj = {
+            name: serviceSongObj.singer
+          };
+
+          axios
+            .post('http://localhost:5555/singer', singerObj)
+            .then((response) => {
+              // create new singer song
+              const singerSongObj = {
+                song: serviceSongObj.song,
+                author: serviceSongObj.author,
+                singer: serviceSongObj.singer,
+                key: serviceSongObj.key,
+                preferred: isPreferred
+              };
+
+              axios
+                .post('http://localhost:5555/singerSongs', singerSongObj)
+                .then((response) => {
+                  // update service song
+                  axios
+                    .put(`http://localhost:5555/serviceSongs/${id}`, serviceSongObj)
+                    .then((response) => {
+                      // update the newly set preferred key singer song
+                      // safety check
+                      if (newId !== '') {
+                        axios
+                          .put(`http://localhost:5555/singerSongs/${newId}`, newSingerSongObj)
+                          .catch((error) => {
+                            console.log(error.message);
+                            setStatus('danger');
+                            setNotification('Error updating service!');
+                            setLoading(false);
+                          })
+                      }
+                      
+                      // update the old preferred key singer song if necessary
+                      // safety check
+                      if (oldId !== '') {
+                        axios
+                          .put(`http://localhost:5555/singerSongs/${oldId}`, oldSingerSongObj)
+                          .catch((error) => {
+                            console.log(error.message);
+                            setStatus('danger');
+                            setNotification('Error updating service!');
+                            setLoading(false);
+                          })
+                      }
+
+                      setRefresh(!refresh);
+                      setStatus('success');
+                      setNotification('Successfully updated service song!');
+                    })
+                    .catch((error) => {
+                      console.log(error.message);
+                      setStatus('danger');
+                      setNotification('Error while updating service song!');
+                      setLoading(false);
+                    })
+                })
+                .catch((error) => {
+                  console.log(error.message);
+                  setStatus('danger');
+                  setNotification('Error creating singer song!');
+                  setLoading(false);
+                })
+            })
+            .catch((error) => {
+              console.log(error.message);
+              setStatus('danger');
+              setNotification('Error while creating new singer!');
+              setLoading(false);
+            })
+        } else {
+          // create new singer song
+          const singerSongObj = {
+            song: serviceSongObj.song,
+            author: serviceSongObj.author,
+            singer: serviceSongObj.singer,
+            key: serviceSongObj.key,
+            preferred: isPreferred
+          };
+
+          axios
+            .post('http://localhost:5555/singerSongs', singerSongObj)
+            .then((response) => {
+              // update service song
+              axios
+                .put(`http://localhost:5555/serviceSongs/${id}`, serviceSongObj)
+                .then((response) => {
+                  // update the newly set preferred key singer song
+                  // safety check
+                  if (newId !== '') {
+                    axios
+                      .put(`http://localhost:5555/singerSongs/${newId}`, newSingerSongObj)
+                      .catch((error) => {
+                        console.log(error.message);
+                        setStatus('danger');
+                        setNotification('Error updating service!');
+                        setLoading(false);
+                      })
+                  }
+                  
+                  // update the old preferred key singer song if necessary
+                  // safety check
+                  if (oldId !== '') {
+                    axios
+                      .put(`http://localhost:5555/singerSongs/${oldId}`, oldSingerSongObj)
+                      .catch((error) => {
+                        console.log(error.message);
+                        setStatus('danger');
+                        setNotification('Error updating service!');
+                        setLoading(false);
+                      })
+                  }
+
+                  setRefresh(!refresh);
+                  setStatus('success');
+                  setNotification('Successfully updated service song!');
+                })
+                .catch((error) => {
+                  console.log(error.message);
+                  setStatus('danger');
+                  setNotification('Error while updating service song!');
+                  setLoading(false);
+                })
+            })
+            .catch((error) => {
+              console.log(error.message);
+              setStatus('danger');
+              setNotification('Error creating singer song!');
+              setLoading(false);
+            })
+        }
+      } else {
+
+      }
       axios
         .put(`http://localhost:5555/serviceSongs/${id}`, serviceSongObj)
         .then((response) => {
@@ -618,9 +794,9 @@ function SVNTCOG () {
               .put(`http://localhost:5555/singerSongs/${newId}`, newSingerSongObj)
               .catch((error) => {
                 console.log(error.message);
-                  setStatus('danger');
-                  setNotification('Error updating service!');
-                  setLoading(false);
+                setStatus('danger');
+                setNotification('Error updating service!');
+                setLoading(false);
               })
           }
           

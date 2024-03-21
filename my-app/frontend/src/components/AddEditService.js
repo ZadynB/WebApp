@@ -1,6 +1,6 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
-import { Stack, Modal, ModalClose, Typography, Input, Button, ModalDialog } from '@mui/joy';
+import { Stack, Modal, ModalClose, Typography, Button, ModalDialog } from '@mui/joy';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -40,13 +40,11 @@ function AddEditService(props) {
   }, [edit, info.date, info.worshipLeader]);
 
   const selectSinger = (option) => {
-    console.log(option);
     setWorshipLeader(option);
     setIsNewSinger(false);
   };
 
   const selectNewSinger = (option) => {
-    console.log(option);
     setWorshipLeader({name: option.inputValue});
     setIsNewSinger(true);
   }
@@ -164,12 +162,7 @@ function AddEditService(props) {
                   <Typography id="modal-field-2" textColor="text.tertiary">
                     Worship Leader
                   </Typography>
-                  {/* <Input 
-                    id='add-edit-textfield'
-                    placeholder='Worship Leader...'
-                    value={worshipLeader}
-                    onChange={(newValue) => setWorshipLeader(newValue.target.value)}
-                  /> */}
+
                   <SingerSearchBar
                     ref={singerSearchRef}
                     options={singers}

@@ -71,7 +71,7 @@ const SingerSearchBar = forwardRef((props, ref) => {
           const { inputValue } = params;
 
           //suggest the creation of a new value
-          const isExisting = options.some((option) => inputValue === option);
+          const isExisting = options.some((option) => inputValue === option.name);
           if (inputValue !== '' && !isExisting) {
             filtered.push({
               inputValue,
